@@ -486,11 +486,16 @@
         const raw = localStorage.getItem(STORAGE_KEY);
         if (!raw) return;
         const data = JSON.parse(raw);
-        INPUT_IDS.forEach(id => {
-          const el = document.getElementById(id);
-          if (el && data[id] !== undefined) el.value = data[id];
+        var restored = false;
+        INPUT_IDS.forEach(function(id) {
+          var el = document.getElementById(id);
+          if (el && data[id] !== undefined && data[id] !== "") {
+            el.value = data[id];
+            restored = true;
+          }
         });
-      } catch (e) {}
+        return restored;
+      } catch (e) { return false; }
     }
 
     function applyPreset(type) {
@@ -783,12 +788,14 @@
       URL.revokeObjectURL(a.href);
     }
 
-    window.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("DOMContentLoaded", function() {
       loadFormValues();
-      document.querySelectorAll("input").forEach(el => {
+      document.querySelectorAll("input").forEach(function(el) {
         el.addEventListener("input", saveFormValues);
         el.addEventListener("change", saveFormValues);
+        el.addEventListener("blur", saveFormValues);
       });
+      window.addEventListener("beforeunload", saveFormValues);
       var calcBtn = document.getElementById("calcBtn");
       if (calcBtn) calcBtn.addEventListener("click", calculateKakei);
       var resetBtn = document.getElementById("resetBtn");
