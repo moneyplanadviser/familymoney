@@ -116,6 +116,8 @@
     .exclude-option label { display: inline-flex; align-items: center; gap: 8px; font-weight: 400; font-size: 0.9rem; color: var(--text-muted); cursor: pointer; }
     .exclude-option input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
     .exclude-option.disabled label { opacity: 0.5; pointer-events: none; cursor: not-allowed; }
+    .form-group.radio-disabled { opacity: 0.5; pointer-events: none; }
+    .form-group.radio-disabled .radio-group label { cursor: not-allowed; }
 
     .ref-section {
       margin-top: 24px;
@@ -154,7 +156,7 @@
       <p class="step-desc">各項目を選択してください。進路に応じた教育費の総額を試算します。（1人あたり・学習費総額の目安）</p>
 
       <form id="calcForm">
-        <div class="form-group">
+        <div class="form-group" id="formGroup_b">
           <label>幼稚園</label>
           <div class="radio-group" name="kindergarten">
             <label><input type="radio" name="b" value="55.4" checked> <span class="opt-label">公立</span></label>
@@ -162,7 +164,7 @@
           </div>
           <div class="exclude-option" id="excludeOpt_b"><label><input type="checkbox" name="exclude_b"> すでに通っている・完了済み（計算から除外）</label></div>
         </div>
-        <div class="form-group">
+        <div class="form-group" id="formGroup_c">
           <label>小学校</label>
           <div class="radio-group">
             <label><input type="radio" name="c" value="201.8" checked> <span class="opt-label">公立</span></label>
@@ -170,7 +172,7 @@
           </div>
           <div class="exclude-option" id="excludeOpt_c"><label><input type="checkbox" name="exclude_c"> すでに通っている・完了済み（計算から除外）</label></div>
         </div>
-        <div class="form-group">
+        <div class="form-group" id="formGroup_d">
           <label>中学校</label>
           <div class="radio-group">
             <label><input type="radio" name="d" value="162.7" checked> <span class="opt-label">公立</span></label>
@@ -178,7 +180,7 @@
           </div>
           <div class="exclude-option" id="excludeOpt_d"><label><input type="checkbox" name="exclude_d"> すでに通っている・完了済み（計算から除外）</label></div>
         </div>
-        <div class="form-group">
+        <div class="form-group" id="formGroup_e">
           <label>高校</label>
           <div class="radio-group">
             <label><input type="radio" name="e" value="179.3" checked> <span class="opt-label">公立</span></label>
@@ -278,6 +280,11 @@
         const shouldDisable = isChecked && anyLaterChecked;
         opt.classList.toggle('disabled', shouldDisable);
         input.disabled = shouldDisable;
+        const formGroup = opt.closest('.form-group');
+        const radioName = name.replace('exclude_', '');
+        const radios = document.querySelectorAll('input[name="' + radioName + '"]');
+        if (formGroup) formGroup.classList.toggle('radio-disabled', shouldDisable);
+        radios.forEach(r => { r.disabled = shouldDisable; });
       });
     }
 
