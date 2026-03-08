@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FamilyMoney | 家計・相続のシミュレーションツール</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #2d5a4a;
+      --primary-light: #3d7a65;
+      --accent: #e8b86d;
+      --bg: #f8f6f2;
+      --text: #2c2c2c;
+      --font: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
+    }
+    body { font-family: var(--font); color: var(--text); background: var(--bg); min-height: 100vh; }
+    .header {
+      background: linear-gradient(135deg, var(--primary) 0%, #1e3d32 100%);
+      color: #fff;
+      padding: 48px 24px 56px;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 12px; letter-spacing: 0.08em; }
+    .header p { font-size: 0.95rem; opacity: 0.9; }
+    .container { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+    .tool-card {
+      display: block;
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      border: 1px solid #e5e0d8;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    .tool-card h2 { font-size: 1.1rem; color: var(--primary); margin-bottom: 8px; }
+    .tool-card p { font-size: 0.9rem; color: #5c5c5c; line-height: 1.7; }
+    .tool-card .arrow { color: var(--primary); font-weight: 700; margin-top: 12px; display: inline-block; }
+    .footer { text-align: center; padding: 32px; font-size: 0.8rem; color: #888; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>FamilyMoney</h1>
+    <p>家計・相続をわかりやすくシミュレーション</p>
+  </header>
+  <main class="container">
+    <a href="souzokuzei.html" class="tool-card">
+      <h2>相続税シミュレーター</h2>
+      <p>相続税を3ステップでシミュレーション。課税価格・相続税総額・各人の税額を自動計算。クライアント向け無料サービスです。</p>
+      <span class="arrow">計算を始める →</span>
+    </a>
+  </main>
+  <footer class="footer">
+    <p>FamilyMoney｜クライアント向け無料サービス</p>
+  </footer>
+</body>
+</html>

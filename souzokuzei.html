@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>相続税シミュレーター | FamilyMoney</title>
+  <meta name="description" content="相続税を3ステップでシミュレーション。課税価格・相続税総額・各人の税額を自動計算。クライアント向け無料サービス。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #2d5a4a;
+      --primary-light: #3d7a65;
+      --primary-dark: #1e3d32;
+      --accent: #e8b86d;
+      --accent-light: #f5d9a8;
+      --bg: #f8f6f2;
+      --bg-card: #ffffff;
+      --text: #2c2c2c;
+      --text-muted: #5c5c5c;
+      --border: #e5e0d8;
+      --success: #2d5a4a;
+      --font: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px 80px; }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #fff;
+      padding: 32px 24px 40px;
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+    .header p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    /* Step Cards */
+    .step-card {
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-top: 24px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+    }
+    .step-card h2 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--accent-light);
+    }
+    .step-num {
+      width: 36px;
+      height: 36px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+    .step-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 1rem;
+      font-family: inherit;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .form-group input[type="number"] {
+      text-align: right;
+    }
+    .form-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 480px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* Heir inputs (Step 3) */
+    .heir-list { margin-top: 16px; }
+    .heir-item {
+      display: grid;
+      grid-template-columns: 1fr 120px;
+      gap: 12px;
+      align-items: end;
+      margin-bottom: 12px;
+    }
+    .heir-item label { margin-bottom: 4px; }
+    .heir-item input { margin-bottom: 0; }
+
+    /* Results */
+    .result-box {
+      background: linear-gradient(135deg, #f0f7f4 0%, #e8f0ed 100%);
+      border: 2px solid var(--primary-light);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 20px;
+    }
+    .result-box.highlight {
+      background: linear-gradient(135deg, #fff9ed 0%, #fff3e0 100%);
+      border-color: var(--accent);
+    }
+    .result-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .result-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .result-value.large {
+      font-size: 1.8rem;
+    }
+    .calc-detail {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+    }
+    .calc-detail strong { color: var(--text); }
+
+    /* Table */
+    .result-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 0.9rem;
+    }
+    .result-table th,
+    .result-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .result-table th {
+      background: var(--bg);
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .result-table td:last-child {
+      text-align: right;
+      font-weight: 600;
+    }
+
+    /* Button */
+    .btn {
+      display: inline-block;
+      padding: 16px 32px;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      margin-top: 24px;
+    }
+    .btn:hover {
+      background: var(--primary-light);
+      transform: translateY(-1px);
+    }
+    .btn:active { transform: translateY(0); }
+
+    /* Summary */
+    .summary-card {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: 32px;
+      margin-top: 32px;
+      text-align: center;
+    }
+    .summary-card h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+    .summary-card .total {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .summary-card .note {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      margin-top: 16px;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .footer a { color: var(--primary); }
+
+    /* Reference table */
+    .ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin: 20px 0;
+      background: var(--bg);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .ref-table th,
+    .ref-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .ref-table th {
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      width: 120px;
+    }
+    #taxBasisTable th { width: auto; }
+    #taxBasisTable th:first-child { min-width: 200px; }
+    .ref-table tr:last-child td { border-bottom: none; }
+    .ref-section {
+      margin-top: 24px;
+      padding: 20px;
+      background: #f0f7f4;
+      border-radius: 12px;
+      border-left: 4px solid var(--primary);
+    }
+    .ref-section h4 {
+      font-size: 0.95rem;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .ref-section p { font-size: 0.85rem; line-height: 1.7; color: var(--text); }
+    .step-what {
+      background: #fff9ed;
+      border: 1px solid var(--accent-light);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .step-what strong { color: var(--primary); }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .step-card { padding: 20px; }
+      .heir-item { grid-template-columns: 1fr; }
+      .ref-table { font-size: 0.8rem; }
+      .ref-table th, .ref-table td { padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <h1>相続税シミュレーター</h1>
+    <p>相続税を3ステップでシミュレーション｜クライアント向け無料サービス</p>
+  </header>
+
+  <main class="container">
+    <!-- 試算の計算根拠：相続税速算表 -->
+    <section class="step-card" id="taxBasisSection">
+      <h2 style="border-bottom: 2px solid var(--accent-light); padding-bottom: 12px;">試算の計算根拠</h2>
+      <p class="step-desc">相続税の試算には、以下の速算表（<span id="taxTableEffective">2015年1月以降</span>）を使用しています。税率改正時はこの表を更新してください。</p>
+      <table class="ref-table" id="taxBasisTable">
+        <thead>
+          <tr>
+            <th>各相続人の取得金額</th>
+            <th>税率</th>
+            <th>控除額</th>
+          </tr>
+        </thead>
+        <tbody id="taxBasisBody">
+          <!-- JSでTAX_TABLEから生成 -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Step 1: 課税価格の計算 -->
+    <section class="step-card">
+      <h2><span class="step-num">1</span>課税価格の計算</h2>
+      <p class="step-desc">
+        正味の遺産額から基礎控除（3,000万円＋600万円×法定相続人の数）を差し引いて、課税遺産総額を算出します。
+      </p>
+      <div class="form-group">
+        <label for="totalAssets">正味の遺産額（万円）</label>
+        <input type="number" id="totalAssets" min="0" step="100" placeholder="例：15000" value="15000">
+        <p class="form-hint">相続財産の総額から債務・葬儀費用を差し引いた金額</p>
+      </div>
+      <div class="form-group">
+        <label for="heirCount">法定相続人の数</label>
+        <select id="heirCount">
+          <option value="1">1人</option>
+          <option value="2">2人</option>
+          <option value="3" selected>3人</option>
+          <option value="4">4人</option>
+          <option value="5">5人</option>
+          <option value="6">6人</option>
+          <option value="7">7人</option>
+          <option value="8">8人</option>
+        </select>
+        <p class="form-hint">配偶者＋子・父母・兄弟姉妹の合計人数</p>
+      </div>
+      <div id="step1Result" class="result-box" style="display:none;">
+        <div class="result-label">課税遺産総額</div>
+        <div class="result-value" id="taxableAmount">0 万円</div>
+        <div class="calc-detail" id="step1Detail"></div>
+      </div>
+    </section>
+
+    <!-- Step 2: 相続税総額の計算 -->
+    <section class="step-card">
+      <h2><span class="step-num">2</span>相続税総額の計算</h2>
+      <p class="step-desc">
+        課税遺産総額を法定相続分に従って仮に按分し、各人の取得金額に税率をかけて合計したものが相続税の総額です。
+      </p>
+      <div class="form-group">
+        <label for="hasSpouse">配偶者の有無</label>
+        <select id="hasSpouse">
+          <option value="1" selected>配偶者あり</option>
+          <option value="0">配偶者なし</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="heirType">他の法定相続人の種類</label>
+        <select id="heirType">
+          <option value="child" selected>子（または孫）</option>
+          <option value="parent">父母（直系尊属）</option>
+          <option value="sibling">兄弟姉妹</option>
+        </select>
+      </div>
+      <p class="form-hint" id="otherHeirHint">配偶者1人＋子2人 → 他の相続人2人</p>
+      <div id="step2Result" class="result-box" style="display:none;">
+        <div class="result-label">相続税の総額</div>
+        <div class="result-value large" id="totalTax">0 万円</div>
+        <div class="calc-detail" id="step2Detail"></div>
+      </div>
+    </section>
+
+    <!-- Step 3: 各人の算出税額 -->
+    <section class="step-card">
+      <h2><span class="step-num">3</span>各人の算出税額の計算</h2>
+      <div class="step-what">
+        <strong>③とは？</strong><br>
+        Step2で求めた「相続税の総額」を、各相続人が<strong>実際に取得した財産の割合</strong>で按分し、一人ひとりの納付税額を算出するステップです。法定相続分ではなく、遺産分割協議で決まった実際の取得金額を使います。
+      </div>
+      <p class="step-desc">
+        相続税の総額を、各相続人の実際の取得割合（取得金額÷正味の遺産額）で按分します。※2割加算・配偶者控除等は簡略化しています。
+      </p>
+
+      <div class="ref-section">
+        <h4>計算式（Step3）</h4>
+        <p>各人の算出税額 ＝ 相続税の総額 × 各人の取得割合（取得金額 ÷ 正味の遺産額）</p>
+      </div>
+
+      <div id="heirInputs" class="heir-list">
+        <!-- Dynamic heir inputs -->
+      </div>
+      <div id="step3Result" class="result-box highlight" style="display:none;">
+        <div class="result-label">各人の算出税額</div>
+        <table class="result-table" id="step3Table"></table>
+      </div>
+    </section>
+
+    <button class="btn" id="calcBtn">計算する</button>
+
+    <div id="summaryCard" class="summary-card" style="display:none;">
+      <h3>相続税の総額</h3>
+      <div class="total" id="summaryTotal">0 万円</div>
+      <p class="note">※概算です。実際の申告には税理士へのご相談をおすすめします。</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p><a href="index.html">FamilyMoney</a> 相続税シミュレーター｜クライアント向け無料サービス</p>
+  </footer>
+
+  <script>
+    // 相続税速算表（万円）※この表を更新すれば計算式も自動で反映されます
+    const TAX_TABLE_EFFECTIVE = '2015年1月以降';
+    const TAX_TABLE = [
+      { min: 0, max: 1000, rate: 0.10, deduction: 0 },
+      { min: 1000, max: 3000, rate: 0.15, deduction: 50 },
+      { min: 3000, max: 5000, rate: 0.20, deduction: 200 },
+      { min: 5000, max: 10000, rate: 0.30, deduction: 700 },
+      { min: 10000, max: 20000, rate: 0.40, deduction: 1700 },
+      { min: 20000, max: 30000, rate: 0.45, deduction: 2700 },
+      { min: 30000, max: 60000, rate: 0.50, deduction: 4200 },
+      { min: 60000, max: Infinity, rate: 0.55, deduction: 7200 }
+    ];
+
+    function formatRange(row) {
+      const fmt = (n) => n >= 10000 ? (n / 10000) + '億円' : n + '万円';
+      if (row.max === Infinity) return fmt(row.min) + '超';
+      if (row.min === 0) return fmt(row.max) + '以下';
+      return fmt(row.min) + '超～' + fmt(row.max) + '以下';
+    }
+
+    function renderTaxBasisTable() {
+      const tbody = document.getElementById('taxBasisBody');
+      if (!tbody) return;
+      tbody.innerHTML = TAX_TABLE.map(row => `
+        <tr>
+          <td>${formatRange(row)}</td>
+          <td>${(row.rate * 100).toFixed(0)}%</td>
+          <td>${row.deduction === 0 ? '—' : row.deduction + '万円'}</td>
+        </tr>
+      `).join('');
+      const el = document.getElementById('taxTableEffective');
+      if (el) el.textContent = TAX_TABLE_EFFECTIVE;
+    }
+
+    function getTax(amount) {
+      for (const row of TAX_TABLE) {
+        if (amount <= row.max) {
+          return Math.floor(amount * row.rate - row.deduction);
+        }
+      }
+      return 0;
+    }
+
+    // 法定相続分の割合を計算（配偶者, 他相続人）
+    function getLegalShares(hasSpouse, heirType, otherCount) {
+      let spouseShare = 0, otherShare = 0;
+      if (hasSpouse) {
+        if (heirType === 'child') {
+          spouseShare = 1/2;
+          otherShare = 1/2 / otherCount;
+        } else if (heirType === 'parent') {
+          spouseShare = 2/3;
+          otherShare = 1/3 / otherCount;
+        } else {
+          spouseShare = 3/4;
+          otherShare = 1/4 / otherCount;
+        }
+      } else {
+        otherShare = 1 / otherCount;
+      }
+      return { spouseShare, otherShare };
+    }
+
+    function formatNum(n) {
+      return Math.round(n).toLocaleString();
+    }
+
+    function buildHeirInputs(preserveValues = false) {
+      const hasSpouse = document.getElementById('hasSpouse').value === '1';
+      const container = document.getElementById('heirInputs');
+      const totalAssets = parseFloat(document.getElementById('totalAssets').value) || 0;
+      const otherCount = getOtherHeirCount();
+      const heirType = document.getElementById('heirType').value;
+      const { spouseShare, otherShare } = getLegalShares(hasSpouse, heirType, otherCount);
+
+      const labels = [];
+      if (hasSpouse) labels.push('配偶者');
+      const typeLabel = heirType === 'child' ? '子' : heirType === 'parent' ? '父母' : '兄弟姉妹';
+      for (let i = 0; i < otherCount; i++) {
+        labels.push(otherCount > 1 ? `${typeLabel}${i+1}` : typeLabel);
+      }
+
+      const oldValues = preserveValues ? Array.from(document.querySelectorAll('.heir-amount')).map(inp => inp.value) : [];
+
+      container.innerHTML = '';
+      labels.forEach((label, i) => {
+        let defaultValue = 0;
+        if (totalAssets > 0) {
+          defaultValue = hasSpouse && i === 0
+            ? Math.round(totalAssets * spouseShare)
+            : Math.round(totalAssets * otherShare);
+        }
+        if (preserveValues && oldValues[i] !== undefined) {
+          defaultValue = oldValues[i];
+        }
+        const div = document.createElement('div');
+        div.className = 'heir-item';
+        div.innerHTML = `
+          <div>
+            <label>${label}の取得金額（万円）</label>
+            <input type="number" class="heir-amount" data-index="${i}" min="0" step="100" placeholder="0" value="${defaultValue}">
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function getOtherHeirCount() {
+      const heirCount = parseInt(document.getElementById('heirCount').value);
+      const hasSpouse = document.getElementById('hasSpouse').value === '1';
+      return Math.max(1, heirCount - (hasSpouse ? 1 : 0));
+    }
+
+    function updateOtherHeirHint() {
+      const n = getOtherHeirCount();
+      const hasSpouse = document.getElementById('hasSpouse').value === '1';
+      const type = document.getElementById('heirType').value;
+      const typeJa = type === 'child' ? '子' : type === 'parent' ? '父母' : '兄弟姉妹';
+      document.getElementById('otherHeirHint').textContent =
+        hasSpouse ? `配偶者1人＋${typeJa}${n}人` : `${typeJa}${n}人`;
+    }
+
+    document.getElementById('heirCount').addEventListener('change', () => { updateOtherHeirHint(); buildHeirInputs(false); });
+    document.getElementById('hasSpouse').addEventListener('change', () => { updateOtherHeirHint(); buildHeirInputs(false); });
+    document.getElementById('heirType').addEventListener('change', () => { updateOtherHeirHint(); buildHeirInputs(false); });
+
+    document.getElementById('calcBtn').addEventListener('click', calculate);
+
+    function calculate() {
+      const totalAssets = parseFloat(document.getElementById('totalAssets').value) || 0;
+      const heirCount = parseInt(document.getElementById('heirCount').value);
+      const hasSpouse = document.getElementById('hasSpouse').value === '1';
+      const heirType = document.getElementById('heirType').value;
+      const otherCount = getOtherHeirCount();
+
+      // Step 1
+      const baseDeduction = 3000 + 600 * heirCount;
+      const taxableAmount = Math.max(0, totalAssets - baseDeduction);
+
+      document.getElementById('step1Result').style.display = 'block';
+      document.getElementById('taxableAmount').textContent = formatNum(taxableAmount) + ' 万円';
+      document.getElementById('step1Detail').innerHTML = `
+        正味の遺産額 <strong>${formatNum(totalAssets)}万円</strong> − 基礎控除 <strong>${formatNum(baseDeduction)}万円</strong>
+        （3,000万＋600万×${heirCount}人） = 課税遺産総額
+      `;
+
+      if (taxableAmount <= 0) {
+        document.getElementById('step2Result').style.display = 'block';
+        document.getElementById('totalTax').textContent = '0 万円';
+        document.getElementById('step2Detail').textContent = '課税遺産総額が0以下のため、相続税はかかりません。';
+        document.getElementById('step3Result').style.display = 'none';
+        document.getElementById('summaryCard').style.display = 'block';
+        document.getElementById('summaryTotal').textContent = '0 万円';
+        return;
+      }
+
+      // Step 2
+      const { spouseShare, otherShare } = getLegalShares(hasSpouse, heirType, otherCount);
+      let totalTaxCalc = 0;
+      const details = [];
+
+      if (hasSpouse && spouseShare > 0) {
+        const spouseAmount = taxableAmount * spouseShare;
+        const spouseTax = getTax(spouseAmount);
+        totalTaxCalc += spouseTax;
+        details.push(`配偶者: ${formatNum(spouseAmount)}万円×税率 → ${formatNum(spouseTax)}万円`);
+      }
+
+      for (let i = 0; i < otherCount; i++) {
+        const amount = taxableAmount * otherShare;
+        const tax = getTax(amount);
+        totalTaxCalc += tax;
+        const label = heirType === 'child' ? '子' : heirType === 'parent' ? '父母' : '兄弟姉妹';
+        details.push(`${label}${otherCount > 1 ? i+1 : ''}: ${formatNum(amount)}万円×税率 → ${formatNum(tax)}万円`);
+      }
+
+      document.getElementById('step2Result').style.display = 'block';
+      document.getElementById('totalTax').textContent = formatNum(totalTaxCalc) + ' 万円';
+      document.getElementById('step2Detail').innerHTML = details.join('<br>');
+
+      // Step 3（入力欄がなければ法定相続分で初期化）
+      let heirAmountInputs = document.querySelectorAll('.heir-amount');
+      if (heirAmountInputs.length === 0) {
+        buildHeirInputs(false);
+        heirAmountInputs = document.querySelectorAll('.heir-amount');
+      }
+      const totalEntered = Array.from(heirAmountInputs).reduce((sum, inp) => sum + (parseFloat(inp.value) || 0), 0);
+
+      if (totalEntered > 0 && Math.abs(totalEntered - totalAssets) < totalAssets * 0.01) {
+        const table = document.getElementById('step3Table');
+        let html = '<thead><tr><th>相続人</th><th>取得金額</th><th>取得割合</th><th>算出税額</th></tr></thead><tbody>';
+        let labels = [];
+        if (hasSpouse) labels.push('配偶者');
+        const typeLabel = heirType === 'child' ? '子' : heirType === 'parent' ? '父母' : '兄弟姉妹';
+        for (let i = 0; i < otherCount; i++) {
+          labels.push(otherCount > 1 ? `${typeLabel}${i+1}` : typeLabel);
+        }
+
+        labels.forEach((label, i) => {
+          const amount = parseFloat(heirAmountInputs[i]?.value) || 0;
+          const ratio = totalAssets > 0 ? amount / totalAssets : 0;
+          const tax = Math.floor(totalTaxCalc * ratio);
+          html += `<tr><td>${label}</td><td>${formatNum(amount)}万円</td><td>${(ratio * 100).toFixed(1)}%</td><td>${formatNum(tax)}万円</td></tr>`;
+        });
+        html += '</tbody>';
+        table.innerHTML = html;
+        document.getElementById('step3Result').style.display = 'block';
+      } else {
+        document.getElementById('step3Result').style.display = 'block';
+        document.getElementById('step3Table').innerHTML = `
+          <tbody>
+            <tr><td colspan="4" style="text-align:center;padding:24px;color:var(--text-muted);">
+              各相続人の取得金額を入力し、合計が正味の遺産額（${formatNum(totalAssets)}万円）と一致するようにしてから「計算する」を押してください。
+            </td></tr>
+          </tbody>
+        `;
+      }
+
+      document.getElementById('summaryCard').style.display = 'block';
+      document.getElementById('summaryTotal').textContent = formatNum(totalTaxCalc) + ' 万円';
+    }
+
+    // 初期表示：法定相続分で自動入力
+    document.getElementById('totalAssets').addEventListener('input', () => {
+      const total = parseFloat(document.getElementById('totalAssets').value) || 0;
+      const hasSpouse = document.getElementById('hasSpouse').value === '1';
+      const heirType = document.getElementById('heirType').value;
+      const otherCount = getOtherHeirCount();
+      const { spouseShare, otherShare } = getLegalShares(hasSpouse, heirType, otherCount);
+
+      const inputs = document.querySelectorAll('.heir-amount');
+      if (inputs.length > 0 && total > 0) {
+        if (hasSpouse) {
+          inputs[0].value = Math.round(total * spouseShare);
+        }
+        for (let i = hasSpouse ? 1 : 0; i < inputs.length; i++) {
+          inputs[i].value = Math.round(total * otherShare);
+        }
+      }
+    });
+
+    renderTaxBasisTable();
+    updateOtherHeirHint();
+    buildHeirInputs();
+  </script>
+
+</body>
+</html>
