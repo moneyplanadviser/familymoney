@@ -153,47 +153,46 @@
         <div class="form-group">
           <label>幼稚園</label>
           <div class="radio-group" name="kindergarten">
-            <label><input type="radio" name="b" value="55.4" checked> <span class="opt-label">公立</span><span class="opt-value">55.4万円</span></label>
-            <label><input type="radio" name="b" value="104.2"> <span class="opt-label">私立</span><span class="opt-value">104.2万円</span></label>
+            <label><input type="radio" name="b" value="55.4" checked> <span class="opt-label">公立</span></label>
+            <label><input type="radio" name="b" value="104.2"> <span class="opt-label">私立</span></label>
           </div>
         </div>
         <div class="form-group">
           <label>小学校</label>
           <div class="radio-group">
-            <label><input type="radio" name="c" value="201.8" checked> <span class="opt-label">公立</span><span class="opt-value">201.8万円</span></label>
-            <label><input type="radio" name="c" value="1096.9"> <span class="opt-label">私立</span><span class="opt-value">1096.9万円</span></label>
+            <label><input type="radio" name="c" value="201.8" checked> <span class="opt-label">公立</span></label>
+            <label><input type="radio" name="c" value="1096.9"> <span class="opt-label">私立</span></label>
           </div>
         </div>
         <div class="form-group">
           <label>中学校</label>
           <div class="radio-group">
-            <label><input type="radio" name="d" value="162.7" checked> <span class="opt-label">公立</span><span class="opt-value">162.7万円</span></label>
-            <label><input type="radio" name="d" value="468.1"> <span class="opt-label">私立</span><span class="opt-value">468.1万円</span></label>
+            <label><input type="radio" name="d" value="162.7" checked> <span class="opt-label">公立</span></label>
+            <label><input type="radio" name="d" value="468.1"> <span class="opt-label">私立</span></label>
           </div>
         </div>
         <div class="form-group">
           <label>高校</label>
           <div class="radio-group">
-            <label><input type="radio" name="e" value="179.3" checked> <span class="opt-label">公立</span><span class="opt-value">179.3万円</span></label>
-            <label><input type="radio" name="e" value="309.1"> <span class="opt-label">私立</span><span class="opt-value">309.1万円</span></label>
+            <label><input type="radio" name="e" value="179.3" checked> <span class="opt-label">公立</span></label>
+            <label><input type="radio" name="e" value="309.1"> <span class="opt-label">私立</span></label>
             <label><input type="radio" name="e" value="0"> <span class="opt-label">行かない</span></label>
           </div>
         </div>
         <div class="form-group" id="universityGroup">
           <label>高校卒業後の進路</label>
           <div class="radio-group">
-            <label><input type="radio" name="f" value="423" checked> <span class="opt-label">国公立大学</span><span class="opt-value">423万円</span></label>
-            <label><input type="radio" name="f" value="550"> <span class="opt-label">私立文系</span><span class="opt-value">550万円</span></label>
-            <label><input type="radio" name="f" value="700"> <span class="opt-label">私立理系</span><span class="opt-value">700万円</span></label>
-            <label><input type="radio" name="f" value="0"> <span class="opt-label">行かない</span></label>
+            <label><input type="radio" name="f" value="423" checked> <span class="opt-label">国公立大学</span></label>
+            <label><input type="radio" name="f" value="550"> <span class="opt-label">私立文系</span></label>
+            <label><input type="radio" name="f" value="700"> <span class="opt-label">私立理系</span></label>
+            <label><input type="radio" name="f" value="0"> <span class="opt-label">就職</span></label>
           </div>
         </div>
         <div class="form-group" id="housingGroup">
           <label>大学時代の住まい</label>
           <div class="radio-group">
             <label><input type="radio" name="g" value="0" checked> <span class="opt-label">自宅通学</span></label>
-            <label><input type="radio" name="g" value="293"> <span class="opt-label">下宿</span><span class="opt-value">+293万円</span></label>
-            <label><input type="radio" name="g" value="0" id="gNone"> <span class="opt-label">行かない</span></label>
+            <label><input type="radio" name="g" value="293"> <span class="opt-label">下宿</span></label>
           </div>
         </div>
 
@@ -267,14 +266,12 @@
         document.querySelector('input[name="f"][value="0"]').checked = true;
         housingGroup.style.opacity = '0.5';
         housingGroup.style.pointerEvents = 'none';
-        document.getElementById('gNone').checked = true;
       } else {
         universityGroup.style.opacity = '1';
         universityGroup.style.pointerEvents = 'auto';
         if (f === 0) {
           housingGroup.style.opacity = '0.5';
           housingGroup.style.pointerEvents = 'none';
-          document.getElementById('gNone').checked = true;
         } else {
           housingGroup.style.opacity = '1';
           housingGroup.style.pointerEvents = 'auto';
