@@ -258,8 +258,11 @@
     .ratio-savings { background: #5b8fc4; }
 
     /* グラフ */
+    .chart-wrapper {
+      max-width: 960px;
+      margin: 24px auto 0;
+    }
     .chart-card {
-      margin-top: 24px;
       height: 420px;
     }
     .chart-note { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; }
@@ -274,8 +277,8 @@
 <body>
 
   <header class="header">
-    <h1>家計シミュレーター</h1>
-    <p>40代・晩産夫婦向け。毎月の家計から「いま」と「30年先」のイメージをざっくり確認</p>
+    <h1>Family Money｜簡単ライフシミュレーション</h1>
+    <p>40代・晩産夫婦向け。毎月の家計から「いま」と「30年先」のイメージをざっくり確認できます。</p>
   </header>
 
   <main class="container">
@@ -295,6 +298,12 @@
             <button type="button" class="preset-btn" onclick="applyPreset('couple')">夫婦</button>
             <button type="button" class="preset-btn" onclick="applyPreset('family')">家族（子あり）</button>
           </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">メールアドレス（結果を受け取りたい方のみ）</label>
+          <input id="email" type="email" placeholder="例：family@example.com">
+          <p class="form-hint">※ 入力しなくても診断はできます。</p>
         </div>
 
         <div class="form-group">
@@ -411,22 +420,28 @@
         </div>
 
         <div class="card">
-          <div class="section-title">結果の保存</div>
-          <p class="small-note">診断結果を印刷用ページで表示できます。</p>
+          <div class="section-title">結果の保存・受け取り</div>
+          <p class="small-note">診断結果を印刷用ページで表示したり、メールで受け取ることができます。</p>
           <div class="actions-row">
             <button class="btn btn-sub" onclick="openPrintView()">結果をPDFで保存</button>
+            <button class="btn btn-sub" onclick="sendResultByEmail()">結果をメールで受け取る</button>
             <button class="btn btn-sub" onclick="exportToCSV()">CSVでエクスポート</button>
           </div>
-          <p class="small-note">※ PDFはブラウザの「印刷→PDFに保存」をご利用ください。</p>
+          <p class="small-note">
+            ※ PDFはブラウザの「印刷→PDFに保存」をご利用ください。<br>
+            ※ メール送信は外部サービス（Google Apps Scriptなど）と連携して動きます。
+          </p>
         </div>
       </div>
     </div>
 
-    <!-- グラフ -->
+    <!-- グラフ（layout外でフル幅表示） -->
+    <div class="chart-wrapper">
     <div class="card chart-card">
       <div class="section-title">30年先までの貯蓄シミュレーション</div>
       <p class="chart-note">利回りや家計の見直しによって、将来の貯蓄イメージがどのように変化するかをざっくり確認できます。</p>
       <canvas id="projectionChart"></canvas>
+    </div>
     </div>
   </main>
 
@@ -435,8 +450,8 @@
   </footer>
 
   <script>
-    const STORAGE_KEY = "familymoney-kakei-v1";
-    const INPUT_IDS = ["income","bonus","returnRate","age","rent","utility","phone","insurance","food","daily","child","other"];
+    const STORAGE_KEY = "familymoney-life-sim-v1";
+    const INPUT_IDS = ["email","income","bonus","returnRate","age","rent","utility","phone","insurance","food","daily","child","other"];
 
     const PRESETS = {
       single: { income: 250000, bonus: 0, rent: 70000, utility: 8000, phone: 5000, insurance: 5000, food: 40000, daily: 15000, child: 0, other: 30000, age: 35 },
@@ -635,10 +650,10 @@
         data: {
           labels: labels,
           datasets: [
-            { type: "bar", label: "あなたの年間貯蓄額", data: userAnnual, backgroundColor: "rgba(184,149,106,0.5)" },
-            { type: "bar", label: "青木家モデルの年間貯蓄額", data: aokiAnnual, backgroundColor: "rgba(184,149,106,0.3)" },
-            { type: "line", label: "あなたの累計資産", data: userTotal, borderColor: "#b8956a", borderWidth: 2, fill: false, tension: 0.2 },
-            { type: "line", label: "青木家モデルの累計資産", data: aokiTotal, borderColor: "#8b7355", borderWidth: 2, fill: false, tension: 0.2 }
+            { type: "bar", label: "あなたの年間貯蓄額", data: userAnnual, backgroundColor: "rgba(244,164,96,0.6)", yAxisID: "y" },
+            { type: "bar", label: "青木家モデルの年間貯蓄額", data: aokiAnnual, backgroundColor: "rgba(190,158,130,0.5)", yAxisID: "y" },
+            { type: "line", label: "あなたの累計資産", data: userTotal, borderColor: "rgba(244,164,96,1)", borderWidth: 2, fill: false, tension: 0.2, yAxisID: "y1" },
+            { type: "line", label: "青木家モデルの累計資産", data: aokiTotal, borderColor: "rgba(150,120,90,1)", borderWidth: 2, fill: false, tension: 0.2, yAxisID: "y1" }
           ]
         },
         options: {
@@ -646,14 +661,26 @@
           maintainAspectRatio: false,
           scales: {
             y: {
+              type: "linear",
+              position: "left",
               beginAtZero: true,
-              ticks: { callback: v => (v / 10000).toLocaleString() + " 万円" }
+              ticks: { callback: function(v) { return (v / 10000).toLocaleString() + " 万円"; } }
+            },
+            y1: {
+              type: "linear",
+              position: "right",
+              beginAtZero: true,
+              grid: { drawOnChartArea: false },
+              ticks: { callback: function(v) { return (v / 10000).toLocaleString() + " 万円"; } }
+            },
+            x: {
+              ticks: { maxRotation: 0, minRotation: 0 }
             }
           },
           plugins: {
-            legend: { position: "bottom" },
+            legend: { position: "bottom", labels: { boxWidth: 16, font: { size: 10 } } },
             tooltip: {
-              callbacks: { label: ctx => ctx.dataset.label + ": " + formatYen(ctx.parsed.y) + " 円" }
+              callbacks: { label: function(ctx) { return ctx.dataset.label + ": " + formatYen(ctx.parsed.y) + " 円"; } }
             }
           }
         }
@@ -661,10 +688,7 @@
     }
 
     function resetForm() {
-      INPUT_IDS.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.value = id === "returnRate" ? "3" : "";
-      });
+      document.querySelectorAll("input").forEach(el => { el.value = ""; });
       document.getElementById("result-saving").textContent = "― 円／年";
       document.getElementById("result-saving").className = "saving-rate";
       document.getElementById("saving-note").textContent = "年間ベースの貯蓄額：診断後に表示されます。";
@@ -677,30 +701,54 @@
       document.getElementById("goldenRatioBox").style.display = "none";
       if (projectionChart) { projectionChart.destroy(); projectionChart = null; }
       lastResult = null;
-      localStorage.removeItem(STORAGE_KEY);
+      try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    }
+
+    function sendResultByEmail() {
+      const emailEl = document.getElementById("email");
+      const email = emailEl ? emailEl.value.trim() : "";
+      if (!email) {
+        alert("メールアドレスを入力してください。");
+        return;
+      }
+      if (!lastResult) {
+        alert("先に家計を診断してください。");
+        return;
+      }
+      const ENDPOINT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+      const payload = { email, result: lastResult, source: "familymoney-life-simulation" };
+      fetch(ENDPOINT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        mode: "no-cors"
+      }).catch(() => {});
+      alert("結果のメール送信を受け付けました。（※ Apps Script側の設定が必要です）");
     }
 
     function openPrintView() {
       if (!lastResult) { alert("先に家計を診断してください。"); return; }
       const win = window.open("", "_blank");
       if (!win) return;
-      win.document.write(`
-        <!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><title>Family Money｜家計シミュレーション 結果</title>
-        <style>body{font-family:sans-serif;padding:24px;}h1{font-size:20px;}h2{font-size:16px;margin:16px 0 4px;}p{margin:0 0 6px;}</style></head><body>
-        <h1>Family Money｜家計シミュレーション 結果</h1>
-        <h2>1. 基本情報</h2>
-        <p>手取り収入（月）：${lastResult.income.toLocaleString()} 円</p>
-        <p>ボーナス（年間）：${lastResult.bonus.toLocaleString()} 円</p>
-        <p>利回り（年率）：${lastResult.rateInput || 0}%</p>
-        <h2>2. あなたの家計</h2>
-        <p>年間の貯蓄額：${formatYen(lastResult.annualSavingUser)} 円／年（貯蓄率：${lastResult.savingRateUser}％）</p>
-        <p>家計タイプ：${lastResult.type}</p>
-        <p>コメント：${lastResult.message}</p>
-        <h2>3. 青木家モデル</h2>
-        <p>年間の貯蓄額：${formatYen(lastResult.annualSavingAoki)} 円／年（貯蓄率：${lastResult.savingRateAoki}％）</p>
-        <p style="font-size:11px;color:#666;">※ 本シミュレーションは参考値です。</p>
-        <script>window.onload=function(){window.print();};<\/script></body></html>
-      `);
+      const savingUserText = formatYen(lastResult.annualSavingUser) + " 円／年（貯蓄率：" + lastResult.savingRateUser + "％）";
+      const savingAokiText = formatYen(lastResult.annualSavingAoki) + " 円／年（貯蓄率：" + lastResult.savingRateAoki + "％）";
+      win.document.write(
+        "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"UTF-8\"><title>Family Money｜簡単ライフシミュレーション 結果</title>" +
+        "<style>body{font-family:\"Noto Sans JP\",system-ui,sans-serif;padding:24px;line-height:1.6;color:#333;}h1{font-size:20px;margin-bottom:8px;}h2{font-size:16px;margin:16px 0 4px;}p{margin:0 0 6px;}.small{font-size:11px;color:#666;}</style></head><body>" +
+        "<h1>Family Money｜簡単ライフシミュレーション 結果</h1>" +
+        "<h2>1. 基本情報</h2>" +
+        "<p>手取り収入（月）：" + lastResult.income.toLocaleString() + " 円</p>" +
+        "<p>ボーナス（年間）：" + lastResult.bonus.toLocaleString() + " 円</p>" +
+        "<p>利回り（年率）：" + (lastResult.rateInput || 0) + "%</p>" +
+        "<h2>2. あなたの家計</h2>" +
+        "<p>年間の貯蓄額：" + savingUserText + "</p>" +
+        "<p>家計タイプ：" + lastResult.type + "</p>" +
+        "<p>コメント：" + lastResult.message + "</p>" +
+        "<h2>3. 青木家モデル（同じ収入の場合）</h2>" +
+        "<p>年間の貯蓄額：" + savingAokiText + "</p>" +
+        "<p class=\"small\">※ 本シミュレーションは参考値です。実際の税金・社会保険料・物価変動などは考慮していません。</p>" +
+        "<script>window.onload=function(){window.print();};<\/script></body></html>"
+      );
       win.document.close();
     }
 
@@ -728,7 +776,10 @@
 
     window.addEventListener("DOMContentLoaded", () => {
       loadFormValues();
-      document.querySelectorAll("input").forEach(el => el.addEventListener("input", saveFormValues));
+      document.querySelectorAll("input").forEach(el => {
+        el.addEventListener("input", saveFormValues);
+        el.addEventListener("change", saveFormValues);
+      });
       const incomeVal = Number(document.getElementById("income").value);
       if (incomeVal) calculateKakei();
     });
