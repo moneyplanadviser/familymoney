@@ -305,7 +305,8 @@
 
       const years = parseInt(document.getElementById('yearsToSave').value, 10) || 18;
       const months = Math.max(1, years * 12);
-      const monthly = Math.round(total / months);
+      const totalYen = total * 10000;
+      const monthly = Math.round(totalYen / months);
       const monthlyEl = document.getElementById('monthlyBox');
       monthlyEl.innerHTML = '<strong>月々の貯蓄目標の目安：約 ' + monthly.toLocaleString() + ' 円</strong><br>' +
         '<span style="font-size:0.85rem; color:var(--text-muted);">' + years + '年で貯める場合</span>';
