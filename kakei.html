@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -294,9 +294,9 @@
         <div class="form-group">
           <label>クイック入力</label>
           <div class="preset-row">
-            <button type="button" class="preset-btn" onclick="applyPreset('single')">単身</button>
-            <button type="button" class="preset-btn" onclick="applyPreset('couple')">夫婦</button>
-            <button type="button" class="preset-btn" onclick="applyPreset('family')">家族（子あり）</button>
+            <button type="button" class="preset-btn" data-preset="single">単身</button>
+            <button type="button" class="preset-btn" data-preset="couple">夫婦</button>
+            <button type="button" class="preset-btn" data-preset="family">家族（子あり）</button>
           </div>
         </div>
 
@@ -373,8 +373,8 @@
           </div>
         </div>
 
-        <button class="btn" onclick="calculateKakei()">家計を診断する</button>
-        <button class="btn btn-reset" onclick="resetForm()">リセット</button>
+        <button type="button" class="btn" id="calcBtn">家計を診断する</button>
+        <button type="button" class="btn btn-reset" id="resetBtn">リセット</button>
       </div>
 
       <!-- 右：結果 -->
@@ -423,9 +423,9 @@
           <div class="section-title">結果の保存・受け取り</div>
           <p class="small-note">診断結果を印刷用ページで表示したり、メールで受け取ることができます。</p>
           <div class="actions-row">
-            <button class="btn btn-sub" onclick="openPrintView()">結果をPDFで保存</button>
-            <button class="btn btn-sub" onclick="sendResultByEmail()">結果をメールで受け取る</button>
-            <button class="btn btn-sub" onclick="exportToCSV()">CSVでエクスポート</button>
+            <button type="button" class="btn btn-sub" id="printBtn">結果をPDFで保存</button>
+            <button type="button" class="btn btn-sub" id="emailBtn">結果をメールで受け取る</button>
+            <button type="button" class="btn btn-sub" id="csvBtn">CSVでエクスポート</button>
           </div>
           <p class="small-note">
             ※ PDFはブラウザの「印刷→PDFに保存」をご利用ください。<br>
@@ -535,6 +535,7 @@
     }
 
     function calculateKakei() {
+      try {
       const income = Number(document.getElementById("income").value);
       const bonus = Number(document.getElementById("bonus").value) || 0;
       const rateInput = Number(document.getElementById("returnRate").value) || 0;
@@ -581,7 +582,7 @@
         pillLabel = "貯蓄の目安：要見直しゾーン";
       } else if (savingRateUser < 10) {
         type = "タイプC：あと少しで安定ゾーン";
-        message = "大きな浪費はありませんが、ボーナスの使い方や、変動費のゆらぎで貯蓄が増えにくい状態かもしれません。家計の"見える化"で、安心感とコントロール感が高まりやすくなります。";
+        message = "大きな浪費はありませんが、ボーナスの使い方や、変動費のゆらぎで貯蓄が増えにくい状態かもしれません。家計の「見える化」で、安心感とコントロール感が高まりやすくなります。";
         pillClass += " pill-yellow";
         savingNote = "年間でどのくらい貯められているかの目安です。無理な節約よりも、支出の「優先順位づけ」を意識してみましょう。";
         pillLabel = "貯蓄の目安：あと少しで安定";
@@ -624,7 +625,15 @@
         rent, utility, phone, insurance, food, daily, child, other
       };
 
-      updateProjectionChart(annualSavingUser, annualSavingAoki, rateInput, age);
+      try {
+        updateProjectionChart(annualSavingUser, annualSavingAoki, rateInput, age);
+      } catch (chartErr) {
+        console.warn("グラフの描画でエラー:", chartErr);
+      }
+      } catch (err) {
+        console.error("家計診断エラー:", err);
+        alert("エラーが発生しました。手取り収入（月）を入力してから再度お試しください。");
+      }
     }
 
     function updateProjectionChart(annualSavingUser, annualSavingAoki, ratePercent, age) {
@@ -779,6 +788,20 @@
       document.querySelectorAll("input").forEach(el => {
         el.addEventListener("input", saveFormValues);
         el.addEventListener("change", saveFormValues);
+      });
+      var calcBtn = document.getElementById("calcBtn");
+      if (calcBtn) calcBtn.addEventListener("click", calculateKakei);
+      var resetBtn = document.getElementById("resetBtn");
+      if (resetBtn) resetBtn.addEventListener("click", resetForm);
+      var printBtn = document.getElementById("printBtn");
+      if (printBtn) printBtn.addEventListener("click", openPrintView);
+      var emailBtn = document.getElementById("emailBtn");
+      if (emailBtn) emailBtn.addEventListener("click", sendResultByEmail);
+      var csvBtn = document.getElementById("csvBtn");
+      if (csvBtn) csvBtn.addEventListener("click", exportToCSV);
+      document.querySelectorAll(".preset-btn").forEach(function(btn) {
+        var preset = btn.getAttribute("data-preset");
+        if (preset) btn.addEventListener("click", function() { applyPreset(preset); });
       });
       const incomeVal = Number(document.getElementById("income").value);
       if (incomeVal) calculateKakei();
