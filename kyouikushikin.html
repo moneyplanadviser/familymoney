@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>教育費シミュレーター | FamilyMoney</title>
+  <meta name="description" content="進路別に教育資金を試算。幼稚園〜大学まで公立・私立の選択で総額を自動計算。クライアント向け無料サービス。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #f9dfb8;
+      --primary-light: #fcecd8;
+      --primary-dark: #b8956a;
+      --accent: #f9dfb8;
+      --accent-light: #fcecd8;
+      --bg: #f8f6f2;
+      --bg-card: #ffffff;
+      --text: #2c2c2c;
+      --text-muted: #5c5c5c;
+      --border: #e5e0d8;
+      --font: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.7; min-height: 100vh; }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px 80px; }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, #8b7355 100%);
+      color: #fff;
+      padding: 32px 24px 40px;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.05em; }
+    .header p { font-size: 0.9rem; opacity: 0.9; }
+
+    .step-card {
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-top: 24px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+    }
+    .step-card h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--accent-light);
+    }
+    .step-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }
+
+    .form-group { margin-bottom: 24px; }
+    .form-group label { display: block; font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 10px; }
+    .radio-group { display: flex; flex-wrap: wrap; gap: 16px; }
+    .radio-group label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 400;
+      cursor: pointer;
+      padding: 10px 16px;
+      background: var(--bg);
+      border-radius: 10px;
+      border: 2px solid var(--border);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .radio-group label:hover { border-color: var(--primary-light); }
+    .radio-group label:has(input:checked) { border-color: var(--primary-dark); background: var(--accent-light); }
+    .radio-group input { display: none; }
+    .radio-group .opt-label { font-weight: 500; }
+    .radio-group .opt-value { font-size: 0.85rem; color: var(--text-muted); }
+
+    .btn {
+      display: inline-block;
+      padding: 16px 32px;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      background: var(--primary-dark);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      margin-top: 24px;
+    }
+    .btn:hover { background: var(--primary-light); transform: translateY(-1px); }
+
+    .result-box {
+      background: linear-gradient(135deg, var(--accent-light) 0%, var(--primary) 100%);
+      border: 2px solid var(--primary);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-top: 24px;
+    }
+    .result-label { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px; }
+    .result-value { font-size: 1.8rem; font-weight: 700; color: var(--primary-dark); }
+
+    .ref-section {
+      margin-top: 24px;
+      padding: 20px;
+      background: var(--accent-light);
+      border-radius: 12px;
+      border-left: 4px solid var(--primary-dark);
+    }
+    .ref-section h4 { font-size: 0.95rem; color: var(--primary-dark); margin-bottom: 12px; }
+    .ref-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .ref-table th, .ref-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+    .ref-table th { background: var(--primary-dark); color: #fff; font-weight: 600; }
+    .ref-table td:last-child { text-align: right; font-weight: 600; }
+
+    .footer { text-align: center; padding: 32px 24px; font-size: 0.8rem; color: var(--text-muted); }
+    .footer a { color: var(--primary-dark); }
+    .step-desc a, .ref-section a { color: var(--primary-dark); text-decoration: underline; }
+    .step-desc a:hover, .ref-section a:hover { opacity: 0.8; }
+
+    @media (max-width: 600px) {
+      .step-card { padding: 20px; }
+      .radio-group { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <h1>教育費シミュレーター</h1>
+    <p>進路別に教育資金を試算｜クライアント向け無料サービス</p>
+  </header>
+
+  <main class="container">
+    <section class="step-card">
+      <h2>教育費シミュレーション</h2>
+      <p class="step-desc">各項目を選択してください。進路に応じた教育費の総額を試算します。（1人あたり・学習費総額の目安）</p>
+
+      <form id="calcForm">
+        <div class="form-group">
+          <label>幼稚園</label>
+          <div class="radio-group" name="kindergarten">
+            <label><input type="radio" name="b" value="55.4" checked> <span class="opt-label">公立</span><span class="opt-value">55.4万円</span></label>
+            <label><input type="radio" name="b" value="104.2"> <span class="opt-label">私立</span><span class="opt-value">104.2万円</span></label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>小学校</label>
+          <div class="radio-group">
+            <label><input type="radio" name="c" value="201.8" checked> <span class="opt-label">公立</span><span class="opt-value">201.8万円</span></label>
+            <label><input type="radio" name="c" value="1096.9"> <span class="opt-label">私立</span><span class="opt-value">1096.9万円</span></label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>中学校</label>
+          <div class="radio-group">
+            <label><input type="radio" name="d" value="162.7" checked> <span class="opt-label">公立</span><span class="opt-value">162.7万円</span></label>
+            <label><input type="radio" name="d" value="468.1"> <span class="opt-label">私立</span><span class="opt-value">468.1万円</span></label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>高校</label>
+          <div class="radio-group">
+            <label><input type="radio" name="e" value="179.3" checked> <span class="opt-label">公立</span><span class="opt-value">179.3万円</span></label>
+            <label><input type="radio" name="e" value="309.1"> <span class="opt-label">私立</span><span class="opt-value">309.1万円</span></label>
+            <label><input type="radio" name="e" value="0"> <span class="opt-label">行かない</span></label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>高校卒業後の進路</label>
+          <div class="radio-group">
+            <label><input type="radio" name="f" value="423" checked> <span class="opt-label">国公立大学</span><span class="opt-value">423万円</span></label>
+            <label><input type="radio" name="f" value="550"> <span class="opt-label">私立文系</span><span class="opt-value">550万円</span></label>
+            <label><input type="radio" name="f" value="700"> <span class="opt-label">私立理系</span><span class="opt-value">700万円</span></label>
+            <label><input type="radio" name="f" value="0"> <span class="opt-label">行かない</span></label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>大学時代の住まい</label>
+          <div class="radio-group">
+            <label><input type="radio" name="g" value="0" checked> <span class="opt-label">自宅通学</span></label>
+            <label><input type="radio" name="g" value="293"> <span class="opt-label">下宿</span><span class="opt-value">+293万円</span></label>
+            <label><input type="radio" name="g" value="0"> <span class="opt-label">行かない</span></label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn">計算する</button>
+      </form>
+
+      <div id="resultBox" class="result-box" style="display:none;">
+        <div class="result-label">教育費の総額（1人あたり）</div>
+        <div class="result-value" id="resultValue">0 万円</div>
+      </div>
+    </section>
+
+    <section class="step-card">
+      <h2>試算の計算根拠</h2>
+      <p class="step-desc">文部科学省「<a href="https://www.mext.go.jp/b_menu/toukei/chousa03/gakushuuhi/kekka/k_detail/mext_00002.html" target="_blank" rel="noopener">令和5年度子供の学習費調査</a>」及び日本学生支援機構「<a href="https://www.jasso.go.jp/statistics/gakusei_chosa/2022.html" target="_blank" rel="noopener">令和4年度学生生活調査</a>」に基づく学習費総額の目安です。※学校給食費・塾・習い事等を含む</p>
+      <div class="ref-section">
+        <h4>進路別 学習費総額（万円）</h4>
+        <table class="ref-table">
+          <thead>
+            <tr><th>項目</th><th>公立</th><th>私立</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>幼稚園（3年間）</td><td>55.4</td><td>104.2</td></tr>
+            <tr><td>小学校（6年間）</td><td>201.8</td><td>1096.9</td></tr>
+            <tr><td>中学校（3年間）</td><td>162.7</td><td>468.1</td></tr>
+            <tr><td>高校（3年間）</td><td>179.3</td><td>309.1</td></tr>
+            <tr><td>大学（4年間）国公立</td><td colspan="2">423</td></tr>
+            <tr><td>大学（4年間）私立文系</td><td colspan="2">550</td></tr>
+            <tr><td>大学（4年間）私立理系</td><td colspan="2">700</td></tr>
+            <tr><td>下宿（4年間）</td><td colspan="2">+293</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.8rem; margin-top:12px; color:var(--text-muted);">出典：<a href="https://www.mext.go.jp/b_menu/toukei/chousa03/gakushuuhi/kekka/k_detail/mext_00002.html" target="_blank" rel="noopener">文部科学省「令和5年度子供の学習費調査」</a>、<a href="https://www.jasso.go.jp/statistics/gakusei_chosa/2022.html" target="_blank" rel="noopener">日本学生支援機構「令和4年度学生生活調査」</a>。※概算です。実際の費用は学校・地域により異なります。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p><a href="index.html">FamilyMoney</a> 教育費シミュレーター｜クライアント向け無料サービス</p>
+  </footer>
+
+  <script>
+    document.getElementById('calcForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const b = parseFloat(document.querySelector('input[name="b"]:checked')?.value) || 0;
+      const c = parseFloat(document.querySelector('input[name="c"]:checked')?.value) || 0;
+      const d = parseFloat(document.querySelector('input[name="d"]:checked')?.value) || 0;
+      const e = parseFloat(document.querySelector('input[name="e"]:checked')?.value) || 0;
+      const f = parseFloat(document.querySelector('input[name="f"]:checked')?.value) || 0;
+      const g = parseFloat(document.querySelector('input[name="g"]:checked')?.value) || 0;
+      const total = b + c + d + e + f + g;
+      document.getElementById('resultValue').textContent = Math.round(total).toLocaleString() + ' 万円';
+      document.getElementById('resultBox').style.display = 'block';
+      document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  </script>
+
+</body>
+</html>

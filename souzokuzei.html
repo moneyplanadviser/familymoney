@@ -12,17 +12,17 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --primary: #2d5a4a;
-      --primary-light: #3d7a65;
-      --primary-dark: #1e3d32;
-      --accent: #e8b86d;
-      --accent-light: #f5d9a8;
+      --primary: #f9dfb8;
+      --primary-light: #fcecd8;
+      --primary-dark: #b8956a;
+      --accent: #f9dfb8;
+      --accent-light: #fcecd8;
       --bg: #f8f6f2;
       --bg-card: #ffffff;
       --text: #2c2c2c;
       --text-muted: #5c5c5c;
       --border: #e5e0d8;
-      --success: #2d5a4a;
+      --success: #b8956a;
       --font: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
     }
 
@@ -39,7 +39,7 @@
 
     /* Header */
     .header {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      background: linear-gradient(135deg, var(--primary-dark) 0%, #8b7355 100%);
       color: #fff;
       padding: 32px 24px 40px;
       text-align: center;
@@ -70,7 +70,7 @@
       gap: 12px;
       font-size: 1.15rem;
       font-weight: 700;
-      color: var(--primary);
+      color: var(--primary-dark);
       margin-bottom: 20px;
       padding-bottom: 12px;
       border-bottom: 2px solid var(--accent-light);
@@ -78,7 +78,7 @@
     .step-num {
       width: 36px;
       height: 36px;
-      background: var(--primary);
+      background: var(--primary-dark);
       color: #fff;
       border-radius: 50%;
       display: flex;
@@ -118,7 +118,7 @@
     .form-group input:focus,
     .form-group select:focus {
       outline: none;
-      border-color: var(--primary);
+      border-color: var(--primary-dark);
     }
     .form-group input[type="number"] {
       text-align: right;
@@ -151,7 +151,7 @@
 
     /* Results */
     .result-box {
-      background: linear-gradient(135deg, #f0f7f4 0%, #e8f0ed 100%);
+      background: linear-gradient(135deg, var(--accent-light) 0%, var(--primary) 100%);
       border: 2px solid var(--primary-light);
       border-radius: 12px;
       padding: 20px 24px;
@@ -169,7 +169,7 @@
     .result-value {
       font-size: 1.5rem;
       font-weight: 700;
-      color: var(--primary);
+      color: var(--primary-dark);
     }
     .result-value.large {
       font-size: 1.8rem;
@@ -199,7 +199,7 @@
     .result-table th {
       background: var(--bg);
       font-weight: 600;
-      color: var(--primary);
+      color: var(--primary-dark);
     }
     .result-table td:last-child {
       text-align: right;
@@ -213,7 +213,7 @@
       font-size: 1rem;
       font-weight: 600;
       font-family: inherit;
-      background: var(--primary);
+      background: var(--primary-dark);
       color: #fff;
       border: none;
       border-radius: 12px;
@@ -222,14 +222,14 @@
       margin-top: 24px;
     }
     .btn:hover {
-      background: var(--primary-light);
+      background: var(--accent-light);
       transform: translateY(-1px);
     }
     .btn:active { transform: translateY(0); }
 
     /* Summary */
     .summary-card {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      background: linear-gradient(135deg, var(--primary-dark) 0%, #8b7355 100%);
       color: #fff;
       border-radius: 16px;
       padding: 32px;
@@ -260,7 +260,9 @@
       font-size: 0.8rem;
       color: var(--text-muted);
     }
-    .footer a { color: var(--primary); }
+    .footer a { color: var(--primary-dark); }
+    .step-desc a { color: var(--primary-dark); text-decoration: underline; }
+    .step-desc a:hover { opacity: 0.8; }
 
     /* Reference table */
     .ref-table {
@@ -279,7 +281,7 @@
       border-bottom: 1px solid var(--border);
     }
     .ref-table th {
-      background: var(--primary);
+      background: var(--primary-dark);
       color: #fff;
       font-weight: 600;
       width: 120px;
@@ -290,13 +292,13 @@
     .ref-section {
       margin-top: 24px;
       padding: 20px;
-      background: #f0f7f4;
+      background: var(--accent-light);
       border-radius: 12px;
-      border-left: 4px solid var(--primary);
+      border-left: 4px solid var(--primary-dark);
     }
     .ref-section h4 {
       font-size: 0.95rem;
-      color: var(--primary);
+      color: var(--primary-dark);
       margin-bottom: 12px;
     }
     .ref-section p { font-size: 0.85rem; line-height: 1.7; color: var(--text); }
@@ -308,7 +310,7 @@
       margin-bottom: 20px;
       font-size: 0.9rem;
     }
-    .step-what strong { color: var(--primary); }
+    .step-what strong { color: var(--primary-dark); }
 
     /* Responsive */
     @media (max-width: 600px) {
@@ -330,7 +332,7 @@
     <!-- 試算の計算根拠：相続税速算表 -->
     <section class="step-card" id="taxBasisSection">
       <h2 style="border-bottom: 2px solid var(--accent-light); padding-bottom: 12px;">試算の計算根拠</h2>
-      <p class="step-desc">相続税の試算には、以下の速算表（<span id="taxTableEffective">2015年1月以降</span>）を使用しています。税率改正時はこの表を更新してください。</p>
+      <p class="step-desc">相続税の試算には、<a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/sozoku/4155.htm" target="_blank" rel="noopener">国税庁「相続税の税率」（No.4155）</a>の速算表を使用しています。税率改正時はこの表を更新してください。</p>
       <table class="ref-table" id="taxBasisTable">
         <thead>
           <tr>
@@ -446,7 +448,7 @@
 
   <script>
     // 相続税速算表（万円）※この表を更新すれば計算式も自動で反映されます
-    const TAX_TABLE_EFFECTIVE = '2015年1月以降';
+    const TAX_TABLE_EFFECTIVE = '国税庁 No.4155';
     const TAX_TABLE = [
       { min: 0, max: 1000, rate: 0.10, deduction: 0 },
       { min: 1000, max: 3000, rate: 0.15, deduction: 50 },
@@ -475,8 +477,6 @@
           <td>${row.deduction === 0 ? '—' : row.deduction + '万円'}</td>
         </tr>
       `).join('');
-      const el = document.getElementById('taxTableEffective');
-      if (el) el.textContent = TAX_TABLE_EFFECTIVE;
     }
 
     function getTax(amount) {
