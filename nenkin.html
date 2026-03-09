@@ -199,12 +199,6 @@
       <h2>入力項目</h2>
 
       <div class="form-group">
-        <label for="age">現在の年齢</label>
-        <p class="form-hint">「今何歳か」を入力してください。シミュレーションの起点になります。</p>
-        <input id="age" type="number" min="20" max="100" placeholder="例：40">
-      </div>
-
-      <div class="form-group">
         <label>年金月額（65歳時点）</label>
         <p class="form-hint">65歳から受け取る予定の、月々の年金額です。年金定期便やねんきんネットの「65歳時点の見込み額」を参考にしてください。</p>
         <div class="nenkin-mode">
@@ -304,15 +298,10 @@
     }
 
     function simulate() {
-      const age = Number(document.getElementById('age').value);
       const baseNenkin = getNenkinAmount();
       const startAge = Number(document.getElementById('startAge').value);
       const expense = Number(document.getElementById('expense').value);
 
-      if (!age || age < 20 || age > 100) {
-        alert('現在の年齢を正しく入力してください。');
-        return;
-      }
       if (!baseNenkin || baseNenkin <= 0) {
         alert('年金月額を入力してください。');
         return;
