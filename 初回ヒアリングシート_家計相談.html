@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>家計個別相談 初回ヒアリングシート｜FamilyMoney</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #f9dfb8;
+      --primary-light: #fcecd8;
+      --primary-dark: #b8956a;
+      --bg: #f8f6f2;
+      --bg-card: #ffffff;
+      --text: #2c2c2c;
+      --text-muted: #5c5c5c;
+      --border: #e5e0d8;
+      --font: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
+    }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+      min-height: 100vh;
+      padding-bottom: 48px;
+    }
+    .header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, #8b7355 100%);
+      color: #fff;
+      padding: 24px 20px 32px;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.05em; }
+    .header p { font-size: 0.85rem; opacity: 0.95; }
+    .container { max-width: 640px; margin: 0 auto; padding: 24px 20px; }
+    .card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+    }
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--primary-light);
+    }
+    .form-group { margin-bottom: 16px; }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 1rem;
+      font-family: inherit;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: #fdfaf6;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary-dark);
+      background: #fff;
+    }
+    .form-group textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    .form-hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+    .intro {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 16px;
+      padding: 12px;
+      background: var(--primary-light);
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+    .date-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .date-row input { flex: 1; max-width: 80px; }
+    @media (min-width: 600px) {
+      .header h1 { font-size: 1.4rem; }
+      .container { padding: 32px 24px; }
+      .card { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>家計個別相談 初回ヒアリングシート</h1>
+    <p>ご記入いただくことで、初回ヒアリングの時間を有効に使えます</p>
+  </header>
+
+  <main class="container">
+    <p class="intro">お手数ですが、事前にご記入の上、ご送付ください。</p>
+
+    <!-- 1. 基本情報 -->
+    <div class="card">
+      <h2 class="section-title">1. 基本情報</h2>
+      <div class="form-group">
+        <label>お名前</label>
+        <input type="text" placeholder="例：山田 太郎">
+      </div>
+      <div class="form-group">
+        <label>ご連絡先（メール）</label>
+        <input type="email" placeholder="例：example@email.com">
+      </div>
+      <div class="form-group">
+        <label>ご連絡先（電話）</label>
+        <input type="tel" placeholder="例：090-1234-5678">
+      </div>
+      <div class="form-group">
+        <label>ご希望の相談日時</label>
+        <input type="text" placeholder="例：○月○日 午前中">
+      </div>
+      <div class="form-group">
+        <label>同居されているご家族（配偶者・お子様の人数・年齢など）</label>
+        <input type="text" placeholder="例：配偶者1名、子ども2名（8歳・5歳）">
+      </div>
+    </div>
+
+    <!-- 2. 収入 -->
+    <div class="card">
+      <h2 class="section-title">2-1. 収入について</h2>
+      <div class="form-group">
+        <label>ご自身の収入（月額・円）</label>
+        <input type="text" inputmode="numeric" placeholder="給与・事業など">
+      </div>
+      <div class="form-group">
+        <label>配偶者の収入（月額・円）</label>
+        <input type="text" inputmode="numeric" placeholder="該当なければ「0」">
+      </div>
+      <div class="form-group">
+        <label>その他の収入（月額・円）</label>
+        <input type="text" inputmode="numeric" placeholder="副業・配当・賃料など">
+      </div>
+    </div>
+
+    <!-- 2-2. 支出 -->
+    <div class="card">
+      <h2 class="section-title">2-2. 支出について（月額の概算）</h2>
+      <div class="form-group">
+        <label>住居費（家賃・住宅ローン・管理費等）</label>
+        <input type="text" inputmode="numeric" placeholder="円">
+      </div>
+      <div class="form-group">
+        <label>光熱費・通信費</label>
+        <input type="text" inputmode="numeric" placeholder="円">
+      </div>
+      <div class="form-group">
+        <label>食費</label>
+        <input type="text" inputmode="numeric" placeholder="円">
+      </div>
+      <div class="form-group">
+        <label>日用品・雑費</label>
+        <input type="text" inputmode="numeric" placeholder="円">
+      </div>
+      <div class="form-group">
+        <label>教育費（塾・習い事等）</label>
+        <input type="text" inputmode="numeric" placeholder="円">
+      </div>
+      <div class="form-group">
+        <label>保険料</label>
+        <input type="text" inputmode="numeric" placeholder="円">
+      </div>
+      <div class="form-group">
+        <label>車関連費</label>
+        <input type="text" inputmode="numeric" placeholder="円">
+      </div>
+      <div class="form-group">
+        <label>その他（具体的に）</label>
+        <input type="text" placeholder="円">
+      </div>
+    </div>
+
+    <!-- 2-3. 貯蓄・資産 -->
+    <div class="card">
+      <h2 class="section-title">2-3. 貯蓄・資産の状況</h2>
+      <div class="form-group">
+        <label>預貯金（円）</label>
+        <input type="text" inputmode="numeric" placeholder="円">
+      </div>
+      <div class="form-group">
+        <label>投資（株・投信・iDeCo等・円）</label>
+        <input type="text" inputmode="numeric" placeholder="円">
+      </div>
+      <div class="form-group">
+        <label>その他資産（円）</label>
+        <input type="text" inputmode="numeric" placeholder="円">
+      </div>
+    </div>
+
+    <!-- 2-4. 負債 -->
+    <div class="card">
+      <h2 class="section-title">2-4. 負債の状況</h2>
+      <div class="form-group">
+        <label>住宅ローン 残高（円）</label>
+        <input type="text" inputmode="numeric" placeholder="円">
+      </div>
+      <div class="form-group">
+        <label>住宅ローン 月々の返済額（円）</label>
+        <input type="text" inputmode="numeric" placeholder="円">
+      </div>
+      <div class="form-group">
+        <label>その他のローン・借入 残高・月々返済（円）</label>
+        <input type="text" placeholder="例：残高○○万円、月○万円">
+      </div>
+    </div>
+
+    <!-- 3. 悩み -->
+    <div class="card">
+      <h2 class="section-title">3. 家計について感じていること・悩み</h2>
+      <p class="form-hint" style="margin-bottom: 12px;">思いつくまま自由にお書きください。</p>
+      <div class="form-group">
+        <label>3-1. 相談に至ったきっかけは何ですか？</label>
+        <textarea placeholder="例：貯金が増えない、将来が不安、支出の見直しをしたい など"></textarea>
+      </div>
+      <div class="form-group">
+        <label>3-2. 現在、家計で一番気になっていることは何ですか？</label>
+        <textarea placeholder=""></textarea>
+      </div>
+      <div class="form-group">
+        <label>3-3. これまで家計で困ったこと・失敗したことはありますか？</label>
+        <textarea placeholder=""></textarea>
+      </div>
+      <div class="form-group">
+        <label>3-4. 理想とする家計の状態はどのようなイメージですか？</label>
+        <textarea placeholder="例：毎月○万円貯めたい、老後資金を確保したい など"></textarea>
+      </div>
+      <div class="form-group">
+        <label>3-5. その理想を実現するうえで、自分では何が難しいと感じていますか？</label>
+        <textarea placeholder=""></textarea>
+      </div>
+    </div>
+
+    <!-- 4. 将来の計画 -->
+    <div class="card">
+      <h2 class="section-title">4. 将来の計画・ライフイベント</h2>
+      <div class="form-group">
+        <label>今後5〜10年で予定している大きな支出・イベント</label>
+        <textarea placeholder="例：住宅購入、子どもの進学、親の介護 など"></textarea>
+      </div>
+      <div class="form-group">
+        <label>老後についてのイメージ・不安</label>
+        <textarea placeholder=""></textarea>
+      </div>
+      <div class="form-group">
+        <label>配偶者・ご家族との家計・お金の話し合いの頻度</label>
+        <input type="text" placeholder="例：月1回、年に1回、ほとんど話さない など">
+      </div>
+    </div>
+
+    <!-- 5. その他 -->
+    <div class="card">
+      <h2 class="section-title">5. その他、相談時に伝えておきたいこと</h2>
+      <div class="form-group">
+        <textarea placeholder="自由記述"></textarea>
+      </div>
+    </div>
+
+    <div class="note">
+      ※ 本シートの内容は初回ヒアリングにおいて、現状の整理と課題の明確化に活用いたします。<br>
+      具体的な解決策・アドバイスは、継続サポートプランにてご提供いたします。
+    </div>
+
+    <div class="date-row">
+      <span>記入日：</span>
+      <input type="text" placeholder="年" maxlength="4">
+      <span>年</span>
+      <input type="text" placeholder="月" maxlength="2">
+      <span>月</span>
+      <input type="text" placeholder="日" maxlength="2">
+      <span>日</span>
+    </div>
+  </main>
+</body>
+</html>
