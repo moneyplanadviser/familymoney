@@ -366,7 +366,7 @@
 
   <script>
     (function() {
-      // FormspreeのフォームID（https://formspree.io で取得して置き換えてください）
+      // FormspreeのフォームID（https://formspree.io で取得）
       const FORMSPREE_ID = 'xnjgpnqy';
       const TOTAL = 8; // 0=intro, 1-6=form, 7=completion
       let current = 0;
@@ -465,7 +465,7 @@
             noteEl.textContent = '※ Formspree未設定のため、入力内容は端末内のみにあります。';
             noteEl.style.display = 'block';
           } else if (!sent) {
-            noteEl.textContent = '※ Formspreeのメール認証が完了しているか確認してください。';
+            noteEl.textContent = '※ Formspreeのメール認証完了、フォーム設定（ドメイン制限など）を確認してください。';
             noteEl.style.display = 'block';
           } else {
             noteEl.style.display = 'none';
@@ -481,16 +481,29 @@
       async function submitToFormspree() {
         const data = collectData();
         const email = document.querySelector('input[name="email"]').value.trim();
-        const payload = Object.assign({}, data, { _replyto: email });
-        const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify(payload)
+        const params = new URLSearchParams();
+        Object.keys(data).forEach(function(k) {
+          params.append(k, data[k]);
         });
-        return res.ok;
+        params.append('_replyto', email);
+        try {
+          const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Accept': 'application/json'
+            },
+            body: params.toString()
+          });
+          if (!res.ok) {
+            const err = await res.json().catch(function() { return {}; });
+            console.warn('Formspree error:', res.status, err);
+          }
+          return res.ok;
+        } catch (e) {
+          console.warn('Formspree submit failed:', e);
+          return false;
+        }
       }
 
       btnNext.addEventListener('click', async function() {
