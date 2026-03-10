@@ -514,6 +514,7 @@
         });
         params.append('_replyto', email);
         params.append('email', email); // Formspreeの「email」バリデーション用（英語キー必須）
+        params.append('送信内容（全文）', formatForDisplay(data)); // 全項目を1フィールドで確認用
         try {
           const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
             method: 'POST',

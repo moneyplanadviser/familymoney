@@ -19,6 +19,7 @@
 3. 表示されるフォームID（例：`xyzabcde`）をコピー
 4. `初回ヒアリングシート_家計相談.html` を開き、`YOUR_FORM_ID` をフォームIDに置き換え
 5. フォームで指定したメールアドレスに回答が届きます
+6. Formspreeの「Select columns to display」で「送信内容（全文）」を追加すると、全項目を一覧で確認できます
 
 ## 公開方法（GitHub Pages）
 
