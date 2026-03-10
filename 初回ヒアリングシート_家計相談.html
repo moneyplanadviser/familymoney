@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>家計個別相談 初回ヒアリングシート｜FamilyMoney</title>
+  <!-- Formspree設定: formspree.io でアカウント作成→新規フォーム→フォームIDを取得し、下記 YOUR_FORM_ID を置き換えてください -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
@@ -344,9 +345,9 @@
     <!-- 7. 完了 -->
     <div class="page" data-page="7">
       <div class="inner intro-page">
-        <p>ご記入ありがとうございます。</p>
-        <p class="light">この内容を「コピー」または「メールで送る」で、相談担当者までお送りください。</p>
-        <p class="light" style="margin-top: 16px; font-size: 0.8rem;">※ このフォームはサーバーに保存されません。入力内容はお使いの端末内のみにあります。</p>
+        <p id="completionTitle">ご記入ありがとうございます。</p>
+        <p class="light" id="completionDesc"></p>
+        <p class="light" id="completionNote" style="margin-top: 16px; font-size: 0.8rem; display:none;"></p>
         <div id="completionContent" style="text-align: left; margin-top: 24px; padding: 16px; background: #fff; border-radius: 8px; border: 1px solid var(--border); font-size: 0.85rem; white-space: pre-wrap; max-height: 200px; overflow-y: auto;"></div>
         <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 12px;">
           <button type="button" class="btn btn-copy" id="btnCopy" style="padding: 12px 24px; background: var(--primary-dark); color: #fff; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 600; cursor: pointer;">内容をコピー</button>
@@ -364,6 +365,8 @@
 
   <script>
     (function() {
+      // FormspreeのフォームID（https://formspree.io で取得して置き換えてください）
+      const FORMSPREE_ID = 'YOUR_FORM_ID';
       const TOTAL = 8; // 0=intro, 1-6=form, 7=completion
       let current = 0;
       const pages = document.querySelectorAll('.page');
@@ -441,6 +444,18 @@
           const subject = encodeURIComponent('家計相談 初回ヒアリングシート');
           const body = encodeURIComponent(text);
           mailto.href = 'mailto:?subject=' + subject + '&body=' + body;
+          const sent = window.formspreeSuccess === true;
+          const configured = FORMSPREE_ID && FORMSPREE_ID !== 'YOUR_FORM_ID';
+          document.getElementById('completionDesc').textContent = sent
+            ? '送信が完了しました。担当者よりご連絡いたします。'
+            : 'この内容を「コピー」または「メールで送る」で、相談担当者までお送りください。';
+          const noteEl = document.getElementById('completionNote');
+          if (!configured) {
+            noteEl.textContent = '※ Formspree未設定のため、入力内容は端末内のみにあります。';
+            noteEl.style.display = 'block';
+          } else {
+            noteEl.style.display = 'none';
+          }
         }
         updateNextButton();
       }
@@ -449,8 +464,33 @@
         if (current === 7) showPage(6);
         else showPage(current - 1);
       });
-      btnNext.addEventListener('click', function() {
+      btnNext.addEventListener('click', async function() {
         if (current === TOTAL - 2) {
+          const data = collectData();
+          const email = document.querySelector('input[name="email"]').value.trim();
+          if (FORMSPREE_ID && FORMSPREE_ID !== 'YOUR_FORM_ID') {
+            btnNext.disabled = true;
+            btnNext.textContent = '送信中...';
+            try {
+              const payload = Object.assign({}, data, { _replyto: email });
+              const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+              });
+              if (res.ok) {
+                window.formspreeSuccess = true;
+              } else {
+                window.formspreeSuccess = false;
+              }
+            } catch (e) {
+              window.formspreeSuccess = false;
+            }
+            btnNext.disabled = false;
+            btnNext.textContent = '完了';
+          } else {
+            window.formspreeSuccess = false;
+          }
           showPage(7);
           return;
         }
