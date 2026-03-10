@@ -67,7 +67,8 @@
       margin-bottom: 4px;
     }
     .form-group input,
-    .form-group textarea {
+    .form-group textarea,
+    .form-group select {
       width: 100%;
       padding: 12px 14px;
       font-size: 1rem;
@@ -78,8 +79,15 @@
       -webkit-appearance: none;
       appearance: none;
     }
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%235c5c5c' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
     .form-group input:focus,
-    .form-group textarea:focus {
+    .form-group textarea:focus,
+    .form-group select:focus {
       outline: none;
       border-color: var(--primary-dark);
       background: #fff;
@@ -97,14 +105,11 @@
       line-height: 1.6;
     }
     .date-row {
-      display: flex;
-      gap: 8px;
       margin-top: 16px;
       font-size: 0.85rem;
       color: var(--text-muted);
-      align-items: center;
     }
-    .date-row input { flex: 1; max-width: 70px; }
+    .date-row #dateDisplay { font-weight: 600; color: var(--text); }
 
     .nav-bar {
       position: fixed;
@@ -189,7 +194,7 @@
         </div>
         <div class="form-group">
           <label>ご希望の相談日時</label>
-          <input type="text" name="datetime" placeholder="例：○月○日 午前中">
+          <input type="datetime-local" name="datetime">
         </div>
         <div class="form-group">
           <label>同居されているご家族</label>
@@ -203,18 +208,18 @@
       <div class="inner">
         <div class="page-progress">2 / 6</div>
         <h2 class="page-title">収入</h2>
-        <p class="form-hint">月額の概算で構いません。</p>
+        <p class="form-hint">月額の概算で構いません。万円単位で入力してください。</p>
         <div class="form-group">
-          <label>ご自身の収入（月額・円）</label>
-          <input type="text" name="income_self" inputmode="numeric" placeholder="給与・事業など">
+          <label>ご自身の収入（月額・万円）</label>
+          <input type="text" name="income_self" inputmode="numeric" placeholder="例：30" data-unit="man">
         </div>
         <div class="form-group">
-          <label>配偶者の収入（月額・円）</label>
-          <input type="text" name="income_spouse" inputmode="numeric" placeholder="該当なければ「0」">
+          <label>配偶者の収入（月額・万円）</label>
+          <input type="text" name="income_spouse" inputmode="numeric" placeholder="該当なければ「0」" data-unit="man">
         </div>
         <div class="form-group">
-          <label>その他の収入（月額・円）</label>
-          <input type="text" name="income_other" inputmode="numeric" placeholder="副業・配当・賃料など">
+          <label>その他の収入（月額・万円）</label>
+          <input type="text" name="income_other" inputmode="numeric" placeholder="副業・配当・賃料など" data-unit="man">
         </div>
       </div>
     </div>
@@ -258,12 +263,12 @@
         <div class="page-progress">4 / 6</div>
         <h2 class="page-title">資産・負債</h2>
         <div class="form-group">
-          <label>預貯金（円）</label>
-          <input type="text" name="asset_savings" inputmode="numeric" placeholder="円">
+          <label>預貯金（万円）</label>
+          <input type="text" name="asset_savings" inputmode="numeric" placeholder="例：500" data-unit="man">
         </div>
         <div class="form-group">
-          <label>投資（株・投信・iDeCo等・円）</label>
-          <input type="text" name="asset_invest" inputmode="numeric" placeholder="円">
+          <label>投資（株・投信・iDeCo等・万円）</label>
+          <input type="text" name="asset_invest" inputmode="numeric" placeholder="例：100" data-unit="man">
         </div>
         <div class="form-group">
           <label>住宅ローン 残高・月々返済（円）</label>
@@ -320,7 +325,14 @@
         </div>
         <div class="form-group">
           <label>配偶者・ご家族との家計の話し合いの頻度</label>
-          <input type="text" name="talk_freq" placeholder="例：月1回、年に1回、ほとんど話さない など">
+          <select name="talk_freq">
+            <option value="">選択してください</option>
+            <option value="月1回以上">月1回以上</option>
+            <option value="年に数回">年に数回</option>
+            <option value="年に1回程度">年に1回程度</option>
+            <option value="ほとんど話さない">ほとんど話さない</option>
+            <option value="その他">その他</option>
+          </select>
         </div>
         <div class="form-group">
           <label>その他、相談時に伝えておきたいこと</label>
@@ -328,12 +340,7 @@
         </div>
         <div class="date-row">
           <span>記入日：</span>
-          <input type="text" name="date_y" placeholder="年" maxlength="4">
-          <span>年</span>
-          <input type="text" name="date_m" placeholder="月" maxlength="2">
-          <span>月</span>
-          <input type="text" name="date_d" placeholder="日" maxlength="2">
-          <span>日</span>
+          <span id="dateDisplay"></span>
         </div>
         <div class="note">
           ※ 本シートの内容は初回ヒアリングにおいて、現状の整理と課題の明確化に活用いたします。<br>
@@ -388,12 +395,23 @@
       };
 
       function getRequiredEmpty(pageNum) {
-        if (pageNum !== 1) return [];
-        const name = document.querySelector('input[name="name"]');
-        const email = document.querySelector('input[name="email"]');
+        const page = pages[pageNum];
+        if (!page) return [];
+        const inputs = page.querySelectorAll('input[name], textarea[name], select[name]');
+        let hasValue = false;
         const empty = [];
-        if (!name || !name.value.trim()) empty.push(name);
-        if (!email || !email.value.trim()) empty.push(email);
+        inputs.forEach(function(el) {
+          const v = el.value ? el.value.trim() : '';
+          if (v) hasValue = true;
+        });
+        if (pageNum === 1) {
+          const name = document.querySelector('input[name="name"]');
+          const email = document.querySelector('input[name="email"]');
+          if (!name || !name.value.trim()) empty.push(name);
+          if (!email || !email.value.trim()) empty.push(email);
+        } else if (pageNum >= 2 && pageNum <= 6 && !hasValue && inputs.length > 0) {
+          empty.push(inputs[0]);
+        }
         return empty;
       }
 
@@ -407,14 +425,19 @@
 
       function collectData() {
         const data = {};
-        document.querySelectorAll('input[name], textarea[name]').forEach(function(el) {
-          const v = el.value ? el.value.trim() : '';
-          if (v && LABELS[el.name]) data[LABELS[el.name]] = v;
+        document.querySelectorAll('input[name], textarea[name], select[name]').forEach(function(el) {
+          let v = el.value ? el.value.trim() : '';
+          if (v && LABELS[el.name]) {
+            if (el.dataset.unit === 'man') v = v + '万円';
+            else if (el.type === 'datetime-local' && v) {
+              const d = new Date(v);
+              v = d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日 ' + d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
+            }
+            data[LABELS[el.name]] = v;
+          }
         });
-        const y = document.querySelector('input[name="date_y"]').value.trim();
-        const m = document.querySelector('input[name="date_m"]').value.trim();
-        const d = document.querySelector('input[name="date_d"]').value.trim();
-        if (y || m || d) data['記入日'] = y + '年' + m + '月' + d + '日';
+        const now = new Date();
+        data['記入日'] = now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日';
         return data;
       }
 
@@ -436,6 +459,10 @@
         } else {
           btnNext.textContent = '次へ';
           btnNext.style.display = 'block';
+        }
+        if (current === 6) {
+          const now = new Date();
+          document.getElementById('dateDisplay').textContent = now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日';
         }
         if (current === 7) {
           const data = collectData();
@@ -529,7 +556,7 @@
         showPage(current + 1);
       });
 
-      document.querySelectorAll('input, textarea').forEach(function(el) {
+      document.querySelectorAll('input, textarea, select').forEach(function(el) {
         el.addEventListener('input', updateNextButton);
         el.addEventListener('change', updateNextButton);
       });
