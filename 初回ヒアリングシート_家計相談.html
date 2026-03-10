@@ -14,68 +14,56 @@
       --primary-light: #fcecd8;
       --primary-dark: #b8956a;
       --bg: #f8f6f2;
-      --bg-card: #ffffff;
       --text: #2c2c2c;
       --text-muted: #5c5c5c;
       --border: #e5e0d8;
       --font: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
     }
-    html { font-size: 16px; scroll-behavior: smooth; }
-    body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.7; }
+    html { font-size: 16px; }
+    body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.7; overflow-x: hidden; }
 
     .header {
       background: linear-gradient(135deg, var(--primary-dark) 0%, #8b7355 100%);
       color: #fff;
-      padding: 24px 20px 32px;
+      padding: 20px 20px 24px;
       text-align: center;
     }
-    .header h1 { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.05em; }
-    .header p { font-size: 0.85rem; opacity: 0.95; }
+    .header h1 { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; letter-spacing: 0.05em; }
+    .header p { font-size: 0.8rem; opacity: 0.95; }
 
-    .intro {
-      padding: 24px 20px 32px;
-      text-align: center;
+    .page-container {
+      min-height: calc(100vh - 120px);
+      padding: 24px 20px 100px;
+      position: relative;
+    }
+    .page {
+      display: none;
       max-width: 480px;
       margin: 0 auto;
     }
-    .intro p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
-    .intro .light { font-size: 0.85rem; color: var(--text-muted); opacity: 0.9; margin-top: 8px; }
-
-    .page-section {
-      min-height: 100vh;
-      padding: 32px 20px 48px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .page-section .inner {
-      max-width: 480px;
-      margin: 0 auto;
-      width: 100%;
-    }
-    .section-label {
+    .page.active { display: block; }
+    .page-progress {
       font-size: 0.75rem;
       font-weight: 600;
       color: var(--primary-dark);
       letter-spacing: 0.1em;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
-    .section-title {
+    .page-title {
       font-size: 1.1rem;
       font-weight: 700;
       color: var(--primary-dark);
-      margin-bottom: 24px;
-      padding-bottom: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
       border-bottom: 2px solid var(--primary-light);
     }
-    .form-group { margin-bottom: 16px; }
-    .form-group:last-child { margin-bottom: 0; }
+    .form-group { margin-bottom: 14px; }
     .form-group label {
       display: block;
       font-size: 0.85rem;
       font-weight: 600;
       color: var(--text);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .form-group input,
     .form-group textarea {
@@ -95,40 +83,69 @@
       border-color: var(--primary-dark);
       background: #fff;
     }
-    .form-group textarea { min-height: 72px; resize: vertical; }
-    .form-hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
-    .sub-section { margin-top: 24px; }
-    .sub-section-title { font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 12px; }
-    .scroll-hint {
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      padding: 16px;
-      opacity: 0.8;
-    }
-    .scroll-hint::after { content: " ↓"; }
+    .form-group textarea { min-height: 64px; resize: vertical; }
+    .form-hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; margin-bottom: 12px; }
+    .sub-title { font-size: 0.9rem; font-weight: 600; color: var(--text); margin: 16px 0 8px; }
     .note {
       font-size: 0.8rem;
       color: var(--text-muted);
-      margin-top: 24px;
-      padding: 16px;
+      margin-top: 16px;
+      padding: 12px;
       background: var(--primary-light);
       border-radius: 8px;
       line-height: 1.6;
     }
     .date-row {
       display: flex;
-      gap: 12px;
-      margin-top: 24px;
+      gap: 8px;
+      margin-top: 16px;
       font-size: 0.85rem;
       color: var(--text-muted);
       align-items: center;
     }
-    .date-row input { flex: 1; max-width: 80px; }
-    @media (min-width: 600px) {
-      .header h1 { font-size: 1.4rem; }
-      .page-section { padding: 48px 24px 64px; }
+    .date-row input { flex: 1; max-width: 70px; }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      padding: 16px 20px;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      max-width: 480px;
+      margin: 0 auto;
+      box-sizing: border-box;
     }
+    .nav-bar .btn {
+      flex: 1;
+      padding: 14px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: opacity 0.2s;
+    }
+    .nav-bar .btn:active { opacity: 0.8; }
+    .btn-prev {
+      background: #e5e0d8;
+      color: var(--text);
+      max-width: 100px;
+    }
+    .btn-next {
+      background: var(--primary-dark);
+      color: #fff;
+    }
+    .btn-prev.hidden { visibility: hidden; }
+    .intro-page { text-align: center; padding: 40px 20px; }
+    .intro-page p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 12px; }
+    .intro-page .light { font-size: 0.85rem; opacity: 0.9; }
   </style>
 </head>
 <body>
@@ -137,70 +154,70 @@
     <p>ご記入いただくことで、初回ヒアリングの時間を有効に使えます</p>
   </header>
 
-  <div class="intro">
-    <p>分かる範囲でOK。空欄でも大丈夫です。<br>スクロールしながら進めてください。</p>
-    <p class="light">お手数ですが、事前にご記入の上、ご送付ください。</p>
-  </div>
-
-  <p class="scroll-hint">基本情報から始めます</p>
-
-  <!-- 1. 基本情報 -->
-  <section class="page-section" id="section-basic">
-    <div class="inner">
-      <div class="section-label">1 / 4</div>
-      <h2 class="section-title">基本情報</h2>
-      <div class="form-group">
-        <label>お名前</label>
-        <input type="text" placeholder="例：山田 太郎">
-      </div>
-      <div class="form-group">
-        <label>ご連絡先（メール）</label>
-        <input type="email" placeholder="例：example@email.com">
-      </div>
-      <div class="form-group">
-        <label>ご連絡先（電話）</label>
-        <input type="tel" placeholder="例：090-1234-5678">
-      </div>
-      <div class="form-group">
-        <label>ご希望の相談日時</label>
-        <input type="text" placeholder="例：○月○日 午前中">
-      </div>
-      <div class="form-group">
-        <label>同居されているご家族（配偶者・お子様の人数・年齢など）</label>
-        <input type="text" placeholder="例：配偶者1名、子ども2名（8歳・5歳）">
+  <div class="page-container">
+    <!-- 0. イントロ -->
+    <div class="page active" data-page="0">
+      <div class="inner intro-page">
+        <p>分かる範囲でOK。<br>空欄でも大丈夫です。</p>
+        <p class="light">「次へ」を押して始めてください。</p>
       </div>
     </div>
-  </section>
 
-  <!-- 2. 収入 -->
-  <section class="page-section" id="section-income">
-    <div class="inner">
-      <div class="section-label">2 / 4</div>
-      <h2 class="section-title">収入</h2>
-      <p class="form-hint" style="margin-bottom: 16px;">月額の概算で構いません。</p>
-      <div class="form-group">
-        <label>ご自身の収入（月額・円）</label>
-        <input type="text" inputmode="numeric" placeholder="給与・事業など">
-      </div>
-      <div class="form-group">
-        <label>配偶者の収入（月額・円）</label>
-        <input type="text" inputmode="numeric" placeholder="該当なければ「0」">
-      </div>
-      <div class="form-group">
-        <label>その他の収入（月額・円）</label>
-        <input type="text" inputmode="numeric" placeholder="副業・配当・賃料など">
+    <!-- 1. 基本情報 -->
+    <div class="page" data-page="1">
+      <div class="inner">
+        <div class="page-progress">1 / 6</div>
+        <h2 class="page-title">基本情報</h2>
+        <div class="form-group">
+          <label>お名前</label>
+          <input type="text" placeholder="例：山田 太郎">
+        </div>
+        <div class="form-group">
+          <label>ご連絡先（メール）</label>
+          <input type="email" placeholder="例：example@email.com">
+        </div>
+        <div class="form-group">
+          <label>ご連絡先（電話）</label>
+          <input type="tel" placeholder="例：090-1234-5678">
+        </div>
+        <div class="form-group">
+          <label>ご希望の相談日時</label>
+          <input type="text" placeholder="例：○月○日 午前中">
+        </div>
+        <div class="form-group">
+          <label>同居されているご家族</label>
+          <input type="text" placeholder="例：配偶者1名、子ども2名（8歳・5歳）">
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- 3. 支出 -->
-  <section class="page-section" id="section-expense">
-    <div class="inner">
-      <div class="section-label">3 / 4</div>
-      <h2 class="section-title">支出・資産・負債</h2>
-      <p class="form-hint" style="margin-bottom: 16px;">月額の概算で構いません。</p>
-      <div class="sub-section">
-        <div class="sub-section-title">毎月の支出</div>
+    <!-- 2. 収入 -->
+    <div class="page" data-page="2">
+      <div class="inner">
+        <div class="page-progress">2 / 6</div>
+        <h2 class="page-title">収入</h2>
+        <p class="form-hint">月額の概算で構いません。</p>
+        <div class="form-group">
+          <label>ご自身の収入（月額・円）</label>
+          <input type="text" inputmode="numeric" placeholder="給与・事業など">
+        </div>
+        <div class="form-group">
+          <label>配偶者の収入（月額・円）</label>
+          <input type="text" inputmode="numeric" placeholder="該当なければ「0」">
+        </div>
+        <div class="form-group">
+          <label>その他の収入（月額・円）</label>
+          <input type="text" inputmode="numeric" placeholder="副業・配当・賃料など">
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 支出 -->
+    <div class="page" data-page="3">
+      <div class="inner">
+        <div class="page-progress">3 / 6</div>
+        <h2 class="page-title">毎月の支出</h2>
+        <p class="form-hint">月額の概算で構いません。</p>
         <div class="form-group">
           <label>住居費（家賃・住宅ローン・管理費等）</label>
           <input type="text" inputmode="numeric" placeholder="円">
@@ -222,16 +239,17 @@
           <input type="text" inputmode="numeric" placeholder="円">
         </div>
         <div class="form-group">
-          <label>保険料</label>
-          <input type="text" inputmode="numeric" placeholder="円">
-        </div>
-        <div class="form-group">
-          <label>車関連費・その他</label>
+          <label>保険料・車関連費・その他</label>
           <input type="text" inputmode="numeric" placeholder="円">
         </div>
       </div>
-      <div class="sub-section">
-        <div class="sub-section-title">貯蓄・資産の状況</div>
+    </div>
+
+    <!-- 4. 資産・負債 -->
+    <div class="page" data-page="4">
+      <div class="inner">
+        <div class="page-progress">4 / 6</div>
+        <h2 class="page-title">資産・負債</h2>
         <div class="form-group">
           <label>預貯金（円）</label>
           <input type="text" inputmode="numeric" placeholder="円">
@@ -240,9 +258,6 @@
           <label>投資（株・投信・iDeCo等・円）</label>
           <input type="text" inputmode="numeric" placeholder="円">
         </div>
-      </div>
-      <div class="sub-section">
-        <div class="sub-section-title">負債の状況</div>
         <div class="form-group">
           <label>住宅ローン 残高・月々返済（円）</label>
           <input type="text" placeholder="例：残高○○万円、月○万円">
@@ -253,64 +268,108 @@
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- 4. 目標 -->
-  <section class="page-section" id="section-goal">
-    <div class="inner">
-      <div class="section-label">4 / 4</div>
-      <h2 class="section-title">目標・悩み・将来の計画</h2>
-      <p class="form-hint" style="margin-bottom: 16px;">思いつくまま自由にお書きください。</p>
-      <div class="form-group">
-        <label>相談に至ったきっかけは何ですか？</label>
-        <textarea placeholder="例：貯金が増えない、将来が不安、支出の見直しをしたい など"></textarea>
-      </div>
-      <div class="form-group">
-        <label>現在、家計で一番気になっていることは何ですか？</label>
-        <textarea placeholder=""></textarea>
-      </div>
-      <div class="form-group">
-        <label>これまで家計で困ったこと・失敗したことはありますか？</label>
-        <textarea placeholder=""></textarea>
-      </div>
-      <div class="form-group">
-        <label>理想とする家計の状態はどのようなイメージですか？</label>
-        <textarea placeholder="例：毎月○万円貯めたい、老後資金を確保したい など"></textarea>
-      </div>
-      <div class="form-group">
-        <label>その理想を実現するうえで、自分では何が難しいと感じていますか？</label>
-        <textarea placeholder=""></textarea>
-      </div>
-      <div class="form-group">
-        <label>今後5〜10年で予定している大きな支出・イベント</label>
-        <textarea placeholder="例：住宅購入、子どもの進学、親の介護 など"></textarea>
-      </div>
-      <div class="form-group">
-        <label>老後についてのイメージ・不安</label>
-        <textarea placeholder=""></textarea>
-      </div>
-      <div class="form-group">
-        <label>配偶者・ご家族との家計・お金の話し合いの頻度</label>
-        <input type="text" placeholder="例：月1回、年に1回、ほとんど話さない など">
-      </div>
-      <div class="form-group">
-        <label>その他、相談時に伝えておきたいこと</label>
-        <textarea placeholder="自由記述"></textarea>
-      </div>
-      <div class="date-row">
-        <span>記入日：</span>
-        <input type="text" placeholder="年" maxlength="4">
-        <span>年</span>
-        <input type="text" placeholder="月" maxlength="2">
-        <span>月</span>
-        <input type="text" placeholder="日" maxlength="2">
-        <span>日</span>
-      </div>
-      <div class="note">
-        ※ 本シートの内容は初回ヒアリングにおいて、現状の整理と課題の明確化に活用いたします。<br>
-        具体的な解決策・アドバイスは、継続サポートプランにてご提供いたします。
+    <!-- 5. 目標・悩み -->
+    <div class="page" data-page="5">
+      <div class="inner">
+        <div class="page-progress">5 / 6</div>
+        <h2 class="page-title">目標・悩み</h2>
+        <p class="form-hint">思いつくまま自由にお書きください。</p>
+        <div class="form-group">
+          <label>相談に至ったきっかけは何ですか？</label>
+          <textarea placeholder="例：貯金が増えない、将来が不安 など"></textarea>
+        </div>
+        <div class="form-group">
+          <label>家計で一番気になっていることは？</label>
+          <textarea placeholder=""></textarea>
+        </div>
+        <div class="form-group">
+          <label>これまで家計で困ったこと・失敗したことは？</label>
+          <textarea placeholder=""></textarea>
+        </div>
+        <div class="form-group">
+          <label>理想とする家計の状態は？</label>
+          <textarea placeholder="例：毎月○万円貯めたい、老後資金を確保したい など"></textarea>
+        </div>
+        <div class="form-group">
+          <label>その理想を実現するうえで、何が難しいと感じていますか？</label>
+          <textarea placeholder=""></textarea>
+        </div>
       </div>
     </div>
-  </section>
+
+    <!-- 6. 将来・その他 -->
+    <div class="page" data-page="6">
+      <div class="inner">
+        <div class="page-progress">6 / 6</div>
+        <h2 class="page-title">将来の計画・その他</h2>
+        <div class="form-group">
+          <label>今後5〜10年で予定している大きな支出・イベント</label>
+          <textarea placeholder="例：住宅購入、子どもの進学、親の介護 など"></textarea>
+        </div>
+        <div class="form-group">
+          <label>老後についてのイメージ・不安</label>
+          <textarea placeholder=""></textarea>
+        </div>
+        <div class="form-group">
+          <label>配偶者・ご家族との家計の話し合いの頻度</label>
+          <input type="text" placeholder="例：月1回、年に1回、ほとんど話さない など">
+        </div>
+        <div class="form-group">
+          <label>その他、相談時に伝えておきたいこと</label>
+          <textarea placeholder="自由記述"></textarea>
+        </div>
+        <div class="date-row">
+          <span>記入日：</span>
+          <input type="text" placeholder="年" maxlength="4">
+          <span>年</span>
+          <input type="text" placeholder="月" maxlength="2">
+          <span>月</span>
+          <input type="text" placeholder="日" maxlength="2">
+          <span>日</span>
+        </div>
+        <div class="note">
+          ※ 本シートの内容は初回ヒアリングにおいて、現状の整理と課題の明確化に活用いたします。<br>
+          具体的な解決策・アドバイスは、継続サポートプランにてご提供いたします。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="nav-bar">
+    <button type="button" class="btn btn-prev hidden" id="btnPrev">前へ</button>
+    <button type="button" class="btn btn-next" id="btnNext">次へ</button>
+  </nav>
+
+  <script>
+    (function() {
+      const TOTAL = 7; // 0=intro, 1-6=form pages
+      let current = 0;
+      const pages = document.querySelectorAll('.page');
+      const btnPrev = document.getElementById('btnPrev');
+      const btnNext = document.getElementById('btnNext');
+
+      function showPage(n) {
+        current = Math.max(0, Math.min(n, TOTAL - 1));
+        pages.forEach(function(p, i) {
+          p.classList.toggle('active', i === current);
+        });
+        btnPrev.classList.toggle('hidden', current === 0);
+        btnNext.textContent = current === TOTAL - 1 ? '完了' : '次へ';
+      }
+
+      btnPrev.addEventListener('click', function() {
+        showPage(current - 1);
+      });
+      btnNext.addEventListener('click', function() {
+        if (current === TOTAL - 1) {
+          return; // 完了時は何もしない（またはメッセージ表示）
+        }
+        showPage(current + 1);
+      });
+
+      showPage(0);
+    })();
+  </script>
 </body>
 </html>
