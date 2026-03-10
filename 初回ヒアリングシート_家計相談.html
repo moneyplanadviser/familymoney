@@ -143,6 +143,12 @@
       color: #fff;
     }
     .btn-prev.hidden { visibility: hidden; }
+    .btn-next:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .input-error { border-color: #c64545 !important; background: #ffecec !important; }
+    .error-msg { font-size: 0.8rem; color: #c64545; margin-top: 4px; }
     .intro-page { text-align: center; padding: 40px 20px; }
     .intro-page p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 12px; }
     .intro-page .light { font-size: 0.85rem; opacity: 0.9; }
@@ -169,24 +175,24 @@
         <div class="page-progress">1 / 6</div>
         <h2 class="page-title">基本情報</h2>
         <div class="form-group">
-          <label>お名前</label>
-          <input type="text" placeholder="例：山田 太郎">
+          <label>お名前 <span class="required">*</span></label>
+          <input type="text" name="name" placeholder="例：山田 太郎" data-required>
         </div>
         <div class="form-group">
-          <label>ご連絡先（メール）</label>
-          <input type="email" placeholder="例：example@email.com">
+          <label>ご連絡先（メール） <span class="required">*</span></label>
+          <input type="email" name="email" placeholder="例：example@email.com" data-required>
         </div>
         <div class="form-group">
           <label>ご連絡先（電話）</label>
-          <input type="tel" placeholder="例：090-1234-5678">
+          <input type="tel" name="tel" placeholder="例：090-1234-5678">
         </div>
         <div class="form-group">
           <label>ご希望の相談日時</label>
-          <input type="text" placeholder="例：○月○日 午前中">
+          <input type="text" name="datetime" placeholder="例：○月○日 午前中">
         </div>
         <div class="form-group">
           <label>同居されているご家族</label>
-          <input type="text" placeholder="例：配偶者1名、子ども2名（8歳・5歳）">
+          <input type="text" name="family" placeholder="例：配偶者1名、子ども2名（8歳・5歳）">
         </div>
       </div>
     </div>
@@ -199,15 +205,15 @@
         <p class="form-hint">月額の概算で構いません。</p>
         <div class="form-group">
           <label>ご自身の収入（月額・円）</label>
-          <input type="text" inputmode="numeric" placeholder="給与・事業など">
+          <input type="text" name="income_self" inputmode="numeric" placeholder="給与・事業など">
         </div>
         <div class="form-group">
           <label>配偶者の収入（月額・円）</label>
-          <input type="text" inputmode="numeric" placeholder="該当なければ「0」">
+          <input type="text" name="income_spouse" inputmode="numeric" placeholder="該当なければ「0」">
         </div>
         <div class="form-group">
           <label>その他の収入（月額・円）</label>
-          <input type="text" inputmode="numeric" placeholder="副業・配当・賃料など">
+          <input type="text" name="income_other" inputmode="numeric" placeholder="副業・配当・賃料など">
         </div>
       </div>
     </div>
@@ -220,27 +226,27 @@
         <p class="form-hint">月額の概算で構いません。</p>
         <div class="form-group">
           <label>住居費（家賃・住宅ローン・管理費等）</label>
-          <input type="text" inputmode="numeric" placeholder="円">
+          <input type="text" name="exp_rent" inputmode="numeric" placeholder="円">
         </div>
         <div class="form-group">
           <label>光熱費・通信費</label>
-          <input type="text" inputmode="numeric" placeholder="円">
+          <input type="text" name="exp_utility" inputmode="numeric" placeholder="円">
         </div>
         <div class="form-group">
           <label>食費</label>
-          <input type="text" inputmode="numeric" placeholder="円">
+          <input type="text" name="exp_food" inputmode="numeric" placeholder="円">
         </div>
         <div class="form-group">
           <label>日用品・雑費</label>
-          <input type="text" inputmode="numeric" placeholder="円">
+          <input type="text" name="exp_daily" inputmode="numeric" placeholder="円">
         </div>
         <div class="form-group">
           <label>教育費（塾・習い事等）</label>
-          <input type="text" inputmode="numeric" placeholder="円">
+          <input type="text" name="exp_edu" inputmode="numeric" placeholder="円">
         </div>
         <div class="form-group">
           <label>保険料・車関連費・その他</label>
-          <input type="text" inputmode="numeric" placeholder="円">
+          <input type="text" name="exp_other" inputmode="numeric" placeholder="円">
         </div>
       </div>
     </div>
@@ -252,19 +258,19 @@
         <h2 class="page-title">資産・負債</h2>
         <div class="form-group">
           <label>預貯金（円）</label>
-          <input type="text" inputmode="numeric" placeholder="円">
+          <input type="text" name="asset_savings" inputmode="numeric" placeholder="円">
         </div>
         <div class="form-group">
           <label>投資（株・投信・iDeCo等・円）</label>
-          <input type="text" inputmode="numeric" placeholder="円">
+          <input type="text" name="asset_invest" inputmode="numeric" placeholder="円">
         </div>
         <div class="form-group">
           <label>住宅ローン 残高・月々返済（円）</label>
-          <input type="text" placeholder="例：残高○○万円、月○万円">
+          <input type="text" name="debt_housing" placeholder="例：残高○○万円、月○万円">
         </div>
         <div class="form-group">
           <label>その他のローン・借入</label>
-          <input type="text" placeholder="例：残高○○万円、月○万円">
+          <input type="text" name="debt_other" placeholder="例：残高○○万円、月○万円">
         </div>
       </div>
     </div>
@@ -277,23 +283,23 @@
         <p class="form-hint">思いつくまま自由にお書きください。</p>
         <div class="form-group">
           <label>相談に至ったきっかけは何ですか？</label>
-          <textarea placeholder="例：貯金が増えない、将来が不安 など"></textarea>
+          <textarea name="reason" placeholder="例：貯金が増えない、将来が不安 など"></textarea>
         </div>
         <div class="form-group">
           <label>家計で一番気になっていることは？</label>
-          <textarea placeholder=""></textarea>
+          <textarea name="concern" placeholder=""></textarea>
         </div>
         <div class="form-group">
           <label>これまで家計で困ったこと・失敗したことは？</label>
-          <textarea placeholder=""></textarea>
+          <textarea name="past_trouble" placeholder=""></textarea>
         </div>
         <div class="form-group">
           <label>理想とする家計の状態は？</label>
-          <textarea placeholder="例：毎月○万円貯めたい、老後資金を確保したい など"></textarea>
+          <textarea name="ideal" placeholder="例：毎月○万円貯めたい、老後資金を確保したい など"></textarea>
         </div>
         <div class="form-group">
           <label>その理想を実現するうえで、何が難しいと感じていますか？</label>
-          <textarea placeholder=""></textarea>
+          <textarea name="difficulty" placeholder=""></textarea>
         </div>
       </div>
     </div>
@@ -305,32 +311,47 @@
         <h2 class="page-title">将来の計画・その他</h2>
         <div class="form-group">
           <label>今後5〜10年で予定している大きな支出・イベント</label>
-          <textarea placeholder="例：住宅購入、子どもの進学、親の介護 など"></textarea>
+          <textarea name="future_event" placeholder="例：住宅購入、子どもの進学、親の介護 など"></textarea>
         </div>
         <div class="form-group">
           <label>老後についてのイメージ・不安</label>
-          <textarea placeholder=""></textarea>
+          <textarea name="retirement" placeholder=""></textarea>
         </div>
         <div class="form-group">
           <label>配偶者・ご家族との家計の話し合いの頻度</label>
-          <input type="text" placeholder="例：月1回、年に1回、ほとんど話さない など">
+          <input type="text" name="talk_freq" placeholder="例：月1回、年に1回、ほとんど話さない など">
         </div>
         <div class="form-group">
           <label>その他、相談時に伝えておきたいこと</label>
-          <textarea placeholder="自由記述"></textarea>
+          <textarea name="other" placeholder="自由記述"></textarea>
         </div>
         <div class="date-row">
           <span>記入日：</span>
-          <input type="text" placeholder="年" maxlength="4">
+          <input type="text" name="date_y" placeholder="年" maxlength="4">
           <span>年</span>
-          <input type="text" placeholder="月" maxlength="2">
+          <input type="text" name="date_m" placeholder="月" maxlength="2">
           <span>月</span>
-          <input type="text" placeholder="日" maxlength="2">
+          <input type="text" name="date_d" placeholder="日" maxlength="2">
           <span>日</span>
         </div>
         <div class="note">
           ※ 本シートの内容は初回ヒアリングにおいて、現状の整理と課題の明確化に活用いたします。<br>
           具体的な解決策・アドバイスは、継続サポートプランにてご提供いたします。
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. 完了 -->
+    <div class="page" data-page="7">
+      <div class="inner intro-page">
+        <p>ご記入ありがとうございます。</p>
+        <p class="light">この内容を「コピー」または「メールで送る」で、相談担当者までお送りください。</p>
+        <p class="light" style="margin-top: 16px; font-size: 0.8rem;">※ このフォームはサーバーに保存されません。入力内容はお使いの端末内のみにあります。</p>
+        <div id="completionContent" style="text-align: left; margin-top: 24px; padding: 16px; background: #fff; border-radius: 8px; border: 1px solid var(--border); font-size: 0.85rem; white-space: pre-wrap; max-height: 200px; overflow-y: auto;"></div>
+        <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 12px;">
+          <button type="button" class="btn btn-copy" id="btnCopy" style="padding: 12px 24px; background: var(--primary-dark); color: #fff; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 600; cursor: pointer;">内容をコピー</button>
+          <a id="mailtoLink" href="#" class="btn-mailto" style="display: inline-block; padding: 12px 24px; background: #e5e0d8; color: var(--text); border-radius: 10px; font-size: 0.95rem; font-weight: 600; text-decoration: none; text-align: center;">メールで送る</a>
+          <button type="button" id="btnBack" style="padding: 10px; background: transparent; color: var(--text-muted); border: none; font-size: 0.85rem; cursor: pointer; margin-top: 8px;">← 入力内容を修正する</button>
         </div>
       </div>
     </div>
@@ -343,30 +364,134 @@
 
   <script>
     (function() {
-      const TOTAL = 7; // 0=intro, 1-6=form pages
+      const TOTAL = 8; // 0=intro, 1-6=form, 7=completion
       let current = 0;
       const pages = document.querySelectorAll('.page');
       const btnPrev = document.getElementById('btnPrev');
       const btnNext = document.getElementById('btnNext');
+      const navBar = document.querySelector('.nav-bar');
+
+      const LABELS = {
+        name: 'お名前', email: 'メール', tel: '電話', datetime: '相談日時', family: '家族構成',
+        income_self: 'ご自身の収入', income_spouse: '配偶者の収入', income_other: 'その他の収入',
+        exp_rent: '住居費', exp_utility: '光熱・通信費', exp_food: '食費', exp_daily: '日用品・雑費',
+        exp_edu: '教育費', exp_other: '保険・車・その他',
+        asset_savings: '預貯金', asset_invest: '投資', debt_housing: '住宅ローン', debt_other: 'その他借入',
+        reason: '相談のきっかけ', concern: '一番気になっていること', past_trouble: '困ったこと・失敗',
+        ideal: '理想の家計', difficulty: '難しいと感じること',
+        future_event: '今後5〜10年の予定', retirement: '老後のイメージ・不安',
+        talk_freq: '話し合いの頻度', other: 'その他'
+      };
+
+      function getRequiredEmpty(pageNum) {
+        if (pageNum !== 1) return [];
+        const name = document.querySelector('input[name="name"]');
+        const email = document.querySelector('input[name="email"]');
+        const empty = [];
+        if (!name || !name.value.trim()) empty.push(name);
+        if (!email || !email.value.trim()) empty.push(email);
+        return empty;
+      }
+
+      function updateNextButton() {
+        const empty = getRequiredEmpty(current);
+        const canNext = empty.length === 0;
+        btnNext.disabled = !canNext;
+        document.querySelectorAll('.input-error').forEach(function(el) { el.classList.remove('input-error'); });
+        empty.forEach(function(el) { if (el) el.classList.add('input-error'); });
+      }
+
+      function collectData() {
+        const data = {};
+        document.querySelectorAll('input[name], textarea[name]').forEach(function(el) {
+          const v = el.value ? el.value.trim() : '';
+          if (v && LABELS[el.name]) data[LABELS[el.name]] = v;
+        });
+        const y = document.querySelector('input[name="date_y"]').value.trim();
+        const m = document.querySelector('input[name="date_m"]').value.trim();
+        const d = document.querySelector('input[name="date_d"]').value.trim();
+        if (y || m || d) data['記入日'] = y + '年' + m + '月' + d + '日';
+        return data;
+      }
+
+      function formatForDisplay(data) {
+        return Object.keys(data).map(function(k) { return k + '：' + data[k]; }).join('\n\n');
+      }
 
       function showPage(n) {
         current = Math.max(0, Math.min(n, TOTAL - 1));
         pages.forEach(function(p, i) {
           p.classList.toggle('active', i === current);
         });
+        navBar.style.display = current === 7 ? 'none' : 'flex';
         btnPrev.classList.toggle('hidden', current === 0);
-        btnNext.textContent = current === TOTAL - 1 ? '完了' : '次へ';
+        if (current === TOTAL - 2) {
+          btnNext.textContent = '完了';
+        } else if (current === TOTAL - 1) {
+          btnNext.style.display = 'none';
+        } else {
+          btnNext.textContent = '次へ';
+          btnNext.style.display = 'block';
+        }
+        if (current === 7) {
+          const data = collectData();
+          const text = formatForDisplay(data);
+          document.getElementById('completionContent').textContent = text || '（入力内容がありません）';
+          const mailto = document.getElementById('mailtoLink');
+          const subject = encodeURIComponent('家計相談 初回ヒアリングシート');
+          const body = encodeURIComponent(text);
+          mailto.href = 'mailto:?subject=' + subject + '&body=' + body;
+        }
+        updateNextButton();
       }
 
       btnPrev.addEventListener('click', function() {
-        showPage(current - 1);
+        if (current === 7) showPage(6);
+        else showPage(current - 1);
       });
       btnNext.addEventListener('click', function() {
-        if (current === TOTAL - 1) {
-          return; // 完了時は何もしない（またはメッセージ表示）
+        if (current === TOTAL - 2) {
+          showPage(7);
+          return;
         }
+        const empty = getRequiredEmpty(current);
+        if (empty.length > 0) return;
         showPage(current + 1);
       });
+
+      document.querySelectorAll('input, textarea').forEach(function(el) {
+        el.addEventListener('input', updateNextButton);
+        el.addEventListener('change', updateNextButton);
+      });
+
+      document.getElementById('btnBack').addEventListener('click', function() {
+        showPage(6);
+      });
+
+      document.getElementById('btnCopy').addEventListener('click', function() {
+        const text = formatForDisplay(collectData());
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function() {
+            alert('コピーしました。メールやメモに貼り付けてお送りください。');
+          }).catch(function() { fallbackCopy(text); });
+        } else {
+          fallbackCopy(text);
+        }
+      });
+      function fallbackCopy(text) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed'; ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          alert('コピーしました。メールやメモに貼り付けてお送りください。');
+        } catch (e) {
+          alert('コピーに失敗しました。画面の内容を手動でコピーしてください。');
+        }
+        document.body.removeChild(ta);
+      }
 
       showPage(0);
     })();
