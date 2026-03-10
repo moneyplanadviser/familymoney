@@ -349,9 +349,10 @@
         <p class="light" id="completionDesc"></p>
         <p class="light" id="completionNote" style="margin-top: 16px; font-size: 0.8rem; display:none;"></p>
         <div id="completionContent" style="text-align: left; margin-top: 24px; padding: 16px; background: #fff; border-radius: 8px; border: 1px solid var(--border); font-size: 0.85rem; white-space: pre-wrap; max-height: 200px; overflow-y: auto;"></div>
-        <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 12px;">
+        <div id="completionActions" style="margin-top: 20px; display: flex; flex-direction: column; gap: 12px;">
           <button type="button" class="btn btn-copy" id="btnCopy" style="padding: 12px 24px; background: var(--primary-dark); color: #fff; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 600; cursor: pointer;">内容をコピー</button>
           <a id="mailtoLink" href="#" class="btn-mailto" style="display: inline-block; padding: 12px 24px; background: #e5e0d8; color: var(--text); border-radius: 10px; font-size: 0.95rem; font-weight: 600; text-decoration: none; text-align: center;">メールで送る</a>
+          <button type="button" id="btnRetry" style="display:none; padding: 12px 24px; background: var(--primary-dark); color: #fff; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 600; cursor: pointer;">もう一度送信する</button>
           <button type="button" id="btnBack" style="padding: 10px; background: transparent; color: var(--text-muted); border: none; font-size: 0.85rem; cursor: pointer; margin-top: 8px;">← 入力内容を修正する</button>
         </div>
       </div>
@@ -446,12 +447,25 @@
           mailto.href = 'mailto:?subject=' + subject + '&body=' + body;
           const sent = window.formspreeSuccess === true;
           const configured = FORMSPREE_ID && FORMSPREE_ID !== 'YOUR_FORM_ID';
-          document.getElementById('completionDesc').textContent = sent
-            ? '送信が完了しました。担当者よりご連絡いたします。'
-            : 'この内容を「コピー」または「メールで送る」で、相談担当者までお送りください。';
+          const descEl = document.getElementById('completionDesc');
+          if (sent) {
+            descEl.textContent = '送信が完了しました。担当者にメールで届いています。';
+          } else if (configured) {
+            descEl.textContent = '送信に失敗しました。以下の方法でお送りください。';
+          } else {
+            descEl.textContent = 'この内容を「コピー」または「メールで送る」でお送りください。';
+          }
+          descEl.style.fontWeight = sent ? '600' : '400';
+          descEl.style.color = sent ? 'var(--primary-dark)' : 'var(--text-muted)';
+          document.getElementById('btnCopy').style.display = sent ? 'none' : 'block';
+          document.getElementById('mailtoLink').style.display = sent ? 'none' : 'inline-block';
+          document.getElementById('btnRetry').style.display = (sent || !configured) ? 'none' : 'block';
           const noteEl = document.getElementById('completionNote');
           if (!configured) {
             noteEl.textContent = '※ Formspree未設定のため、入力内容は端末内のみにあります。';
+            noteEl.style.display = 'block';
+          } else if (!sent) {
+            noteEl.textContent = '※ Formspreeのメール認証が完了しているか確認してください。';
             noteEl.style.display = 'block';
           } else {
             noteEl.style.display = 'none';
@@ -464,25 +478,28 @@
         if (current === 7) showPage(6);
         else showPage(current - 1);
       });
+      async function submitToFormspree() {
+        const data = collectData();
+        const email = document.querySelector('input[name="email"]').value.trim();
+        const payload = Object.assign({}, data, { _replyto: email });
+        const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+        return res.ok;
+      }
+
       btnNext.addEventListener('click', async function() {
         if (current === TOTAL - 2) {
-          const data = collectData();
-          const email = document.querySelector('input[name="email"]').value.trim();
           if (FORMSPREE_ID && FORMSPREE_ID !== 'YOUR_FORM_ID') {
             btnNext.disabled = true;
             btnNext.textContent = '送信中...';
             try {
-              const payload = Object.assign({}, data, { _replyto: email });
-              const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-              });
-              if (res.ok) {
-                window.formspreeSuccess = true;
-              } else {
-                window.formspreeSuccess = false;
-              }
+              window.formspreeSuccess = await submitToFormspree();
             } catch (e) {
               window.formspreeSuccess = false;
             }
@@ -506,6 +523,21 @@
 
       document.getElementById('btnBack').addEventListener('click', function() {
         showPage(6);
+      });
+
+      document.getElementById('btnRetry').addEventListener('click', async function() {
+        const btn = document.getElementById('btnRetry');
+        btn.disabled = true;
+        btn.textContent = '送信中...';
+        try {
+          window.formspreeSuccess = await submitToFormspree();
+          showPage(7);
+        } catch (e) {
+          window.formspreeSuccess = false;
+          showPage(7);
+        }
+        btn.disabled = false;
+        btn.textContent = 'もう一度送信する';
       });
 
       document.getElementById('btnCopy').addEventListener('click', function() {
