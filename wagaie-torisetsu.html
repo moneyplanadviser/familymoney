@@ -68,21 +68,6 @@
       transition: width 0.3s;
     }
     .form-progress-text { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); }
-    .form-sample-btn {
-      position: absolute;
-      top: 16px;
-      right: 20px;
-      font-size: 0.8rem;
-      padding: 8px 14px;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      cursor: pointer;
-      font-family: inherit;
-      color: var(--text-muted);
-    }
-    .form-sample-btn:hover { background: #f8f6f2; color: var(--text); }
-
     .form-container {
       max-width: 480px;
       margin: 0 auto;
@@ -349,7 +334,6 @@
   <!-- ===== フォーム画面 ===== -->
   <div class="form-view" id="form-view">
     <header class="form-header">
-      <button type="button" class="form-sample-btn" id="btn-sample">サンプルを見る</button>
       <h1>トリセツ作成画面</h1>
       <div class="form-progress">
         <div class="form-progress-bar">
@@ -659,17 +643,6 @@
       document.getElementById('form-view').classList.remove('hidden');
       document.getElementById('preview-view').classList.remove('active');
     }
-    var sampleData = {
-      name: 'まい',
-      axis: ['子どもの経験', '日々のゆとり', '将来への備え'],
-      anxiety: ['先の見通しが立たない時', '教育費を考えた時', '旦那さんと話せていない時'],
-      spend: ['疲れている時', '子どものためと思った時', 'なんとなく不安な時'],
-      relief: ['使っていい金額が分かっている', '教育費の見通しがある', '旦那さんと共有できている'],
-      timing: ['子どもの将来の話をしている時', '旅行や予定を立てている時'],
-      avoid: ['なんでそんなに使ったの', 'またその話？', '責められている感じ'],
-      first: ['今の家計の現状を知りたい']
-    };
-
     renderTags();
     initTagClicks();
     initAddButtons();
@@ -682,9 +655,6 @@
       } else {
         goToPage(currentPage + 1);
       }
-    });
-    document.getElementById('btn-sample').addEventListener('click', function() {
-      showPreview(sampleData);
     });
     document.getElementById('btn-edit').addEventListener('click', function() {
       showForm();
