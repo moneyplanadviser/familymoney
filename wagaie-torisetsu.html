@@ -17,7 +17,7 @@
       --text-muted: #5c5c5c;
       --accent: #e8c547;
       --accent-dark: #d4a82a;
-      --section-bg: #f8f6f2;
+      --border: #e5e0d8;
       --font: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
     }
     html { font-size: 16px; }
@@ -25,30 +25,215 @@
       font-family: var(--font);
       color: var(--text);
       min-height: 100vh;
+      background: #f5f3ef;
+      background-image: linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    /* ===== フォーム画面 ===== */
+    .form-view { display: block; }
+    .form-view.hidden { display: none; }
+    .preview-view { display: none; }
+    .preview-view.active { display: block; }
+
+    .form-header {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 20px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .form-header h1 { font-size: 1rem; font-weight: 700; color: var(--text); }
+    .form-progress {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .form-progress-bar {
+      flex: 1;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .form-progress-fill {
+      height: 100%;
+      background: var(--accent-dark);
+      border-radius: 2px;
+      transition: width 0.3s;
+    }
+    .form-progress-text { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); }
+    .form-sample-btn {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 0.8rem;
+      padding: 8px 14px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      color: var(--text-muted);
+    }
+    .form-sample-btn:hover { background: #f8f6f2; color: var(--text); }
+
+    .form-container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 24px 20px 100px;
+    }
+    .form-page { display: none; max-width: 400px; margin: 0 auto; }
+    .form-page.active { display: block; }
+    .form-intro {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .form-intro p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 12px; }
+    .form-intro .light { font-size: 0.85rem; opacity: 0.9; }
+    .form-question-title { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 16px; }
+    .form-input-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .form-input-row input {
+      flex: 1;
+      padding: 12px 14px;
+      font-size: 1rem;
+      font-family: inherit;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+    .form-input-row input:focus { outline: none; border-color: var(--accent-dark); }
+    .form-input-row input::placeholder { color: #aaa; }
+    .form-add-btn {
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .form-add-btn:hover { background: #f8f6f2; color: var(--text); border-color: var(--accent-dark); }
+    .form-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .form-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      background: var(--accent);
+      background: linear-gradient(135deg, #fff4c4 0%, #ffe8a0 100%);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .form-chip-remove {
+      width: 18px;
+      height: 18px;
+      padding: 0;
+      border: none;
+      background: rgba(0,0,0,0.15);
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 0.75rem;
+      line-height: 1;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .form-chip-remove:hover { background: rgba(0,0,0,0.3); }
+    .form-tags-label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; }
+    .form-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .form-tag {
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      font-family: inherit;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+      color: var(--text);
+    }
+    .form-tag:hover { border-color: var(--accent-dark); background: #fffef5; }
+    .form-tag.selected { border-color: var(--accent-dark); background: #fff9e6; color: var(--text); }
+    .form-name-input {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 1.1rem;
+      font-family: inherit;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+    .form-name-input:focus { outline: none; border-color: var(--accent-dark); }
+    .form-name-label { font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; display: block; }
+
+    .form-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      padding: 16px 20px;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      max-width: 480px;
+      margin: 0 auto;
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
+    }
+    .form-nav .btn {
+      padding: 14px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .form-nav .btn-prev {
+      background: #e5e0d8;
+      color: var(--text);
+      max-width: 100px;
+    }
+    .form-nav .btn-next {
+      background: var(--accent);
+      color: var(--text);
+      flex: 1;
+      max-width: 200px;
+    }
+    .form-nav .btn-prev.hidden { visibility: hidden; }
+    .form-nav .btn:active { opacity: 0.9; }
+
+    /* ===== プレビュー画面 ===== */
+    .preview-view .body-bg {
+      min-height: 100vh;
       background: linear-gradient(180deg, #e8dcc8 0%, var(--cork-dark) 100%);
       padding: 20px 16px 100px;
     }
-
-    /* コルク・木目風の背景パターン */
     .cork-bg {
       background-color: var(--cork);
       background-image:
         radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 50%),
         radial-gradient(circle at 80% 70%, rgba(0,0,0,0.05) 0%, transparent 40%),
-        repeating-linear-gradient(
-          90deg,
-          transparent,
-          transparent 2px,
-          rgba(0,0,0,0.02) 2px,
-          rgba(0,0,0,0.02) 4px
-        );
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.02) 2px, rgba(0,0,0,0.02) 4px);
       min-height: 100vh;
       margin: -20px -16px -100px;
       padding: 24px 16px 120px;
-      position: relative;
     }
-
-    /* 白い紙のカード（プレビュー本体） */
     .preview-card {
       background: var(--paper);
       border-radius: 12px;
@@ -59,8 +244,6 @@
       position: relative;
       overflow: hidden;
     }
-
-    /* 縦書きタイトル（左端装飾） */
     .vertical-title {
       position: absolute;
       left: 8px;
@@ -72,13 +255,7 @@
       color: rgba(44,44,44,0.25);
       letter-spacing: 0.2em;
     }
-
-    .preview-inner {
-      margin-left: 0;
-      padding-left: 4px;
-    }
-
-    /* ヘッダー */
+    .preview-inner { margin-left: 0; padding-left: 4px; }
     .preview-header {
       display: flex;
       justify-content: space-between;
@@ -87,16 +264,8 @@
       padding-bottom: 12px;
       border-bottom: 1px solid #e8e4dc;
     }
-    .preview-title-en {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      color: var(--text-muted);
-    }
-    .preview-date {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-    }
+    .preview-title-en { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; color: var(--text-muted); }
+    .preview-date { font-size: 0.7rem; color: var(--text-muted); }
     .preview-name {
       font-size: 1.4rem;
       font-weight: 700;
@@ -105,21 +274,9 @@
       align-items: center;
       gap: 8px;
     }
-    .preview-name .icon {
-      width: 24px;
-      height: 24px;
-      color: var(--accent);
-    }
-    .preview-subtitle {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
-
-    /* セクション */
-    .section {
-      margin-bottom: 18px;
-    }
+    .preview-name .icon { width: 24px; height: 24px; color: var(--accent); }
+    .preview-subtitle { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 20px; }
+    .section { margin-bottom: 18px; }
     .section-title {
       font-size: 0.8rem;
       font-weight: 700;
@@ -129,29 +286,10 @@
       align-items: center;
       gap: 6px;
     }
-    .section-title .icon {
-      width: 18px;
-      height: 18px;
-      flex-shrink: 0;
-      color: var(--accent-dark);
-    }
-    .section-list {
-      font-size: 0.85rem;
-      line-height: 1.7;
-      color: var(--text);
-      padding-left: 24px;
-    }
-    .section-list li {
-      margin-bottom: 2px;
-    }
-    .section-subtitle {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-      margin-bottom: 6px;
-    }
-
-    /* 最初のひとこと例（ハイライト） */
+    .section-title .icon { width: 18px; height: 18px; flex-shrink: 0; color: var(--accent-dark); }
+    .section-list { font-size: 0.85rem; line-height: 1.7; color: var(--text); padding-left: 24px; }
+    .section-list li { margin-bottom: 2px; }
+    .section-subtitle { font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; margin-bottom: 6px; }
     .first-words {
       background: linear-gradient(135deg, #fff9e6 0%, #fffbf0 100%);
       border-left: 4px solid var(--accent);
@@ -163,14 +301,7 @@
       color: var(--text);
       line-height: 1.6;
     }
-    .first-words-label {
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--accent-dark);
-      margin-bottom: 4px;
-    }
-
-    /* フッター */
+    .first-words-label { font-size: 0.7rem; font-weight: 600; color: var(--accent-dark); margin-bottom: 4px; }
     .preview-footer {
       margin-top: 20px;
       padding-top: 16px;
@@ -180,18 +311,14 @@
       line-height: 1.7;
       text-align: center;
     }
-    .preview-footer strong {
-      color: var(--text);
-    }
-
-    /* 操作ボタンエリア */
+    .preview-footer strong { color: var(--text); }
     .action-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
       background: #fff;
-      border-top: 1px solid #e5e0d8;
+      border-top: 1px solid var(--border);
       padding: 16px 20px;
       display: flex;
       gap: 12px;
@@ -211,185 +338,376 @@
       transition: opacity 0.2s, transform 0.1s;
     }
     .btn:active { opacity: 0.9; transform: scale(0.98); }
-    .btn-download {
-      background: #3d3d3d;
-      color: #fff;
-      flex: 1;
-      max-width: 240px;
-    }
-    .btn-download:hover {
-      background: #2a2a2a;
-    }
-    .btn-edit {
-      background: #fff;
-      color: var(--text);
-      border: 2px solid var(--text);
-      padding: 12px 20px;
-    }
-    .btn-edit:hover {
-      background: #f8f6f2;
-    }
-
+    .btn-download { background: #3d3d3d; color: #fff; flex: 1; max-width: 240px; }
+    .btn-download:hover { background: #2a2a2a; }
+    .btn-edit { background: #fff; color: var(--text); border: 2px solid var(--text); padding: 12px 20px; }
+    .btn-edit:hover { background: #f8f6f2; }
   </style>
 </head>
 <body>
-  <div class="cork-bg">
-    <div class="preview-card" id="preview-card">
-      <div class="vertical-title">わが家のお金の価値観</div>
-      <div class="preview-inner">
-        <div class="preview-header">
-          <span class="preview-title-en">WAGAIE MONEY VALUES</span>
-          <span class="preview-date" id="preview-date">2026年03月17日</span>
+  <!-- ===== フォーム画面 ===== -->
+  <div class="form-view" id="form-view">
+    <header class="form-header">
+      <button type="button" class="form-sample-btn" id="btn-sample">サンプルを見る</button>
+      <h1>トリセツ作成画面</h1>
+      <div class="form-progress">
+        <div class="form-progress-bar">
+          <div class="form-progress-fill" id="progress-fill" style="width: 0%"></div>
         </div>
-        <h1 class="preview-name">
-          <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-          <span id="preview-name">まい</span>
-        </h1>
-        <p class="preview-subtitle">お金の話を、責め合わずに始めるための1枚</p>
-
-        <div class="section">
-          <h2 class="section-title">
-            <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-            わが家が大事にしたいお金の軸
-          </h2>
-          <ul class="section-list" id="section-axis">
-            <li>子どもの経験</li>
-            <li>日々のゆとり</li>
-            <li>将来への備え</li>
-          </ul>
+        <span class="form-progress-text" id="progress-text">0 / 8</span>
+      </div>
+    </header>
+    <div class="form-container">
+      <!-- 0: イントロ -->
+      <div class="form-page active" data-page="0">
+        <div class="form-intro">
+          <p>7つの質問に答えて、<br>わが家のお金の価値観を1枚にまとめます。</p>
+          <p class="light">お金の話を、責め合わずに始めるための取説です。<br>分かる範囲でOK。空欄でも大丈夫です。</p>
         </div>
-
-        <div class="section">
-          <h2 class="section-title">
-            <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-            不安になりやすいポイント
-          </h2>
-          <ul class="section-list" id="section-anxiety">
-            <li>先の見通しが立たない時</li>
-            <li>教育費を考えた時</li>
-            <li>旦那さんと話せていない時</li>
-          </ul>
+      </div>
+      <!-- 1: 名前 -->
+      <div class="form-page" data-page="1">
+        <label class="form-name-label">お名前（取説に表示されます）</label>
+        <input type="text" class="form-name-input" id="input-name" placeholder="例：まい" maxlength="20">
+      </div>
+      <!-- 2: 大事にしたいこと -->
+      <div class="form-page" data-page="2">
+        <h2 class="form-question-title">わが家で大事にしたいこと</h2>
+        <div class="form-input-row">
+          <input type="text" id="input-axis" placeholder="入力する（任意）" data-key="axis">
+          <button type="button" class="form-add-btn" data-add="axis">+</button>
         </div>
-
-        <div class="section">
-          <h2 class="section-title">
-            <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/></svg>
-            お金を使いやすい場面
-          </h2>
-          <ul class="section-list" id="section-spend">
-            <li>疲れている時</li>
-            <li>子どものためと思った時</li>
-            <li>なんとなく不安な時</li>
-          </ul>
+        <div class="form-chips" id="chips-axis"></div>
+        <div class="form-tags-label">タグから選ぶ</div>
+        <div class="form-tags" id="tags-axis"></div>
+      </div>
+      <!-- 3: 不安 -->
+      <div class="form-page" data-page="3">
+        <h2 class="form-question-title">お金のことで不安になりやすいこと</h2>
+        <div class="form-input-row">
+          <input type="text" id="input-anxiety" placeholder="入力する（任意）" data-key="anxiety">
+          <button type="button" class="form-add-btn" data-add="anxiety">+</button>
         </div>
-
-        <div class="section">
-          <h2 class="section-title">
-            <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-            安心できる家計の状態
-          </h2>
-          <ul class="section-list" id="section-relief">
-            <li>使っていい金額が分かっている</li>
-            <li>教育費の見通しがある</li>
-            <li>旦那さんと共有できている</li>
-          </ul>
+        <div class="form-chips" id="chips-anxiety"></div>
+        <div class="form-tags-label">タグから選ぶ</div>
+        <div class="form-tags" id="tags-anxiety"></div>
+      </div>
+      <!-- 4: 使いやすい場面 -->
+      <div class="form-page" data-page="4">
+        <h2 class="form-question-title">ついお金を使いたくなる場面</h2>
+        <div class="form-input-row">
+          <input type="text" id="input-spend" placeholder="入力する（任意）" data-key="spend">
+          <button type="button" class="form-add-btn" data-add="spend">+</button>
         </div>
-
-        <div class="section">
-          <h2 class="section-title">
-            <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-            話しやすいタイミング
-          </h2>
-          <ul class="section-list" id="section-timing">
-            <li>子どもの将来の話をしている時</li>
-            <li>旅行や予定を立てている時</li>
-          </ul>
+        <div class="form-chips" id="chips-spend"></div>
+        <div class="form-tags-label">タグから選ぶ</div>
+        <div class="form-tags" id="tags-spend"></div>
+      </div>
+      <!-- 5: 安心状態 -->
+      <div class="form-page" data-page="5">
+        <h2 class="form-question-title">安心しやすい家計の状態</h2>
+        <div class="form-input-row">
+          <input type="text" id="input-relief" placeholder="入力する（任意）" data-key="relief">
+          <button type="button" class="form-add-btn" data-add="relief">+</button>
         </div>
-
-        <div class="section">
-          <h2 class="section-title">
-            <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
-            話し合いで避けたい言い方
-          </h2>
-          <p class="section-subtitle">（以下の言い方は気持ちが閉じやすくなります）</p>
-          <ul class="section-list" id="section-avoid">
-            <li>なんでそんなに使ったの</li>
-            <li>またその話？</li>
-            <li>責められている感じ</li>
-          </ul>
+        <div class="form-chips" id="chips-relief"></div>
+        <div class="form-tags-label">タグから選ぶ</div>
+        <div class="form-tags" id="tags-relief"></div>
+      </div>
+      <!-- 6: 話しやすいタイミング -->
+      <div class="form-page" data-page="6">
+        <h2 class="form-question-title">お金の話をしやすいタイミング</h2>
+        <div class="form-input-row">
+          <input type="text" id="input-timing" placeholder="入力する（任意）" data-key="timing">
+          <button type="button" class="form-add-btn" data-add="timing">+</button>
         </div>
-
-        <div class="section">
-          <h2 class="section-title">
-            <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/></svg>
-            まず最初に話したいこと
-          </h2>
-          <ul class="section-list" id="section-first">
-            <li>今の家計の現状を知りたい</li>
-          </ul>
+        <div class="form-chips" id="chips-timing"></div>
+        <div class="form-tags-label">タグから選ぶ</div>
+        <div class="form-tags" id="tags-timing"></div>
+      </div>
+      <!-- 7: 避けたい言い方 -->
+      <div class="form-page" data-page="7">
+        <h2 class="form-question-title">言われるとしんどいこと</h2>
+        <div class="form-input-row">
+          <input type="text" id="input-avoid" placeholder="入力する（任意）" data-key="avoid">
+          <button type="button" class="form-add-btn" data-add="avoid">+</button>
         </div>
-
-        <div class="first-words">
-          <div class="first-words-label">最初のひとこと例</div>
-          <div id="first-words-text">「そういえば今の現状ってどうなってるのかな？ 私もちゃんと知っておきたくて。」</div>
+        <div class="form-chips" id="chips-avoid"></div>
+        <div class="form-tags-label">タグから選ぶ</div>
+        <div class="form-tags" id="tags-avoid"></div>
+      </div>
+      <!-- 8: 最初に話したいこと -->
+      <div class="form-page" data-page="8">
+        <h2 class="form-question-title">まず最初に話したいこと</h2>
+        <div class="form-input-row">
+          <input type="text" id="input-first" placeholder="入力する（任意）" data-key="first">
+          <button type="button" class="form-add-btn" data-add="first">+</button>
         </div>
+        <div class="form-chips" id="chips-first"></div>
+        <div class="form-tags-label">タグから選ぶ</div>
+        <div class="form-tags" id="tags-first"></div>
+      </div>
+    </div>
+    <nav class="form-nav">
+      <button type="button" class="btn btn-prev" id="btn-prev">戻る</button>
+      <button type="button" class="btn btn-next" id="btn-next">次へ</button>
+    </nav>
+  </div>
 
-        <div class="preview-footer">
-          <p><strong>価値観が見えると、お金の話は少しだけしやすくなります。</strong></p>
-          <p>この1枚を見ながら、旦那さんと「今の現状」と「わが家で大事にしたいこと」から話してみましょう。</p>
-          <p>一人で整理しにくい時は、Family Money のオンラインサロンで一緒に整えていけます。</p>
+  <!-- ===== プレビュー画面 ===== -->
+  <div class="preview-view" id="preview-view">
+    <div class="body-bg">
+      <div class="cork-bg">
+        <div class="preview-card" id="preview-card">
+          <div class="vertical-title">わが家のお金の価値観</div>
+          <div class="preview-inner">
+            <div class="preview-header">
+              <span class="preview-title-en">WAGAIE MONEY VALUES</span>
+              <span class="preview-date" id="preview-date"></span>
+            </div>
+            <h1 class="preview-name">
+              <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+              <span id="preview-name"></span>
+            </h1>
+            <p class="preview-subtitle">お金の話を、責め合わずに始めるための1枚</p>
+            <div class="section">
+              <h2 class="section-title"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>わが家が大事にしたいお金の軸</h2>
+              <ul class="section-list" id="section-axis"></ul>
+            </div>
+            <div class="section">
+              <h2 class="section-title"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>不安になりやすいポイント</h2>
+              <ul class="section-list" id="section-anxiety"></ul>
+            </div>
+            <div class="section">
+              <h2 class="section-title"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/></svg>お金を使いやすい場面</h2>
+              <ul class="section-list" id="section-spend"></ul>
+            </div>
+            <div class="section">
+              <h2 class="section-title"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>安心できる家計の状態</h2>
+              <ul class="section-list" id="section-relief"></ul>
+            </div>
+            <div class="section">
+              <h2 class="section-title"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>話しやすいタイミング</h2>
+              <ul class="section-list" id="section-timing"></ul>
+            </div>
+            <div class="section">
+              <h2 class="section-title"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>話し合いで避けたい言い方</h2>
+              <p class="section-subtitle">（以下の言い方は気持ちが閉じやすくなります）</p>
+              <ul class="section-list" id="section-avoid"></ul>
+            </div>
+            <div class="section">
+              <h2 class="section-title"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/></svg>まず最初に話したいこと</h2>
+              <ul class="section-list" id="section-first"></ul>
+            </div>
+            <div class="first-words">
+              <div class="first-words-label">最初のひとこと例</div>
+              <div id="first-words-text"></div>
+            </div>
+            <div class="preview-footer">
+              <p><strong>価値観が見えると、お金の話は少しだけしやすくなります。</strong></p>
+              <p>この1枚を見ながら、旦那さんと「今の現状」と「わが家で大事にしたいこと」から話してみましょう。</p>
+              <p>一人で整理しにくい時は、Family Money のオンラインサロンで一緒に整えていけます。</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="action-bar">
-    <button type="button" class="btn btn-download" id="btn-download">画像でダウンロード</button>
-    <button type="button" class="btn btn-edit" id="btn-edit">編集する</button>
+    <div class="action-bar">
+      <button type="button" class="btn btn-download" id="btn-download">画像でダウンロード</button>
+      <button type="button" class="btn btn-edit" id="btn-edit">編集する</button>
+    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
-    (function() {
-      // 日付を今日に
+  (function() {
+    var TAGS = {
+      axis: ['子どもの経験', '日々のゆとり', '将来への備え', '家族の健康', '教育', '老後資金', 'マイホーム'],
+      anxiety: ['先の見通しが立たない時', '教育費を考えた時', '旦那さんと話せていない時', '貯金が増えない時', '大きな出費が迫っている時', '収入が減るかもしれない時'],
+      spend: ['疲れている時', '子どものためと思った時', 'なんとなく不安な時', 'セールの時', 'ストレスがたまった時', '友達と会う時'],
+      relief: ['使っていい金額が分かっている', '教育費の見通しがある', '旦那さんと共有できている', '貯金の目標がある', '毎月の収支が把握できている'],
+      timing: ['子どもの将来の話をしている時', '旅行や予定を立てている時', 'リビングでくつろいでいる時', '週末の朝', '給料日付近'],
+      avoid: ['なんでそんなに使ったの', 'またその話？', '責められている感じ', 'あなたが悪い', 'いつもそう言う'],
+      first: ['今の家計の現状を知りたい', '貯金の目標を一緒に決めたい', 'どこにいくら使っているか把握したい', '教育費の計画を立てたい']
+    };
+    var FIRST_WORDS = {
+      default: '「そういえば今の現状ってどうなってるのかな？ 私もちゃんと知っておきたくて。」',
+      '今の家計の現状を知りたい': '「そういえば今の現状ってどうなってるのかな？ 私もちゃんと知っておきたくて。」',
+      '貯金の目標を一緒に決めたい': '「貯金の目標、一緒に考えたいんだけど。いくらくらいが現実的かな？」',
+      'どこにいくら使っているか把握したい': '「今月どこにいくら使ってるか、一緒に確認してみない？」',
+      '教育費の計画を立てたい': '「子どもの教育費、いつまでにいくら必要か一緒に調べてみない？」'
+    };
+
+    var data = {
+      name: '',
+      axis: [], anxiety: [], spend: [], relief: [], timing: [], avoid: [], first: []
+    };
+    var currentPage = 0;
+    var totalPages = 9;
+
+    function renderTags() {
+      Object.keys(TAGS).forEach(function(key) {
+        var el = document.getElementById('tags-' + key);
+        if (!el) return;
+        el.innerHTML = TAGS[key].map(function(t) {
+          return '<button type="button" class="form-tag" data-key="' + key + '" data-tag="' + t.replace(/"/g, '&quot;') + '">' + t + '</button>';
+        }).join('');
+      });
+    }
+    function initTagClicks() {
+      document.querySelectorAll('.form-tag').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var key = btn.getAttribute('data-key');
+          var tag = btn.getAttribute('data-tag');
+          if (data[key].indexOf(tag) >= 0) return;
+          data[key].push(tag);
+          renderChips(key);
+          btn.classList.add('selected');
+        });
+      });
+    }
+    function renderChips(key) {
+      var el = document.getElementById('chips-' + key);
+      if (!el) return;
+      el.innerHTML = data[key].map(function(item, i) {
+        return '<span class="form-chip">' + item + '<button type="button" class="form-chip-remove" data-key="' + key + '" data-i="' + i + '">×</button></span>';
+      }).join('');
+      el.querySelectorAll('.form-chip-remove').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var k = btn.getAttribute('data-key');
+          var i = parseInt(btn.getAttribute('data-i'), 10);
+          data[k].splice(i, 1);
+          renderChips(k);
+          document.querySelectorAll('.form-tag[data-key="' + k + '"]').forEach(function(t) {
+            t.classList.remove('selected');
+          });
+        });
+      });
+      document.querySelectorAll('.form-tag[data-key="' + key + '"]').forEach(function(t) {
+        t.classList.toggle('selected', data[key].indexOf(t.getAttribute('data-tag')) >= 0);
+      });
+    }
+    function initAddButtons() {
+      document.querySelectorAll('.form-add-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var key = btn.getAttribute('data-add');
+          var input = document.getElementById('input-' + key);
+          var val = (input.value || '').trim();
+          if (!val) return;
+          if (data[key].indexOf(val) >= 0) return;
+          data[key].push(val);
+          input.value = '';
+          renderChips(key);
+        });
+      });
+      document.querySelectorAll('[data-key]').forEach(function(input) {
+        if (input.tagName !== 'INPUT') return;
+        input.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            var key = input.getAttribute('data-key');
+            var val = (input.value || '').trim();
+            if (!val) return;
+            if (data[key].indexOf(val) >= 0) return;
+            data[key].push(val);
+            input.value = '';
+            renderChips(key);
+          }
+        });
+      });
+    }
+    function goToPage(n) {
+      currentPage = Math.max(0, Math.min(n, totalPages - 1));
+      document.querySelectorAll('.form-page').forEach(function(p) {
+        p.classList.toggle('active', parseInt(p.getAttribute('data-page'), 10) === currentPage);
+      });
+      document.getElementById('progress-fill').style.width = ((currentPage + 1) / totalPages * 100) + '%';
+      document.getElementById('progress-text').textContent = (currentPage + 1) + ' / ' + totalPages;
+      document.getElementById('btn-prev').classList.toggle('hidden', currentPage === 0);
+      document.getElementById('btn-next').textContent = currentPage === totalPages - 1 ? 'プレビュー' : '次へ';
+    }
+    function collectFormData() {
+      data.name = (document.getElementById('input-name').value || '').trim() || 'あなた';
+    }
+    function showPreview(formData) {
+      if (formData) {
+        data = formData;
+      } else {
+        collectFormData();
+      }
       var today = new Date();
       var dateStr = today.getFullYear() + '年' + (today.getMonth()+1) + '月' + today.getDate() + '日';
       document.getElementById('preview-date').textContent = dateStr;
-
-      // ダウンロード（プレビューカードをそのままキャプチャ）
-      document.getElementById('btn-download').addEventListener('click', function() {
-        var btn = this;
-        btn.disabled = true;
-        btn.textContent = '作成中...';
-
-        var el = document.getElementById('preview-card');
-        var opt = {
-          scale: 2,
-          useCORS: true,
-          backgroundColor: '#fffef9',
-          logging: false
-        };
-
-        html2canvas(el, opt).then(function(canvas) {
-          var link = document.createElement('a');
-          link.download = 'wagaie-torisetsu-' + (document.getElementById('preview-name').textContent || 'mai') + '.png';
-          link.href = canvas.toDataURL('image/png');
-          link.click();
-          btn.disabled = false;
-          btn.textContent = '画像でダウンロード';
-        }).catch(function(err) {
-          console.error(err);
-          btn.disabled = false;
-          btn.textContent = '画像でダウンロード';
-          alert('ダウンロードに失敗しました。もう一度お試しください。');
-        });
+      document.getElementById('preview-name').textContent = data.name || 'あなた';
+      ['axis','anxiety','spend','relief','timing','avoid','first'].forEach(function(key) {
+        var list = document.getElementById('section-' + key);
+        if (!list) return;
+        var items = data[key] && data[key].length ? data[key] : (key === 'axis' ? ['子どもの経験', '日々のゆとり', '将来への備え'] : []);
+        if (key === 'first' && items.length === 0) items = ['今の家計の現状を知りたい'];
+        list.innerHTML = items.map(function(i) { return '<li>' + i + '</li>'; }).join('');
       });
+      var firstText = data.first && data.first[0] && FIRST_WORDS[data.first[0]] ? FIRST_WORDS[data.first[0]] : FIRST_WORDS.default;
+      document.getElementById('first-words-text').textContent = firstText;
+      document.getElementById('form-view').classList.add('hidden');
+      document.getElementById('preview-view').classList.add('active');
+    }
+    function showForm() {
+      document.getElementById('input-name').value = data.name || '';
+      ['axis','anxiety','spend','relief','timing','avoid','first'].forEach(renderChips);
+      goToPage(0);
+      document.getElementById('form-view').classList.remove('hidden');
+      document.getElementById('preview-view').classList.remove('active');
+    }
+    var sampleData = {
+      name: 'まい',
+      axis: ['子どもの経験', '日々のゆとり', '将来への備え'],
+      anxiety: ['先の見通しが立たない時', '教育費を考えた時', '旦那さんと話せていない時'],
+      spend: ['疲れている時', '子どものためと思った時', 'なんとなく不安な時'],
+      relief: ['使っていい金額が分かっている', '教育費の見通しがある', '旦那さんと共有できている'],
+      timing: ['子どもの将来の話をしている時', '旅行や予定を立てている時'],
+      avoid: ['なんでそんなに使ったの', 'またその話？', '責められている感じ'],
+      first: ['今の家計の現状を知りたい']
+    };
 
-      // 編集する（将来のフォーム画面へ）
-      document.getElementById('btn-edit').addEventListener('click', function() {
-        alert('編集機能は、フォーム実装後に利用できます。');
+    renderTags();
+    initTagClicks();
+    initAddButtons();
+    goToPage(0);
+
+    document.getElementById('btn-prev').addEventListener('click', function() { goToPage(currentPage - 1); });
+    document.getElementById('btn-next').addEventListener('click', function() {
+      if (currentPage === totalPages - 1) {
+        showPreview();
+      } else {
+        goToPage(currentPage + 1);
+      }
+    });
+    document.getElementById('btn-sample').addEventListener('click', function() {
+      showPreview(sampleData);
+    });
+    document.getElementById('btn-edit').addEventListener('click', function() {
+      showForm();
+    });
+    document.getElementById('btn-download').addEventListener('click', function() {
+      var btn = this;
+      btn.disabled = true;
+      btn.textContent = '作成中...';
+      html2canvas(document.getElementById('preview-card'), {
+        scale: 2, useCORS: true, backgroundColor: '#fffef9', logging: false
+      }).then(function(canvas) {
+        var link = document.createElement('a');
+        link.download = 'wagaie-torisetsu-' + (document.getElementById('preview-name').textContent || '') + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        btn.disabled = false;
+        btn.textContent = '画像でダウンロード';
+      }).catch(function() {
+        btn.disabled = false;
+        btn.textContent = '画像でダウンロード';
+        alert('ダウンロードに失敗しました。');
       });
-    })();
+    });
+  })();
   </script>
 </body>
 </html>
