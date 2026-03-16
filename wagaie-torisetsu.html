@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <title>わが家のお金の価値観ミニ取説｜FamilyMoney</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,11 +32,11 @@
       background-size: 20px 20px;
     }
 
-    /* ===== フォーム画面 ===== */
-    .form-view { display: block; }
-    .form-view.hidden { display: none; }
-    .preview-view { display: none; }
-    .preview-view.active { display: block; }
+    /* ===== フォーム画面（初期表示）===== */
+    .form-view { display: block !important; }
+    .form-view.hidden { display: none !important; }
+    .preview-view { display: none !important; }
+    .preview-view.active { display: block !important; }
 
     .form-header {
       background: #fff;
@@ -454,8 +455,8 @@
     </nav>
   </div>
 
-  <!-- ===== プレビュー画面 ===== -->
-  <div class="preview-view" id="preview-view">
+  <!-- ===== プレビュー画面（フォーム回答後に表示）===== -->
+  <div class="preview-view" id="preview-view" style="display: none;">
     <div class="body-bg">
       <div class="cork-bg">
         <div class="preview-card" id="preview-card">
