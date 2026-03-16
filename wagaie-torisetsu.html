@@ -164,6 +164,7 @@
     }
     .form-name-input:focus { outline: none; border-color: var(--accent-dark); }
     .form-name-label { font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; display: block; }
+    .required { color: #c64545; margin-left: 2px; }
 
     .form-nav {
       position: fixed;
@@ -347,19 +348,19 @@
       <div class="form-page active" data-page="0">
         <div class="form-intro">
           <p>7つの質問に答えて、<br>わが家のお金の価値観を1枚にまとめます。</p>
-          <p class="light">お金の話を、責め合わずに始めるための取説です。<br>分かる範囲でOK。空欄でも大丈夫です。</p>
+          <p class="light">お金の話を、責め合わずに始めるための取説です。<br>各項目を1つ以上入力または選択してください。</p>
         </div>
       </div>
       <!-- 1: 名前 -->
       <div class="form-page" data-page="1">
-        <label class="form-name-label">お名前（取説に表示されます）</label>
+        <label class="form-name-label">お名前（取説に表示されます）<span class="required">*</span></label>
         <input type="text" class="form-name-input" id="input-name" placeholder="例：まい" maxlength="20">
       </div>
       <!-- 2: 大事にしたいこと -->
       <div class="form-page" data-page="2">
-        <h2 class="form-question-title">わが家で大事にしたいこと</h2>
+        <h2 class="form-question-title">わが家で大事にしたいこと<span class="required">*</span></h2>
         <div class="form-input-row">
-          <input type="text" id="input-axis" placeholder="入力する（任意）" data-key="axis">
+          <input type="text" id="input-axis" placeholder="入力する（必須）" data-key="axis">
           <button type="button" class="form-add-btn" data-add="axis">+</button>
         </div>
         <div class="form-chips" id="chips-axis"></div>
@@ -368,9 +369,9 @@
       </div>
       <!-- 3: 不安 -->
       <div class="form-page" data-page="3">
-        <h2 class="form-question-title">お金のことで不安になりやすいこと</h2>
+        <h2 class="form-question-title">お金のことで不安になりやすいこと<span class="required">*</span></h2>
         <div class="form-input-row">
-          <input type="text" id="input-anxiety" placeholder="入力する（任意）" data-key="anxiety">
+          <input type="text" id="input-anxiety" placeholder="入力する（必須）" data-key="anxiety">
           <button type="button" class="form-add-btn" data-add="anxiety">+</button>
         </div>
         <div class="form-chips" id="chips-anxiety"></div>
@@ -379,9 +380,9 @@
       </div>
       <!-- 4: 使いやすい場面 -->
       <div class="form-page" data-page="4">
-        <h2 class="form-question-title">ついお金を使いたくなる場面</h2>
+        <h2 class="form-question-title">ついお金を使いたくなる場面<span class="required">*</span></h2>
         <div class="form-input-row">
-          <input type="text" id="input-spend" placeholder="入力する（任意）" data-key="spend">
+          <input type="text" id="input-spend" placeholder="入力する（必須）" data-key="spend">
           <button type="button" class="form-add-btn" data-add="spend">+</button>
         </div>
         <div class="form-chips" id="chips-spend"></div>
@@ -390,9 +391,9 @@
       </div>
       <!-- 5: 安心状態 -->
       <div class="form-page" data-page="5">
-        <h2 class="form-question-title">安心しやすい家計の状態</h2>
+        <h2 class="form-question-title">安心しやすい家計の状態<span class="required">*</span></h2>
         <div class="form-input-row">
-          <input type="text" id="input-relief" placeholder="入力する（任意）" data-key="relief">
+          <input type="text" id="input-relief" placeholder="入力する（必須）" data-key="relief">
           <button type="button" class="form-add-btn" data-add="relief">+</button>
         </div>
         <div class="form-chips" id="chips-relief"></div>
@@ -401,9 +402,9 @@
       </div>
       <!-- 6: 話しやすいタイミング -->
       <div class="form-page" data-page="6">
-        <h2 class="form-question-title">お金の話をしやすいタイミング</h2>
+        <h2 class="form-question-title">お金の話をしやすいタイミング<span class="required">*</span></h2>
         <div class="form-input-row">
-          <input type="text" id="input-timing" placeholder="入力する（任意）" data-key="timing">
+          <input type="text" id="input-timing" placeholder="入力する（必須）" data-key="timing">
           <button type="button" class="form-add-btn" data-add="timing">+</button>
         </div>
         <div class="form-chips" id="chips-timing"></div>
@@ -412,9 +413,9 @@
       </div>
       <!-- 7: 避けたい言い方 -->
       <div class="form-page" data-page="7">
-        <h2 class="form-question-title">言われるとしんどいこと</h2>
+        <h2 class="form-question-title">言われるとしんどいこと<span class="required">*</span></h2>
         <div class="form-input-row">
-          <input type="text" id="input-avoid" placeholder="入力する（任意）" data-key="avoid">
+          <input type="text" id="input-avoid" placeholder="入力する（必須）" data-key="avoid">
           <button type="button" class="form-add-btn" data-add="avoid">+</button>
         </div>
         <div class="form-chips" id="chips-avoid"></div>
@@ -423,9 +424,9 @@
       </div>
       <!-- 8: 最初に話したいこと -->
       <div class="form-page" data-page="8">
-        <h2 class="form-question-title">まず最初に話したいこと</h2>
+        <h2 class="form-question-title">まず最初に話したいこと<span class="required">*</span></h2>
         <div class="form-input-row">
-          <input type="text" id="input-first" placeholder="入力する（任意）" data-key="first">
+          <input type="text" id="input-first" placeholder="入力する（必須）" data-key="first">
           <button type="button" class="form-add-btn" data-add="first">+</button>
         </div>
         <div class="form-chips" id="chips-first"></div>
@@ -612,7 +613,7 @@
       document.getElementById('btn-next').textContent = currentPage === totalPages - 1 ? 'プレビュー' : '次へ';
     }
     function collectFormData() {
-      data.name = (document.getElementById('input-name').value || '').trim() || 'あなた';
+      data.name = (document.getElementById('input-name').value || '').trim();
     }
     function showPreview(formData) {
       if (formData) {
@@ -648,8 +649,30 @@
     initAddButtons();
     goToPage(0);
 
+    var PAGE_KEYS = [null, 'name', 'axis', 'anxiety', 'spend', 'relief', 'timing', 'avoid', 'first'];
+    var PAGE_LABELS = ['', 'お名前', 'わが家で大事にしたいこと', 'お金のことで不安になりやすいこと', 'ついお金を使いたくなる場面', '安心しやすい家計の状態', 'お金の話をしやすいタイミング', '言われるとしんどいこと', 'まず最初に話したいこと'];
+
+    function validateCurrentPage() {
+      var key = PAGE_KEYS[currentPage];
+      if (!key) return true;
+      if (key === 'name') {
+        var name = (document.getElementById('input-name').value || '').trim();
+        if (!name) {
+          alert('お名前を入力してください。');
+          return false;
+        }
+        return true;
+      }
+      if (!data[key] || data[key].length === 0) {
+        alert(PAGE_LABELS[currentPage] + 'を1つ以上入力または選択してください。');
+        return false;
+      }
+      return true;
+    }
+
     document.getElementById('btn-prev').addEventListener('click', function() { goToPage(currentPage - 1); });
     document.getElementById('btn-next').addEventListener('click', function() {
+      if (!validateCurrentPage()) return;
       if (currentPage === totalPages - 1) {
         showPreview();
       } else {
