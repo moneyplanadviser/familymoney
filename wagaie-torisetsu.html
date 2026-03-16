@@ -72,8 +72,9 @@
       max-width: 480px;
       margin: 0 auto;
       padding: 24px 20px 100px;
+      overflow-x: hidden;
     }
-    .form-page { display: none; max-width: 400px; margin: 0 auto; }
+    .form-page { display: none; max-width: 100%; margin: 0 auto; }
     .form-page.active { display: block; }
     .form-intro {
       text-align: center;
@@ -86,9 +87,12 @@
       display: flex;
       gap: 8px;
       margin-bottom: 12px;
+      width: 100%;
+      max-width: 100%;
     }
     .form-input-row input {
       flex: 1;
+      min-width: 0;
       padding: 12px 14px;
       font-size: 1rem;
       font-family: inherit;
@@ -99,13 +103,14 @@
     .form-input-row input:focus { outline: none; border-color: var(--accent-dark); }
     .form-input-row input::placeholder { color: #aaa; }
     .form-add-btn {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      min-width: 40px;
+      height: 40px;
       padding: 0;
       border: 2px solid var(--border);
       border-radius: 10px;
       background: #fff;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       cursor: pointer;
       color: var(--text-muted);
       flex-shrink: 0;
