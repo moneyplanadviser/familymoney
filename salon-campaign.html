@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>【初月無料】オンラインサロン｜挑戦する人と応援する人のコミュニティ</title>
+  <meta name="description" content="初月無料キャンペーン実施中。オンラインサロンで、挑戦する人と応援する人をつなぐ。限定記事・割引クーポン・メンバー交流をお楽しみください。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-light: #dbeafe;
+      --accent: #f59e0b;
+      --accent-light: #fef3c7;
+      --bg: #f8fafc;
+      --bg-card: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --font: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.7; min-height: 100vh; }
+
+    /* ヘッダー・ナビ */
+    .nav {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner { max-width: 960px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-size: 1.25rem; font-weight: 700; color: var(--primary); }
+    .nav-links { display: flex; gap: 20px; font-size: 0.85rem; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--primary); }
+    @media (max-width: 640px) { .nav-links { display: none; } }
+
+    /* ヒーロー */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
+      color: #fff;
+      padding: 56px 24px 64px;
+      text-align: center;
+    }
+    .hero-inner { max-width: 720px; margin: 0 auto; }
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 8px 20px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+      letter-spacing: 0.05em;
+    }
+    .hero h1 { font-size: 1.9rem; font-weight: 700; margin-bottom: 16px; line-height: 1.4; }
+    .hero p { font-size: 1rem; opacity: 0.95; margin-bottom: 28px; }
+    .hero-price {
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 20px 28px;
+      display: inline-block;
+      margin-bottom: 28px;
+    }
+    .hero-price .main { font-size: 1.5rem; font-weight: 700; }
+    .hero-price .sub { font-size: 0.9rem; opacity: 0.9; margin-top: 4px; }
+    .cta-btn {
+      display: inline-block;
+      background: #fff;
+      color: var(--primary);
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 16px 48px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 1.5rem; }
+      .hero-price .main { font-size: 1.25rem; }
+    }
+
+    /* コンテナ */
+    .container { max-width: 960px; margin: 0 auto; padding: 48px 24px 80px; }
+
+    /* セクション */
+    .section { margin-bottom: 56px; }
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .section-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    /* カード */
+    .card {
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 28px 32px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .card h3 { font-size: 1.1rem; color: var(--primary); margin-bottom: 12px; }
+    .card p { font-size: 0.95rem; color: var(--text-muted); }
+
+    /* グリッド */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    @media (max-width: 768px) { .grid-3 { grid-template-columns: 1fr; } }
+
+    /* Enjoy Salon */
+    .enjoy-item {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    .enjoy-item .icon {
+      width: 48px;
+      height: 48px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 1.5rem;
+    }
+    .enjoy-item h4 { font-size: 1rem; margin-bottom: 8px; }
+    .enjoy-item p { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* こんな方におすすめ */
+    .recommend-list { list-style: none; }
+    .recommend-list li {
+      padding: 14px 20px;
+      background: var(--bg-card);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      border-left: 4px solid var(--primary);
+      font-size: 0.95rem;
+    }
+
+    /* メンバーの声 */
+    .voice-card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid var(--border);
+    }
+    .voice-card .stars { color: var(--accent); margin-bottom: 12px; font-size: 1rem; }
+    .voice-card p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px; }
+    .voice-card .author { font-size: 0.85rem; color: var(--text); font-weight: 600; }
+
+    /* FAQ */
+    .faq-item {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 12px;
+      border: 1px solid var(--border);
+    }
+    .faq-item dt { font-weight: 600; margin-bottom: 8px; font-size: 0.95rem; }
+    .faq-item dd { font-size: 0.9rem; color: var(--text-muted); margin-left: 0; }
+
+    /* CTA セクション */
+    .cta-section {
+      background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
+      color: #fff;
+      padding: 48px 24px;
+      border-radius: 20px;
+      text-align: center;
+    }
+    .cta-section h2 { font-size: 1.5rem; margin-bottom: 12px; }
+    .cta-section p { opacity: 0.95; margin-bottom: 24px; }
+    .cta-section .cta-btn {
+      background: #fff;
+      color: var(--primary);
+    }
+
+    /* フッター */
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+    .footer-links { margin-bottom: 12px; }
+    .footer-links a { color: var(--text-muted); text-decoration: none; margin: 0 12px; }
+    .footer-links a:hover { color: var(--primary); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <span class="nav-logo">Salon.jp</span>
+      <div class="nav-links">
+        <a href="#">ホーム</a>
+        <a href="#">サロン記事</a>
+        <a href="#">プレゼント</a>
+        <a href="#">クーポン</a>
+        <a href="#">使い方マニュアル</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="hero-badge">初月無料キャンペーン</span>
+      <h1>挑戦する人と応援する人の<br>オンラインサロン</h1>
+      <p>会員限定の記事・割引クーポン・メンバー交流で、あなたの挑戦を応援します。</p>
+      <div class="hero-price">
+        <div class="main">980円/1ヶ月</div>
+        <div class="sub">初月は50円を下限に日割り計算</div>
+      </div>
+      <a href="#entry" class="cta-btn">サロンに入会する</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <h2 class="section-title">このサロンについて</h2>
+      <p class="section-subtitle">まだ公開できない構想段階から、会員限定で共有。プロジェクト制作過程への参加や、メンバー同士の交流が可能です。</p>
+      <div class="card">
+        <h3>会員数最大級のオンラインサロン</h3>
+        <p>挑戦する人と応援する人をつなぐ、日本最大級のオンラインサロンコミュニティ。日々更新される限定記事、割引クーポン、メンバー限定のプレゼント企画など、さまざまな特典をお楽しみいただけます。</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Enjoy Salon !</h2>
+      <p class="section-subtitle">サロンメンバー限定の特典をご紹介</p>
+      <div class="grid-3">
+        <div class="enjoy-item">
+          <div class="icon">📄</div>
+          <h4>メンバー限定記事</h4>
+          <p>毎日更新される限定記事。過去のアーカイブも閲覧可能</p>
+        </div>
+        <div class="enjoy-item">
+          <div class="icon">🎫</div>
+          <h4>割引クーポン</h4>
+          <p>メンバー限定の割引クーポンでお得にショッピング</p>
+        </div>
+        <div class="enjoy-item">
+          <div class="icon">🗺️</div>
+          <h4>チムニーマップ</h4>
+          <p>お店の登録や近くのストア検索が可能</p>
+        </div>
+        <div class="enjoy-item">
+          <div class="icon">👥</div>
+          <h4>サロンメンバー検索</h4>
+          <p>職業別にメンバーを検索し、交流を深められます</p>
+        </div>
+        <div class="enjoy-item">
+          <div class="icon">🎁</div>
+          <h4>限定プレゼント</h4>
+          <p>メンバー限定のプレゼント企画に参加可能</p>
+        </div>
+        <div class="enjoy-item">
+          <div class="icon">💬</div>
+          <h4>掲示板</h4>
+          <p>メンバー限定掲示板で情報交換・交流</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">こんな方におすすめ</h2>
+      <ul class="recommend-list">
+        <li>プロジェクトの制作過程に参加したい</li>
+        <li>自身の事業を宣伝したい</li>
+        <li>同じ志を持つ仲間と交流したい</li>
+        <li>限定情報をいち早くキャッチしたい</li>
+        <li>割引クーポンでお得にショッピングしたい</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">サロンメンバーの声</h2>
+      <div class="grid-2">
+        <div class="voice-card">
+          <div class="stars">★★★★★</div>
+          <p>初月無料で気軽に始められました。限定記事が毎日楽しみで、仕事のヒントもたくさん得られています。</p>
+          <span class="author">— 30代・会社員</span>
+        </div>
+        <div class="voice-card">
+          <div class="stars">★★★★★</div>
+          <p>メンバー同士の交流が活発で、同じ目標を持つ仲間が見つかりました。クーポンもお得です。</p>
+          <span class="author">— 40代・自営業</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">よくある質問</h2>
+      <dl class="faq-list">
+        <div class="faq-item">
+          <dt>初月無料とはどういうことですか？</dt>
+          <dd>初月の利用料金は50円を下限に日割り精算されます。月の途中から入会しても追加料金はかかりません。</dd>
+        </div>
+        <div class="faq-item">
+          <dt>いつでも退会できますか？</dt>
+          <dd>はい、いつでも退会可能です。退会手続き後、次回更新日以降は課金されません。</dd>
+        </div>
+        <div class="faq-item">
+          <dt>支払い方法は？</dt>
+          <dd>クレジットカード決済に対応しています。安全な決済システムをご利用いただけます。</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="section cta-section" id="entry">
+      <h2>今すぐサロンに入会する</h2>
+      <p>初月無料で、まずは気軽に体験してみませんか？</p>
+      <a href="#" class="cta-btn">サロンに入会する</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="#">サロンジャンプ</a>
+      <a href="#">プライバシーポリシー</a>
+      <a href="#">利用規約</a>
+    </div>
+    <p>© Salon.jp - 挑戦する人と応援する人のオンラインサロン</p>
+  </footer>
+</body>
+</html>
