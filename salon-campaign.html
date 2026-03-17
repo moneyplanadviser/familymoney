@@ -3,28 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>【初月無料】オンラインサロン｜挑戦する人と応援する人のコミュニティ</title>
-  <meta name="description" content="初月無料キャンペーン実施中。オンラインサロンで、挑戦する人と応援する人をつなぐ。限定記事・割引クーポン・メンバー交流をお楽しみください。">
+  <title>【初月無料】Family Money オンラインサロン｜家計を、一人じゃないで続ける</title>
+  <meta name="description" content="初月無料キャンペーン実施中。家計簿はつけているけれど貯まらない…そんな方のための、仲間と一緒に家計改善を続けられるコミュニティ。330円/月、初月無料。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
-      --primary-light: #dbeafe;
-      --accent: #f59e0b;
-      --accent-light: #fef3c7;
-      --bg: #f8fafc;
+      --primary: #f9dfb8;
+      --primary-light: #fcecd8;
+      --primary-dark: #b8956a;
+      --accent: #d4a853;
+      --bg: #f8f6f2;
       --bg-card: #ffffff;
-      --text: #1e293b;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
+      --text: #2c2c2c;
+      --text-muted: #5c5c5c;
+      --border: #e5e0d8;
       --font: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
     }
     html { scroll-behavior: smooth; }
-    body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.7; min-height: 100vh; }
+    body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.8; min-height: 100vh; }
 
     /* ヘッダー・ナビ */
     .nav {
@@ -36,119 +35,127 @@
       z-index: 100;
     }
     .nav-inner { max-width: 960px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { font-size: 1.25rem; font-weight: 700; color: var(--primary); }
+    .nav-logo { font-size: 1.25rem; font-weight: 700; color: var(--primary-dark); text-decoration: none; }
+    .nav-logo:hover { color: var(--primary-dark); opacity: 0.9; }
     .nav-links { display: flex; gap: 20px; font-size: 0.85rem; }
     .nav-links a { color: var(--text-muted); text-decoration: none; }
-    .nav-links a:hover { color: var(--primary); }
+    .nav-links a:hover { color: var(--primary-dark); }
     @media (max-width: 640px) { .nav-links { display: none; } }
 
     /* ヒーロー */
     .hero {
-      background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
+      background: linear-gradient(135deg, var(--primary-dark) 0%, #8b7355 100%);
       color: #fff;
-      padding: 56px 24px 64px;
+      padding: 48px 24px 56px;
       text-align: center;
     }
     .hero-inner { max-width: 720px; margin: 0 auto; }
-    .hero-badge {
-      display: inline-block;
-      background: var(--accent);
-      color: #fff;
-      font-size: 0.85rem;
+    .hero-main-title {
+      font-size: 1.6rem;
       font-weight: 700;
-      padding: 8px 20px;
-      border-radius: 999px;
-      margin-bottom: 20px;
+      margin-bottom: 8px;
       letter-spacing: 0.05em;
+      line-height: 1.4;
     }
-    .hero h1 { font-size: 1.9rem; font-weight: 700; margin-bottom: 16px; line-height: 1.4; }
-    .hero p { font-size: 1rem; opacity: 0.95; margin-bottom: 28px; }
+    .hero-period {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .hero-lead {
+      font-size: 1rem;
+      opacity: 0.95;
+      margin-bottom: 12px;
+    }
+    .hero-sub {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      margin-bottom: 24px;
+    }
     .hero-price {
       background: rgba(255,255,255,0.15);
       border-radius: 12px;
-      padding: 20px 28px;
+      padding: 16px 28px;
       display: inline-block;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
-    .hero-price .main { font-size: 1.5rem; font-weight: 700; }
-    .hero-price .sub { font-size: 0.9rem; opacity: 0.9; margin-top: 4px; }
+    .hero-price .main { font-size: 1.35rem; font-weight: 700; }
+    .hero-price .free { font-size: 1rem; font-weight: 600; margin-left: 8px; }
     .cta-btn {
       display: inline-block;
       background: #fff;
-      color: var(--primary);
-      font-size: 1.1rem;
+      color: var(--primary-dark);
+      font-size: 1.05rem;
       font-weight: 700;
-      padding: 16px 48px;
+      padding: 16px 40px;
       border-radius: 12px;
       text-decoration: none;
       transition: transform 0.2s, box-shadow 0.2s;
     }
     .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
     @media (max-width: 640px) {
-      .hero h1 { font-size: 1.5rem; }
-      .hero-price .main { font-size: 1.25rem; }
+      .hero-main-title { font-size: 1.35rem; }
+      .hero h1 { font-size: 1.4rem; }
+      .hero-price .main { font-size: 1.15rem; }
     }
 
     /* コンテナ */
-    .container { max-width: 960px; margin: 0 auto; padding: 48px 24px 80px; }
+    .container { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
 
     /* セクション */
     .section { margin-bottom: 56px; }
     .section-title {
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: 700;
-      color: var(--text);
-      margin-bottom: 24px;
-      text-align: center;
-    }
-    .section-subtitle {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      text-align: center;
-      margin-bottom: 32px;
-    }
-
-    /* カード */
-    .card {
-      background: var(--bg-card);
-      border-radius: 16px;
-      padding: 28px 32px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      border: 1px solid var(--border);
+      color: var(--primary-dark);
       margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--primary-light);
     }
-    .card h3 { font-size: 1.1rem; color: var(--primary); margin-bottom: 12px; }
-    .card p { font-size: 0.95rem; color: var(--text-muted); }
+    .section-body p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 12px; }
+    .section-body p:last-child { margin-bottom: 0; }
 
-    /* グリッド */
-    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-    @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
-
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    @media (max-width: 768px) { .grid-3 { grid-template-columns: 1fr; } }
-
-    /* Enjoy Salon */
-    .enjoy-item {
+    /* 特典グリッド */
+    .benefit-grid { display: grid; gap: 20px; }
+    .benefit-item {
       background: var(--bg-card);
       border-radius: 12px;
-      padding: 24px;
+      padding: 20px 24px;
       border: 1px solid var(--border);
-      text-align: center;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
     }
-    .enjoy-item .icon {
+    .benefit-item .icon {
       width: 48px;
       height: 48px;
+      min-width: 48px;
       background: var(--primary-light);
-      color: var(--primary);
+      color: var(--primary-dark);
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 12px;
       font-size: 1.5rem;
     }
-    .enjoy-item h4 { font-size: 1rem; margin-bottom: 8px; }
-    .enjoy-item p { font-size: 0.85rem; color: var(--text-muted); }
+    .benefit-item h4 { font-size: 1rem; margin-bottom: 6px; color: var(--text); }
+    .benefit-item p { font-size: 0.9rem; color: var(--text-muted); margin: 0; }
+    .benefit-tagline {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      text-align: center;
+      margin-top: 24px;
+      padding: 16px;
+      background: var(--primary-light);
+      border-radius: 10px;
+    }
 
     /* こんな方におすすめ */
     .recommend-list { list-style: none; }
@@ -157,7 +164,7 @@
       background: var(--bg-card);
       border-radius: 10px;
       margin-bottom: 10px;
-      border-left: 4px solid var(--primary);
+      border-left: 4px solid var(--primary-dark);
       font-size: 0.95rem;
     }
 
@@ -167,6 +174,7 @@
       border-radius: 12px;
       padding: 24px;
       border: 1px solid var(--border);
+      margin-bottom: 16px;
     }
     .voice-card .stars { color: var(--accent); margin-bottom: 12px; font-size: 1rem; }
     .voice-card p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px; }
@@ -183,19 +191,32 @@
     .faq-item dt { font-weight: 600; margin-bottom: 8px; font-size: 0.95rem; }
     .faq-item dd { font-size: 0.9rem; color: var(--text-muted); margin-left: 0; }
 
+    /* エントリー手順・注意事項 */
+    .entry-box {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 24px 28px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+    .entry-box h4 { font-size: 1rem; margin-bottom: 12px; color: var(--primary-dark); }
+    .entry-box p, .entry-box ul { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px; }
+    .entry-box ul { margin-left: 1.2em; }
+    .entry-box li { margin-bottom: 4px; }
+
     /* CTA セクション */
     .cta-section {
-      background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
+      background: linear-gradient(135deg, var(--primary-dark) 0%, #8b7355 100%);
       color: #fff;
       padding: 48px 24px;
       border-radius: 20px;
       text-align: center;
     }
-    .cta-section h2 { font-size: 1.5rem; margin-bottom: 12px; }
+    .cta-section h2 { font-size: 1.4rem; margin-bottom: 12px; }
     .cta-section p { opacity: 0.95; margin-bottom: 24px; }
     .cta-section .cta-btn {
       background: #fff;
-      color: var(--primary);
+      color: var(--primary-dark);
     }
 
     /* フッター */
@@ -208,107 +229,103 @@
     }
     .footer-links { margin-bottom: 12px; }
     .footer-links a { color: var(--text-muted); text-decoration: none; margin: 0 12px; }
-    .footer-links a:hover { color: var(--primary); }
+    .footer-links a:hover { color: var(--primary-dark); }
   </style>
 </head>
 <body>
   <nav class="nav">
     <div class="nav-inner">
-      <span class="nav-logo">Salon.jp</span>
+      <a href="index.html" class="nav-logo">Family Money</a>
       <div class="nav-links">
-        <a href="#">ホーム</a>
-        <a href="#">サロン記事</a>
-        <a href="#">プレゼント</a>
-        <a href="#">クーポン</a>
-        <a href="#">使い方マニュアル</a>
+        <a href="index.html">ホーム</a>
+        <a href="kakei.html">家計シミュレーター</a>
+        <a href="souzokuzei.html">相続税シミュレーター</a>
       </div>
     </div>
   </nav>
 
   <header class="hero">
     <div class="hero-inner">
-      <span class="hero-badge">初月無料キャンペーン</span>
-      <h1>挑戦する人と応援する人の<br>オンラインサロン</h1>
-      <p>会員限定の記事・割引クーポン・メンバー交流で、あなたの挑戦を応援します。</p>
+      <h2 class="hero-main-title">初月無料<br>キャンペーン</h2>
+      <p class="hero-period">キャンペーン期間：2026/04/01 ～ 2026/04/30</p>
+      <h1>家計を、一人じゃないで続ける<br>オンラインサロン</h1>
+      <p class="hero-lead">仲間と一緒に家計改善を続けられるコミュニティ。</p>
+      <p class="hero-sub">週1の限定記事・月1のセミナー・相談会・作業会で、<br>「つけてる」から「見てる」へ。</p>
       <div class="hero-price">
-        <div class="main">980円/1ヶ月</div>
-        <div class="sub">初月は50円を下限に日割り計算</div>
+        <span class="main">330円/1ヶ月（税込）</span>
+        <span class="free">初月無料</span>
       </div>
-      <a href="#entry" class="cta-btn">サロンに入会する</a>
+      <a href="https://note.com/familymoney/membership" target="_blank" rel="noopener noreferrer" class="cta-btn">サロンに入会する</a>
     </div>
   </header>
 
   <main class="container">
     <section class="section">
       <h2 class="section-title">このサロンについて</h2>
-      <p class="section-subtitle">まだ公開できない構想段階から、会員限定で共有。プロジェクト制作過程への参加や、メンバー同士の交流が可能です。</p>
-      <div class="card">
-        <h3>会員数最大級のオンラインサロン</h3>
-        <p>挑戦する人と応援する人をつなぐ、日本最大級のオンラインサロンコミュニティ。日々更新される限定記事、割引クーポン、メンバー限定のプレゼント企画など、さまざまな特典をお楽しみいただけます。</p>
+      <div class="section-body">
+        <p>家計簿はつけているけれど貯まらない。<br>数字は見えているけれど、何をどう見直せばいいかわからない。<br>一人では続かない…。</p>
+        <p>Family Money オンラインサロンは、<br>そんな方のための、仲間と一緒に家計改善を続けられるコミュニティです。</p>
+        <p>近すぎず、遠すぎない関係性でお金の相談ができる。<br>月1の作業会で仲間と振り返るから、一人じゃない。続く。</p>
       </div>
     </section>
 
     <section class="section">
-      <h2 class="section-title">Enjoy Salon !</h2>
-      <p class="section-subtitle">サロンメンバー限定の特典をご紹介</p>
-      <div class="grid-3">
-        <div class="enjoy-item">
+      <h2 class="section-title">サロンで得られること</h2>
+      <div class="benefit-grid">
+        <div class="benefit-item">
           <div class="icon">📄</div>
-          <h4>メンバー限定記事</h4>
-          <p>毎日更新される限定記事。過去のアーカイブも閲覧可能</p>
+          <div>
+            <h4>週1の限定記事</h4>
+            <p>毎週土曜に「今日からできること」が届く。知識より環境が大事。</p>
+          </div>
         </div>
-        <div class="enjoy-item">
-          <div class="icon">🎫</div>
-          <h4>割引クーポン</h4>
-          <p>メンバー限定の割引クーポンでお得にショッピング</p>
+        <div class="benefit-item">
+          <div class="icon">📚</div>
+          <div>
+            <h4>月1の家計改善セミナー</h4>
+            <p>お金の使い道をどう選ぶか。あなたに合った基準で一緒に学ぶ。</p>
+          </div>
         </div>
-        <div class="enjoy-item">
-          <div class="icon">🗺️</div>
-          <h4>チムニーマップ</h4>
-          <p>お店の登録や近くのストア検索が可能</p>
-        </div>
-        <div class="enjoy-item">
-          <div class="icon">👥</div>
-          <h4>サロンメンバー検索</h4>
-          <p>職業別にメンバーを検索し、交流を深められます</p>
-        </div>
-        <div class="enjoy-item">
-          <div class="icon">🎁</div>
-          <h4>限定プレゼント</h4>
-          <p>メンバー限定のプレゼント企画に参加可能</p>
-        </div>
-        <div class="enjoy-item">
+        <div class="benefit-item">
           <div class="icon">💬</div>
-          <h4>掲示板</h4>
-          <p>メンバー限定掲示板で情報交換・交流</p>
+          <div>
+            <h4>月1のミニ個別相談会</h4>
+            <p>FPに相談すると3〜5万円する内容を、1人10分でお試し。</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="icon">👥</div>
+          <div>
+            <h4>月1のもくもく作業会＆チャレンジ</h4>
+            <p>仲間と一緒に振り返るから、一人じゃない。続く。</p>
+          </div>
         </div>
       </div>
+      <p class="benefit-tagline">「つけてる」と「見てる」は違う。一人じゃないから続く。</p>
     </section>
 
     <section class="section">
       <h2 class="section-title">こんな方におすすめ</h2>
       <ul class="recommend-list">
-        <li>プロジェクトの制作過程に参加したい</li>
-        <li>自身の事業を宣伝したい</li>
-        <li>同じ志を持つ仲間と交流したい</li>
-        <li>限定情報をいち早くキャッチしたい</li>
-        <li>割引クーポンでお得にショッピングしたい</li>
+        <li>家計簿はつけているけれど、貯まらない</li>
+        <li>一人だと続かない</li>
+        <li>何をどう見直せばいいかわからない</li>
+        <li>仲間と一緒に家計を整えたい</li>
+        <li>節約ではなく、使い方を整えたい</li>
       </ul>
     </section>
 
     <section class="section">
       <h2 class="section-title">サロンメンバーの声</h2>
-      <div class="grid-2">
-        <div class="voice-card">
-          <div class="stars">★★★★★</div>
-          <p>初月無料で気軽に始められました。限定記事が毎日楽しみで、仕事のヒントもたくさん得られています。</p>
-          <span class="author">— 30代・会社員</span>
-        </div>
-        <div class="voice-card">
-          <div class="stars">★★★★★</div>
-          <p>メンバー同士の交流が活発で、同じ目標を持つ仲間が見つかりました。クーポンもお得です。</p>
-          <span class="author">— 40代・自営業</span>
-        </div>
+      <div class="voice-card">
+        <div class="stars">★★★★★</div>
+        <p>初月無料で気軽に始められました。週1の限定記事が楽しみで、「今日からできること」が具体的で助かっています。</p>
+        <span class="author">— 40代・ママ</span>
+      </div>
+      <div class="voice-card">
+        <div class="stars">★★★★★</div>
+        <p>もくもく作業会で仲間と振り返る時間があるから、一人じゃないと実感できました。家計の話を気軽にできる場所ができて安心しています。</p>
+        <span class="author">— 30代・共働き</span>
       </div>
     </section>
 
@@ -316,34 +333,51 @@
       <h2 class="section-title">よくある質問</h2>
       <dl class="faq-list">
         <div class="faq-item">
-          <dt>初月無料とはどういうことですか？</dt>
-          <dd>初月の利用料金は50円を下限に日割り精算されます。月の途中から入会しても追加料金はかかりません。</dd>
+          <dt>Q. 初月無料とはどういうことですか？</dt>
+          <dd>A. キャンペーン期間中にご入会いただくと、初月の会費が無料になります。翌月以降は月額330円（税込）が毎月1日に請求されます。</dd>
         </div>
         <div class="faq-item">
-          <dt>いつでも退会できますか？</dt>
-          <dd>はい、いつでも退会可能です。退会手続き後、次回更新日以降は課金されません。</dd>
+          <dt>Q. いつでも退会できますか？</dt>
+          <dd>A. はい、いつでも退会可能です。退会手続き後、次回更新日以降は課金されません。</dd>
         </div>
         <div class="faq-item">
-          <dt>支払い方法は？</dt>
-          <dd>クレジットカード決済に対応しています。安全な決済システムをご利用いただけます。</dd>
+          <dt>Q. 330円のまま据え置きとは？</dt>
+          <dd>A. 330円でご入会いただいた方は、今後価格が改定されても一生330円のままです。</dd>
         </div>
       </dl>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">エントリー手順・注意事項</h2>
+      <div class="entry-box">
+        <h4>【参加方法】</h4>
+        <p>下記の「サロンに入会する」から、noteのメンバーシップページに進み、新規アカウントを作成のうえご入会ください。</p>
+        <p>入会ページで「初月無料」が適用されていることをご確認いただければ、エントリー完了です。</p>
+      </div>
+      <div class="entry-box">
+        <h4>【注意事項】</h4>
+        <ul>
+          <li>当キャンペーンページからエントリーが必要です。</li>
+          <li>オンラインサロンの入会には、noteアカウントとメンバーシップのご登録が必要です。</li>
+          <li>翌月以降は毎月1日に月会費（330円税込）が請求されます。</li>
+          <li>キャンペーン期間：2026年4月1日（水）～4月30日（木）23:59まで</li>
+        </ul>
+      </div>
     </section>
 
     <section class="section cta-section" id="entry">
       <h2>今すぐサロンに入会する</h2>
       <p>初月無料で、まずは気軽に体験してみませんか？</p>
-      <a href="#" class="cta-btn">サロンに入会する</a>
+      <a href="https://note.com/familymoney/membership" target="_blank" rel="noopener noreferrer" class="cta-btn">サロンに入会する</a>
     </section>
   </main>
 
   <footer class="footer">
     <div class="footer-links">
-      <a href="#">サロンジャンプ</a>
-      <a href="#">プライバシーポリシー</a>
-      <a href="#">利用規約</a>
+      <a href="index.html">Family Money</a>
+      <a href="salon-campaign.html">初月無料キャンペーン</a>
     </div>
-    <p>© Salon.jp - 挑戦する人と応援する人のオンラインサロン</p>
+    <p>© Family Money - 家計・相続・年金をわかりやすく</p>
   </footer>
 </body>
 </html>
