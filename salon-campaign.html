@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>【初月無料】Family Money オンラインサロン｜家計を、一人じゃないで続ける</title>
-  <meta name="description" content="初月無料キャンペーン実施中。家計簿はつけているけれど貯まらない…そんな方のための、仲間と一緒に家計改善を続けられるコミュニティ。330円/月、初月無料。">
+  <title>【初月無料】Family Money オンラインサロン</title>
+  <meta name="description" content="家計簿はつけてるけど一人だと続かない…そんな方のためのオンラインサロン。330円/月、初月無料。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
@@ -14,7 +14,6 @@
       --primary: #f9dfb8;
       --primary-light: #fcecd8;
       --primary-dark: #b8956a;
-      --accent: #d4a853;
       --bg: #f8f6f2;
       --bg-card: #ffffff;
       --text: #2c2c2c;
@@ -25,359 +24,129 @@
     html { scroll-behavior: smooth; }
     body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.8; min-height: 100vh; }
 
-    /* ヘッダー・ナビ */
     .nav {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border);
       padding: 16px 24px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
     }
-    .nav-inner { max-width: 960px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { font-size: 1.25rem; font-weight: 700; color: var(--primary-dark); text-decoration: none; }
-    .nav-logo:hover { color: var(--primary-dark); opacity: 0.9; }
-    .nav-links { display: flex; gap: 20px; font-size: 0.85rem; }
-    .nav-links a { color: var(--text-muted); text-decoration: none; }
-    .nav-links a:hover { color: var(--primary-dark); }
-    @media (max-width: 640px) { .nav-links { display: none; } }
+    .nav-inner { max-width: 640px; margin: 0 auto; }
+    .nav-logo { font-size: 1.1rem; font-weight: 700; color: var(--primary-dark); text-decoration: none; }
+    .nav-logo:hover { opacity: 0.9; }
 
-    /* ヒーロー */
+    .container { max-width: 560px; margin: 0 auto; padding: 40px 24px 64px; }
+
     .hero {
-      background: linear-gradient(135deg, var(--primary-dark) 0%, #8b7355 100%);
-      color: #fff;
-      padding: 48px 24px 56px;
       text-align: center;
+      padding: 40px 0 32px;
     }
-    .hero-inner { max-width: 720px; margin: 0 auto; }
-    .hero-main-title {
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      letter-spacing: 0.05em;
-      line-height: 1.4;
-    }
-    .hero-period {
-      font-size: 0.9rem;
-      opacity: 0.9;
-      margin-bottom: 28px;
+    .hero-badge {
+      font-size: 0.8rem;
+      color: var(--primary-dark);
+      font-weight: 600;
+      margin-bottom: 16px;
     }
     .hero h1 {
-      font-size: 1.75rem;
+      font-size: 1.4rem;
       font-weight: 700;
-      margin-bottom: 16px;
-      line-height: 1.5;
+      line-height: 1.6;
+      margin-bottom: 20px;
     }
     .hero-lead {
-      font-size: 1rem;
-      opacity: 0.95;
-      margin-bottom: 12px;
-    }
-    .hero-sub {
       font-size: 0.95rem;
-      opacity: 0.9;
+      color: var(--text-muted);
       margin-bottom: 24px;
     }
     .hero-price {
-      background: rgba(255,255,255,0.15);
-      border-radius: 12px;
-      padding: 16px 28px;
-      display: inline-block;
-      margin-bottom: 24px;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 28px;
     }
-    .hero-price .main { font-size: 1.35rem; font-weight: 700; }
-    .hero-price .free { font-size: 1rem; font-weight: 600; margin-left: 8px; }
+    .hero-price strong { color: var(--text); }
     .cta-btn {
       display: inline-block;
-      background: #fff;
-      color: var(--primary-dark);
-      font-size: 1.05rem;
-      font-weight: 700;
-      padding: 16px 40px;
-      border-radius: 12px;
-      text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
-    @media (max-width: 640px) {
-      .hero-main-title { font-size: 1.35rem; }
-      .hero h1 { font-size: 1.4rem; }
-      .hero-price .main { font-size: 1.15rem; }
-    }
-
-    /* コンテナ */
-    .container { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
-
-    /* セクション */
-    .section { margin-bottom: 56px; }
-    .section-title {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--primary-dark);
-      margin-bottom: 20px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid var(--primary-light);
-    }
-    .section-body p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 12px; }
-    .section-body p:last-child { margin-bottom: 0; }
-
-    /* 特典グリッド */
-    .benefit-grid { display: grid; gap: 20px; }
-    .benefit-item {
-      background: var(--bg-card);
-      border-radius: 12px;
-      padding: 20px 24px;
-      border: 1px solid var(--border);
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-    }
-    .benefit-item .icon {
-      width: 48px;
-      height: 48px;
-      min-width: 48px;
-      background: var(--primary-light);
-      color: var(--primary-dark);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-    }
-    .benefit-item h4 { font-size: 1rem; margin-bottom: 6px; color: var(--text); }
-    .benefit-item p { font-size: 0.9rem; color: var(--text-muted); margin: 0; }
-    .benefit-tagline {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--primary-dark);
-      text-align: center;
-      margin-top: 24px;
-      padding: 16px;
-      background: var(--primary-light);
-      border-radius: 10px;
-    }
-
-    /* こんな方におすすめ */
-    .recommend-list { list-style: none; }
-    .recommend-list li {
-      padding: 14px 20px;
-      background: var(--bg-card);
-      border-radius: 10px;
-      margin-bottom: 10px;
-      border-left: 4px solid var(--primary-dark);
-      font-size: 0.95rem;
-    }
-
-    /* メンバーの声 */
-    .voice-card {
-      background: var(--bg-card);
-      border-radius: 12px;
-      padding: 24px;
-      border: 1px solid var(--border);
-      margin-bottom: 16px;
-    }
-    .voice-card .stars { color: var(--accent); margin-bottom: 12px; font-size: 1rem; }
-    .voice-card p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px; }
-    .voice-card .author { font-size: 0.85rem; color: var(--text); font-weight: 600; }
-
-    /* FAQ */
-    .faq-item {
-      background: var(--bg-card);
-      border-radius: 12px;
-      padding: 20px 24px;
-      margin-bottom: 12px;
-      border: 1px solid var(--border);
-    }
-    .faq-item dt { font-weight: 600; margin-bottom: 8px; font-size: 0.95rem; }
-    .faq-item dd { font-size: 0.9rem; color: var(--text-muted); margin-left: 0; }
-
-    /* エントリー手順・注意事項 */
-    .entry-box {
-      background: var(--bg-card);
-      border-radius: 12px;
-      padding: 24px 28px;
-      border: 1px solid var(--border);
-      margin-bottom: 16px;
-    }
-    .entry-box h4 { font-size: 1rem; margin-bottom: 12px; color: var(--primary-dark); }
-    .entry-box p, .entry-box ul { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px; }
-    .entry-box ul { margin-left: 1.2em; }
-    .entry-box li { margin-bottom: 4px; }
-
-    /* CTA セクション */
-    .cta-section {
-      background: linear-gradient(135deg, var(--primary-dark) 0%, #8b7355 100%);
+      background: var(--primary-dark);
       color: #fff;
-      padding: 48px 24px;
-      border-radius: 20px;
-      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s;
     }
-    .cta-section h2 { font-size: 1.4rem; margin-bottom: 12px; }
-    .cta-section p { opacity: 0.95; margin-bottom: 24px; }
-    .cta-section .cta-btn {
-      background: #fff;
-      color: var(--primary-dark);
-    }
+    .cta-btn:hover { opacity: 0.9; }
 
-    /* フッター */
-    .footer {
-      text-align: center;
-      padding: 32px 24px;
-      font-size: 0.8rem;
+    .section { margin-bottom: 40px; }
+    .section-title {
+      font-size: 0.9rem;
+      font-weight: 600;
       color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .fit-list {
+      list-style: none;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+    .fit-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .fit-list li:last-child { border-bottom: none; }
+
+    .note-link {
+      text-align: center;
+      padding: 32px 0;
       border-top: 1px solid var(--border);
     }
-    .footer-links { margin-bottom: 12px; }
-    .footer-links a { color: var(--text-muted); text-decoration: none; margin: 0 12px; }
-    .footer-links a:hover { color: var(--primary-dark); }
+    .note-link p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .footer a { color: var(--text-muted); text-decoration: none; }
   </style>
 </head>
 <body>
   <nav class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">Family Money</a>
-      <div class="nav-links">
-        <a href="index.html">ホーム</a>
-        <a href="kakei.html">家計シミュレーター</a>
-        <a href="souzokuzei.html">相続税シミュレーター</a>
-      </div>
     </div>
   </nav>
 
-  <header class="hero">
-    <div class="hero-inner">
-      <h2 class="hero-main-title">初月無料<br>キャンペーン</h2>
-      <p class="hero-period">キャンペーン期間：2026/04/01 ～ 2026/04/30</p>
-      <h1>家計を、一人じゃないで続ける<br>オンラインサロン</h1>
-      <p class="hero-lead">仲間と一緒に家計改善を続けられるコミュニティ。</p>
-      <p class="hero-sub">週1の限定記事・月1のセミナー・相談会・作業会で、<br>「つけてる」から「見てる」へ。</p>
-      <div class="hero-price">
-        <span class="main">330円/1ヶ月（税込）</span>
-        <span class="free">初月無料</span>
-      </div>
-      <a href="https://note.com/familymoney/membership" target="_blank" rel="noopener noreferrer" class="cta-btn">サロンに入会する</a>
-    </div>
-  </header>
-
   <main class="container">
-    <section class="section">
-      <h2 class="section-title">このサロンについて</h2>
-      <div class="section-body">
-        <p>家計簿はつけているけれど貯まらない。<br>数字は見えているけれど、何をどう見直せばいいかわからない。<br>一人では続かない…。</p>
-        <p>Family Money オンラインサロンは、<br>そんな方のための、仲間と一緒に家計改善を続けられるコミュニティです。</p>
-        <p>近すぎず、遠すぎない関係性でお金の相談ができる。<br>月1の作業会で仲間と振り返るから、一人じゃない。続く。</p>
-      </div>
-    </section>
+    <header class="hero">
+      <p class="hero-badge">初月無料キャンペーン（〜2026/04/30）</p>
+      <h1>家計簿はつけてるけど、<br>一人だと続かない人のためのサロン</h1>
+      <p class="hero-lead">仲間と一緒に家計を見る時間があるから、続く。</p>
+      <p class="hero-price"><strong>330円/月（税込）</strong>　初月無料</p>
+      <a href="https://note.com/familymoney/membership" target="_blank" rel="noopener noreferrer" class="cta-btn">詳しく見る・入会する</a>
+    </header>
 
     <section class="section">
-      <h2 class="section-title">サロンで得られること</h2>
-      <div class="benefit-grid">
-        <div class="benefit-item">
-          <div class="icon">📄</div>
-          <div>
-            <h4>週1の限定記事</h4>
-            <p>毎週土曜に「今日からできること」が届く。知識より環境が大事。</p>
-          </div>
-        </div>
-        <div class="benefit-item">
-          <div class="icon">📚</div>
-          <div>
-            <h4>月1の家計改善セミナー</h4>
-            <p>お金の使い道をどう選ぶか。あなたに合った基準で一緒に学ぶ。</p>
-          </div>
-        </div>
-        <div class="benefit-item">
-          <div class="icon">💬</div>
-          <div>
-            <h4>月1のミニ個別相談会</h4>
-            <p>FPに相談すると3〜5万円する内容を、1人10分でお試し。</p>
-          </div>
-        </div>
-        <div class="benefit-item">
-          <div class="icon">👥</div>
-          <div>
-            <h4>月1のもくもく作業会＆チャレンジ</h4>
-            <p>仲間と一緒に振り返るから、一人じゃない。続く。</p>
-          </div>
-        </div>
-      </div>
-      <p class="benefit-tagline">「つけてる」と「見てる」は違う。一人じゃないから続く。</p>
-    </section>
-
-    <section class="section">
-      <h2 class="section-title">こんな方におすすめ</h2>
-      <ul class="recommend-list">
-        <li>家計簿はつけているけれど、貯まらない</li>
+      <h2 class="section-title">こんな方に</h2>
+      <ul class="fit-list">
+        <li>家計簿はつけてるけど貯まらない</li>
         <li>一人だと続かない</li>
         <li>何をどう見直せばいいかわからない</li>
-        <li>仲間と一緒に家計を整えたい</li>
-        <li>節約ではなく、使い方を整えたい</li>
+        <li>仲間と一緒に整えたい</li>
       </ul>
     </section>
 
-    <section class="section">
-      <h2 class="section-title">サロンメンバーの声</h2>
-      <div class="voice-card">
-        <div class="stars">★★★★★</div>
-        <p>初月無料で気軽に始められました。週1の限定記事が楽しみで、「今日からできること」が具体的で助かっています。</p>
-        <span class="author">— 40代・ママ</span>
-      </div>
-      <div class="voice-card">
-        <div class="stars">★★★★★</div>
-        <p>もくもく作業会で仲間と振り返る時間があるから、一人じゃないと実感できました。家計の話を気軽にできる場所ができて安心しています。</p>
-        <span class="author">— 30代・共働き</span>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2 class="section-title">よくある質問</h2>
-      <dl class="faq-list">
-        <div class="faq-item">
-          <dt>Q. 初月無料とはどういうことですか？</dt>
-          <dd>A. キャンペーン期間中にご入会いただくと、初月の会費が無料になります。翌月以降は月額330円（税込）が毎月1日に請求されます。</dd>
-        </div>
-        <div class="faq-item">
-          <dt>Q. いつでも退会できますか？</dt>
-          <dd>A. はい、いつでも退会可能です。退会手続き後、次回更新日以降は課金されません。</dd>
-        </div>
-        <div class="faq-item">
-          <dt>Q. 330円のまま据え置きとは？</dt>
-          <dd>A. 330円でご入会いただいた方は、今後価格が改定されても一生330円のままです。</dd>
-        </div>
-      </dl>
-    </section>
-
-    <section class="section">
-      <h2 class="section-title">エントリー手順・注意事項</h2>
-      <div class="entry-box">
-        <h4>【参加方法】</h4>
-        <p>下記の「サロンに入会する」から、noteのメンバーシップページに進み、新規アカウントを作成のうえご入会ください。</p>
-        <p>入会ページで「初月無料」が適用されていることをご確認いただければ、エントリー完了です。</p>
-      </div>
-      <div class="entry-box">
-        <h4>【注意事項】</h4>
-        <ul>
-          <li>当キャンペーンページからエントリーが必要です。</li>
-          <li>オンラインサロンの入会には、noteアカウントとメンバーシップのご登録が必要です。</li>
-          <li>翌月以降は毎月1日に月会費（330円税込）が請求されます。</li>
-          <li>キャンペーン期間：2026年4月1日（水）～4月30日（木）23:59まで</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="section cta-section" id="entry">
-      <h2>今すぐサロンに入会する</h2>
-      <p>初月無料で、まずは気軽に体験してみませんか？</p>
-      <a href="https://note.com/familymoney/membership" target="_blank" rel="noopener noreferrer" class="cta-btn">サロンに入会する</a>
-    </section>
+    <div class="note-link">
+      <p>週1の記事・月1のセミナー・相談会・作業会など、内容の詳細はnoteで。</p>
+      <a href="https://note.com/familymoney/membership" target="_blank" rel="noopener noreferrer" class="cta-btn">noteで詳しく見る</a>
+    </div>
   </main>
 
   <footer class="footer">
-    <div class="footer-links">
-      <a href="index.html">Family Money</a>
-      <a href="salon-campaign.html">初月無料キャンペーン</a>
-    </div>
-    <p>© Family Money - 家計・相続・年金をわかりやすく</p>
+    <a href="index.html">Family Money</a>
   </footer>
 </body>
 </html>
