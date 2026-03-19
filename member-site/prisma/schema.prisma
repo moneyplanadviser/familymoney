@@ -3,14 +3,14 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model SiteSettings {
   id                  Int      @id @default(1)
   monthlyPasswordHash String
-  updatedAt           DateTime @updatedAt
+  updatedAt           DateTime @default(now()) @updatedAt
 }
 
 model User {

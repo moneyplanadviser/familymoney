@@ -1,6 +1,6 @@
 # 会員限定サイト（プロトタイプ）
 
-ヒアリングで整理した要件を反映した **Next.js + Prisma + SQLite** のプロトタイプです。
+ヒアリングで整理した要件を反映した **Next.js + Prisma + PostgreSQL** のプロトタイプです。
 
 ## できること
 
@@ -14,18 +14,19 @@
 - **利用規約・プライバシー**（ひな形）
 - **決済完了デモ** `/pay/mock-success`（`DEMO_MONTHLY_PASSWORD` を表示）
 
-## セットアップ
+## ローカル開発（Docker + PostgreSQL）
 
 ```bash
 cd member-site
-cp .env.example .env   # 必要なら編集
+docker compose up -d
+cp .env.example .env   # DATABASE_URL は .env.example の例でOK
 npm install
 npx prisma migrate dev
 npx prisma db seed
 npm run dev
 ```
 
-ブラウザで `http://localhost:3000/gate` から。
+ブラウザで **`http://localhost:3000/gate`** から。
 
 ### デモ用アカウント（シード後）
 
@@ -34,19 +35,49 @@ npm run dev
 | 運営 | `admin@example.com` | `admin123` |
 | 会員 | `demo@example.com` | `demo123` |
 
-**今月のサイトパスワード**（ゲート）: `.env` の `DEMO_MONTHLY_PASSWORD`（初期値 `prototype2025`）
+**今月のサイトパスワード**（ゲート）: `.env` の `DEMO_MONTHLY_PASSWORD`（例: `prototype2025`）
 
-## デプロイについて
+## ブラウザで「見える」ようにする（Vercel）
 
-このアプリは **API・DB・ファイルアップロード** を使うため、**GitHub Pages 単体ではホストできません**。  
-`github.io` で試す場合は、**別ホスティング（例: Vercel + Postgres）** に載せ替える想定です。ルートの `FamilyMoney` 静的サイトとは分離しています。
+GitHub Pages では Next.js + DB は動かせないため、**Vercel 等にデプロイ**します。
+
+### 手早い手順
+
+1. **[Deploy to Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmoneyplanadviser%2Ffamilymoney&root-directory=member-site)**（または Vercel ダッシュボードで GitHub リポジトリを Import）
+2. **Root Directory** を **`member-site`** に設定
+3. **[Neon](https://neon.tech)**（無料）などで **PostgreSQL** を作成し、接続文字列をコピー
+4. Vercel の **Environment Variables** に以下を設定（Production / Preview 両方推奨）
+
+| 変数 | 例 |
+|------|-----|
+| `DATABASE_URL` | `postgresql://...@...neon.tech/neondb?sslmode=require` |
+| `SESSION_SECRET` | 32文字以上のランダム文字列 |
+| `DEMO_MONTHLY_PASSWORD` | ゲート用（シードと揃える） |
+| `CONTACT_TO_EMAIL` | お問い合わせ転送先 |
+| `NEXT_PUBLIC_APP_URL` | `https://あなたのプロジェクト.vercel.app` |
+
+5. **Deploy** — ビルドで `prisma migrate deploy` が走り、テーブルが作成されます。
+6. **初回だけ**、ローカルまたは CI からシードを流す（例）:
+
+```bash
+export DATABASE_URL="（Neon の URL と同じ）"
+npx prisma db seed
+```
+
+これで **`https://（あなたのドメイン）/gate`** から画面が開けます。
+
+## ビルド（参考）
+
+- 本番相当: `npm run build`（`prisma migrate deploy` を含む）
+- DB なしで型・Next のみ確認: `npm run build:next`
 
 ## 環境変数
 
 | 変数 | 説明 |
 |------|------|
-| `DATABASE_URL` | 開発は `file:./dev.db` |
+| `DATABASE_URL` | PostgreSQL 接続文字列（必須） |
 | `SESSION_SECRET` | 32文字以上 |
-| `DEMO_MONTHLY_PASSWORD` | ゲート用プレーン（シードと一致） |
+| `DEMO_MONTHLY_PASSWORD` | ゲート用プレーン（シードと一致させる） |
 | `CONTACT_TO_EMAIL` | お問い合わせ転送先 |
+| `NEXT_PUBLIC_APP_URL` | 通知メール内リンク用（任意） |
 | `RESEND_API_KEY` / `RESEND_FROM` | メール送信（任意） |
