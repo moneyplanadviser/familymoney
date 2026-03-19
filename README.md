@@ -39,5 +39,9 @@ python3 -m http.server 8000
 # http://localhost:8000 でアクセス
 ```
 
+## 会員限定サイト（プロトタイプ）
+
+有料会員向けの掲示板・ブログ等の検証用として、`member-site/` に **Next.js** のプロトタイプを置いています。起動手順は [member-site/README.md](member-site/README.md) を参照してください。
+
 ## ライセンス
 

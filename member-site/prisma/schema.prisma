@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model SiteSettings {
+  id                  Int      @id @default(1)
+  monthlyPasswordHash String
+  updatedAt           DateTime @updatedAt
+}
+
+model User {
+  id              String   @id @default(cuid())
+  email           String   @unique
+  passwordHash    String
+  nickname        String
+  role            String   @default("member")
+  notifyEmail     Boolean  @default(true)
+  notifyLine      Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  comments        Comment[]
+  blogComments    BlogComment[]
+  blogPosts       BlogPost[]
+  threadsCreated  Thread[]
+  challenges      ChallengeDeclaration[]
+  notifications   Notification[]
+}
+
+model Announcement {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  createdAt DateTime @default(now())
+}
+
+model Thread {
+  id        String   @id @default(cuid())
+  title     String
+  kind      String
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+  comments  Comment[]
+}
+
+model Comment {
+  id        String    @id @default(cuid())
+  threadId  String
+  thread    Thread    @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  body      String
+  parentId  String?
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies   Comment[] @relation("CommentReplies")
+  createdAt DateTime  @default(now())
+}
+
+model BlogPost {
+  id        String        @id @default(cuid())
+  title     String
+  slug      String        @unique
+  body      String
+  authorId  String
+  author    User          @relation(fields: [authorId], references: [id])
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  comments  BlogComment[]
+}
+
+model BlogComment {
+  id        String        @id @default(cuid())
+  postId    String
+  post      BlogPost      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User          @relation(fields: [userId], references: [id])
+  body      String
+  parentId  String?
+  parent    BlogComment?  @relation("BlogReplies", fields: [parentId], references: [id])
+  replies   BlogComment[] @relation("BlogReplies")
+  createdAt DateTime      @default(now())
+}
+
+model ChallengeDeclaration {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  body      String
+  createdAt DateTime @default(now())
+}
+
+model ContactMessage {
+  id             String   @id @default(cuid())
+  email          String
+  subject        String
+  body           String
+  attachmentPath String?
+  createdAt      DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  link      String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
