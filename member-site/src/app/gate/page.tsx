@@ -3,9 +3,12 @@ import Link from "next/link";
 import { GateForm } from "@/components/GateForm";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/session";
+import { ensureSiteSettings } from "@/lib/site-settings";
 
 export default async function GatePage() {
-  const settings = await prisma.siteSettings.findUnique({ where: { id: 1 } });
+  const settings =
+    (await ensureSiteSettings()) ??
+    (await prisma.siteSettings.findUnique({ where: { id: 1 } }));
   const session = await getSession();
 
   if (settings && session.siteVerifiedAt != null) {

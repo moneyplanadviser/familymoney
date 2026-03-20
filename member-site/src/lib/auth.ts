@@ -1,10 +1,13 @@
 import { redirect } from "next/navigation";
 import { prisma } from "./prisma";
 import { getSession } from "./session";
+import { ensureSiteSettings } from "./site-settings";
 
 /** API 用: ログイン済みユーザーを返す（未ログインは null） */
 export async function getSessionUser() {
-  const settings = await prisma.siteSettings.findUnique({ where: { id: 1 } });
+  const settings =
+    (await ensureSiteSettings()) ??
+    (await prisma.siteSettings.findUnique({ where: { id: 1 } }));
   if (!settings) return null;
   const session = await getSession();
   const siteOk =
@@ -16,7 +19,9 @@ export async function getSessionUser() {
 }
 
 export async function requireSiteAccess() {
-  const settings = await prisma.siteSettings.findUnique({ where: { id: 1 } });
+  const settings =
+    (await ensureSiteSettings()) ??
+    (await prisma.siteSettings.findUnique({ where: { id: 1 } }));
   if (!settings) redirect("/gate");
 
   const session = await getSession();
