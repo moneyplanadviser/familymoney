@@ -186,8 +186,8 @@
         </div>
         <div class="form-group">
           <label>ご連絡先（メール） <span class="required">*</span></label>
-          <input type="email" name="email" placeholder="例：example@email.com" data-required>
-          <p class="error-msg" id="emailFormatError" style="display:none;">正しいメールアドレスの形式で入力してください（例：name@example.com）。</p>
+          <input type="email" name="email" placeholder="例：name@yahoo.co.jp" data-required autocomplete="email">
+          <p class="error-msg" id="emailFormatError" style="display:none;">@の後に「.co.jp」「.com」などのドメインまで含めた、届くメールアドレスを入力してください。</p>
         </div>
         <div class="form-group">
           <label>ご連絡先（電話）</label>
@@ -383,6 +383,13 @@
       const btnNext = document.getElementById('btnNext');
       const navBar = document.querySelector('.nav-bar');
 
+      /** Formspree 相当：ドメインにドットとTLD（2文字以上）必須（test@yahoo 等はブラウザが通すがサーバで弾かれる） */
+      function isStrictEmail(value) {
+        var s = (value || '').trim();
+        if (!s) return false;
+        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(s);
+      }
+
       const LABELS = {
         name: 'お名前', email: 'メール', tel: '電話', datetime: '相談日時', family: '家族構成',
         income_self: 'ご自身の収入', income_spouse: '配偶者の収入', income_other: 'その他の収入',
@@ -410,7 +417,7 @@
           const email = document.querySelector('input[name="email"]');
           if (!name || !name.value.trim()) empty.push(name);
           if (!email || !email.value.trim()) empty.push(email);
-          else if (!email.validity.valid) empty.push(email);
+          else if (!isStrictEmail(email.value)) empty.push(email);
         } else if (pageNum >= 2 && pageNum <= 6 && !hasValue && inputs.length > 0) {
           empty.push(inputs[0]);
         }
@@ -426,7 +433,7 @@
         const emailErr = document.getElementById('emailFormatError');
         const emailInput = document.querySelector('input[name="email"]');
         if (emailErr && emailInput && current === 1) {
-          const showEmailFormat = emailInput.value.trim() && !emailInput.validity.valid;
+          const showEmailFormat = emailInput.value.trim() && !isStrictEmail(emailInput.value);
           emailErr.style.display = showEmailFormat ? 'block' : 'none';
         } else if (emailErr) {
           emailErr.style.display = 'none';
@@ -518,17 +525,17 @@
       });
       function summarizeFormspreeError(body) {
         if (!body || typeof body !== 'object') return '';
-        if (body.error) return String(body.error);
         const errs = body.errors;
         if (errs && typeof errs === 'object') {
           const parts = [];
           Object.keys(errs).forEach(function(k) {
             const v = errs[k];
-            if (Array.isArray(v)) parts.push(v.join(' '));
-            else if (v) parts.push(String(v));
+            var msg = Array.isArray(v) ? v.join(' ') : (v ? String(v) : '');
+            if (msg) parts.push(k + ': ' + msg);
           });
-          if (parts.length) return parts.join(' ');
+          if (parts.length) return parts.join(' / ');
         }
+        if (body.error) return String(body.error);
         return '';
       }
 
@@ -537,7 +544,7 @@
         const data = collectData();
         const emailEl = document.querySelector('input[name="email"]');
         const email = emailEl ? emailEl.value.trim() : '';
-        if (!emailEl || !email || !emailEl.validity.valid) {
+        if (!emailEl || !email || !isStrictEmail(email)) {
           window.formspreeLastError = 'メールアドレスの形式が正しくないため送信できません。基本情報で修正してください。';
           return false;
         }
@@ -560,10 +567,17 @@
           if (!res.ok) {
             const err = await res.json().catch(function() { return {}; });
             console.warn('Formspree error:', res.status, err);
-            const detail = summarizeFormspreeError(err);
-            window.formspreeLastError = detail
-              ? '送信先からの応答: ' + detail
-              : '送信に失敗しました（HTTP ' + res.status + '）。';
+            var detail = summarizeFormspreeError(err);
+            if (res.status === 422) {
+              var hint422 = 'メールは「○○@example.com」のように、@の後にドメイン（.com や .co.jp など）まで入力してください。';
+              window.formspreeLastError = detail
+                ? '送信先からの応答: ' + detail + ' ' + hint422
+                : hint422;
+            } else {
+              window.formspreeLastError = detail
+                ? '送信先からの応答: ' + detail
+                : '送信に失敗しました（HTTP ' + res.status + '）。';
+            }
           }
           return res.ok;
         } catch (e) {
