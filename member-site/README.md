@@ -13,7 +13,7 @@
 - **新着お知らせ**、**通知**（返信時）、**検索**（掲示板・ブログ）
 - **利用規約・プライバシー**（ひな形）
 - **決済完了デモ** `/pay/mock-success`（`DEMO_MONTHLY_PASSWORD` を表示）
-- **公式リンク（Linktree 風）** `/links` — ゲート不要。SNSプロフィール用URLは `https://members.familymoney.jp/links` など。公開ツールサイトへのリンクは `NEXT_PUBLIC_PUBLIC_SITE_URL`（未設定時は `https://www.familymoney.jp`）を使用します。
+- **公式リンク（Linktree 風）** `/links` — ゲート不要。SNSプロフィール用URLは `https://members.familymoney.jp/links` など。公開ツールサイトへのリンクは `NEXT_PUBLIC_PUBLIC_SITE_URL`（未設定時は GitHub Pages `https://moneyplanadviser.github.io/familymoney`）を使用します。
 
 ## ローカル開発（Docker + PostgreSQL）
 
@@ -81,6 +81,6 @@ npx prisma db seed
 | `DEMO_MONTHLY_PASSWORD` | ゲート用プレーン（シードと一致させる） |
 | `CONTACT_TO_EMAIL` | お問い合わせ転送先 |
 | `NEXT_PUBLIC_APP_URL` | 通知メール内リンク用（任意） |
-| `NEXT_PUBLIC_PUBLIC_SITE_URL` | `/links` から飛ばす公開ツールサイトのオリジン（任意。未設定時は `https://www.familymoney.jp`） |
+| `NEXT_PUBLIC_PUBLIC_SITE_URL` | `/links` から飛ばす公開ツールサイトのオリジン（任意。未設定時は `https://moneyplanadviser.github.io/familymoney`） |
 | `NEXT_PUBLIC_LINK_LINE_URL` など | `/links` の外部リンク（任意）。`LINE` / `INSTAGRAM` / `X` / `NEWSLETTER` — 未設定は非表示。note は固定で表示 |
 | `RESEND_API_KEY` / `RESEND_FROM` | メール送信（任意） |

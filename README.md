@@ -31,6 +31,8 @@
 
 **公開URL**: `https://moneyplanadviser.github.io/familymoney/`
 
+**プロフィール用リンク一覧（Linktree 風）**: [links.html](https://moneyplanadviser.github.io/familymoney/links.html)（`main` にマージされ GitHub Pages が更新されると表示されます）
+
 ## ローカルで確認
 
 ```bash

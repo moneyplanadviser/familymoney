@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 function publicSiteBase(): string {
   const raw = process.env.NEXT_PUBLIC_PUBLIC_SITE_URL?.trim();
   if (raw) return raw.replace(/\/$/, "");
-  return "https://www.familymoney.jp";
+  return "https://moneyplanadviser.github.io/familymoney";
 }
 
 function trimEnv(v: string | undefined): string | undefined {
