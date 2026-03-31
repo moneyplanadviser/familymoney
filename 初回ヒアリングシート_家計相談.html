@@ -273,11 +273,12 @@
         </div>
         <div class="form-group">
           <label>住宅ローン 残高・月々返済（円）</label>
-          <input type="text" name="debt_housing" placeholder="例：残高○○万円、月○万円">
+          <p class="form-hint" style="margin-top:0;margin-bottom:6px;">数字でご記入ください（残高・月返済など、分かる範囲で）</p>
+          <input type="text" name="debt_housing" inputmode="decimal" enterkeyhint="done" placeholder="例：500 8">
         </div>
         <div class="form-group">
           <label>その他のローン・借入</label>
-          <input type="text" name="debt_other" placeholder="例：残高○○万円、月○万円">
+          <input type="text" name="debt_other" inputmode="decimal" enterkeyhint="done" placeholder="例：100 3">
         </div>
       </div>
     </div>
