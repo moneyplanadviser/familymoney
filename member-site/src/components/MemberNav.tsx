@@ -35,6 +35,9 @@ export async function MemberNav({ user }: { user: User }) {
         <Link className={link} href="/notifications">
           通知{unread > 0 ? `(${unread})` : ""}
         </Link>
+        <Link className={link} href="/links">
+          リンク
+        </Link>
         {user.role === "admin" && (
           <Link className={link} href="/admin">
             運営
