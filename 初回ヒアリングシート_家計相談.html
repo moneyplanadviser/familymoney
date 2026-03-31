@@ -187,6 +187,7 @@
         <div class="form-group">
           <label>ご連絡先（メール） <span class="required">*</span></label>
           <input type="email" name="email" placeholder="例：example@email.com" data-required>
+          <p class="error-msg" id="emailFormatError" style="display:none;">正しいメールアドレスの形式で入力してください（例：name@example.com）。</p>
         </div>
         <div class="form-group">
           <label>ご連絡先（電話）</label>
@@ -409,6 +410,7 @@
           const email = document.querySelector('input[name="email"]');
           if (!name || !name.value.trim()) empty.push(name);
           if (!email || !email.value.trim()) empty.push(email);
+          else if (!email.validity.valid) empty.push(email);
         } else if (pageNum >= 2 && pageNum <= 6 && !hasValue && inputs.length > 0) {
           empty.push(inputs[0]);
         }
@@ -421,6 +423,14 @@
         btnNext.disabled = !canNext;
         document.querySelectorAll('.input-error').forEach(function(el) { el.classList.remove('input-error'); });
         empty.forEach(function(el) { if (el) el.classList.add('input-error'); });
+        const emailErr = document.getElementById('emailFormatError');
+        const emailInput = document.querySelector('input[name="email"]');
+        if (emailErr && emailInput && current === 1) {
+          const showEmailFormat = emailInput.value.trim() && !emailInput.validity.valid;
+          emailErr.style.display = showEmailFormat ? 'block' : 'none';
+        } else if (emailErr) {
+          emailErr.style.display = 'none';
+        }
       }
 
       function collectData() {
@@ -492,7 +502,8 @@
             noteEl.textContent = '※ Formspree未設定のため、入力内容は端末内のみにあります。';
             noteEl.style.display = 'block';
           } else if (!sent) {
-            noteEl.textContent = '※ Formspreeのメール認証完了、フォーム設定（ドメイン制限など）を確認してください。';
+            var extra = window.formspreeLastError ? ' ' + window.formspreeLastError : '';
+            noteEl.textContent = '※ Formspreeのメール認証完了、フォーム設定（ドメイン制限など）を確認してください。' + extra;
             noteEl.style.display = 'block';
           } else {
             noteEl.style.display = 'none';
@@ -505,9 +516,31 @@
         if (current === 7) showPage(6);
         else showPage(current - 1);
       });
+      function summarizeFormspreeError(body) {
+        if (!body || typeof body !== 'object') return '';
+        if (body.error) return String(body.error);
+        const errs = body.errors;
+        if (errs && typeof errs === 'object') {
+          const parts = [];
+          Object.keys(errs).forEach(function(k) {
+            const v = errs[k];
+            if (Array.isArray(v)) parts.push(v.join(' '));
+            else if (v) parts.push(String(v));
+          });
+          if (parts.length) return parts.join(' ');
+        }
+        return '';
+      }
+
       async function submitToFormspree() {
+        window.formspreeLastError = '';
         const data = collectData();
-        const email = document.querySelector('input[name="email"]').value.trim();
+        const emailEl = document.querySelector('input[name="email"]');
+        const email = emailEl ? emailEl.value.trim() : '';
+        if (!emailEl || !email || !emailEl.validity.valid) {
+          window.formspreeLastError = 'メールアドレスの形式が正しくないため送信できません。基本情報で修正してください。';
+          return false;
+        }
         const params = new URLSearchParams();
         Object.keys(data).forEach(function(k) {
           params.append(k, data[k]);
@@ -527,10 +560,15 @@
           if (!res.ok) {
             const err = await res.json().catch(function() { return {}; });
             console.warn('Formspree error:', res.status, err);
+            const detail = summarizeFormspreeError(err);
+            window.formspreeLastError = detail
+              ? '送信先からの応答: ' + detail
+              : '送信に失敗しました（HTTP ' + res.status + '）。';
           }
           return res.ok;
         } catch (e) {
           console.warn('Formspree submit failed:', e);
+          window.formspreeLastError = 'ネットワークエラーで送信できませんでした。接続を確認して再度お試しください。';
           return false;
         }
       }
