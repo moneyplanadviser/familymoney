@@ -271,23 +271,13 @@
           <label>投資（株・投信・iDeCo等・万円）</label>
           <input type="text" name="asset_invest" inputmode="numeric" placeholder="例：100" data-unit="man">
         </div>
-        <div class="sub-title">住宅ローン</div>
         <div class="form-group">
-          <label>残高（万円）</label>
-          <input type="text" name="debt_housing_balance" inputmode="numeric" enterkeyhint="done" placeholder="例：3000" data-unit="man">
+          <label>住宅ローン 残高（万円）</label>
+          <input type="text" name="debt_housing" inputmode="numeric" enterkeyhint="done" placeholder="例：3000" data-unit="man">
         </div>
         <div class="form-group">
-          <label>月々の返済額（万円）</label>
-          <input type="text" name="debt_housing_monthly" inputmode="numeric" enterkeyhint="done" placeholder="例：8" data-unit="man">
-        </div>
-        <div class="sub-title">その他のローン・借入</div>
-        <div class="form-group">
-          <label>残高（万円）</label>
-          <input type="text" name="debt_other_balance" inputmode="numeric" enterkeyhint="done" placeholder="該当なければ空欄" data-unit="man">
-        </div>
-        <div class="form-group">
-          <label>月々の返済額（万円）</label>
-          <input type="text" name="debt_other_monthly" inputmode="numeric" enterkeyhint="done" placeholder="該当なければ空欄" data-unit="man">
+          <label>その他のローン・借入 残高（万円）</label>
+          <input type="text" name="debt_other" inputmode="numeric" enterkeyhint="done" placeholder="該当なければ空欄" data-unit="man">
         </div>
       </div>
     </div>
@@ -406,8 +396,7 @@
         exp_rent: '住居費', exp_utility: '光熱・通信費', exp_food: '食費', exp_daily: '日用品・雑費',
         exp_edu: '教育費', exp_other: '保険・車・その他',
         asset_savings: '預貯金', asset_invest: '投資',
-        debt_housing_balance: '住宅ローン 残高', debt_housing_monthly: '住宅ローン 月返済',
-        debt_other_balance: 'その他借入 残高', debt_other_monthly: 'その他借入 月返済',
+        debt_housing: '住宅ローン 残高', debt_other: 'その他借入 残高',
         reason: '相談のきっかけ', concern: '一番気になっていること', past_trouble: '困ったこと・失敗',
         ideal: '理想の家計', difficulty: '難しいと感じること',
         future_event: '今後5〜10年の予定', retirement: '老後のイメージ・不安',
