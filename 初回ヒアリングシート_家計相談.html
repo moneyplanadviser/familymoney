@@ -195,8 +195,20 @@
           <input type="tel" name="tel" placeholder="例：090-1234-5678">
         </div>
         <div class="form-group">
-          <label>ご希望の相談日時</label>
-          <input type="datetime-local" name="datetime">
+          <label>ご希望の相談日（任意）</label>
+          <p class="form-hint" style="margin-top:4px;">日付のみです（時間はここでは選べません）。第一〜第三候補までご入力ください。</p>
+        </div>
+        <div class="form-group">
+          <label>第一候補</label>
+          <input type="date" name="datetime_1st">
+        </div>
+        <div class="form-group">
+          <label>第二候補</label>
+          <input type="date" name="datetime_2nd">
+        </div>
+        <div class="form-group">
+          <label>第三候補</label>
+          <input type="date" name="datetime_3rd">
         </div>
         <div class="form-group">
           <label>同居されているご家族</label>
@@ -394,7 +406,9 @@
       }
 
       const LABELS = {
-        name: 'お名前', email: 'メール', tel: '電話', datetime: '相談日時', family: '家族構成',
+        name: 'お名前', email: 'メール', tel: '電話',
+        datetime_1st: '相談希望日 第一候補', datetime_2nd: '相談希望日 第二候補', datetime_3rd: '相談希望日 第三候補',
+        family: '家族構成',
         income_self: 'ご自身の収入', income_spouse: '配偶者の収入', income_other: 'その他の収入',
         exp_rent: '住居費', exp_utility: '光熱・通信費', exp_food: '食費', exp_daily: '日用品・雑費',
         exp_edu: '教育費', exp_other: '保険・車・その他',
@@ -439,9 +453,11 @@
           let v = el.value ? el.value.trim() : '';
           if (v && LABELS[el.name]) {
             if (el.dataset.unit === 'man') v = v + '万円';
-            else if (el.type === 'datetime-local' && v) {
-              const d = new Date(v);
-              v = d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日 ' + d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
+            else if (el.type === 'date' && v) {
+              const p = v.split('-');
+              if (p.length === 3) {
+                v = parseInt(p[0], 10) + '年' + parseInt(p[1], 10) + '月' + parseInt(p[2], 10) + '日';
+              }
             }
             data[LABELS[el.name]] = v;
           }
