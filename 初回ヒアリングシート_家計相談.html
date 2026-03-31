@@ -170,7 +170,8 @@
     <!-- 0. イントロ -->
     <div class="page active" data-page="0">
       <div class="inner intro-page">
-        <p>分かる範囲でOK。<br>空欄でも大丈夫です。</p>
+        <p><strong>お名前</strong>と<strong>メール</strong>だけ必須です。</p>
+        <p>それ以外のページは<strong>すべて任意</strong>です。空欄のまま「次へ」で進められます。</p>
         <p class="light">「次へ」を押して始めてください。</p>
       </div>
     </div>
@@ -208,8 +209,8 @@
     <div class="page" data-page="2">
       <div class="inner">
         <div class="page-progress">2 / 6</div>
-        <h2 class="page-title">収入</h2>
-        <p class="form-hint">月額の概算で構いません。万円単位で入力してください。</p>
+        <h2 class="page-title">収入（任意）</h2>
+        <p class="form-hint">未入力のままでも次へ進められます。入力する場合は月額の概算・万円単位で。</p>
         <div class="form-group">
           <label>ご自身の収入（月額・万円）</label>
           <input type="text" name="income_self" inputmode="numeric" placeholder="例：30" data-unit="man">
@@ -229,8 +230,8 @@
     <div class="page" data-page="3">
       <div class="inner">
         <div class="page-progress">3 / 6</div>
-        <h2 class="page-title">毎月の支出</h2>
-        <p class="form-hint">月額の概算で構いません。万円単位で入力してください。</p>
+        <h2 class="page-title">毎月の支出（任意）</h2>
+        <p class="form-hint">未入力のままでも次へ進められます。入力する場合は月額の概算・万円単位で。</p>
         <div class="form-group">
           <label>住居費（家賃・住宅ローン・管理費等）（月額・万円）</label>
           <input type="text" name="exp_rent" inputmode="numeric" placeholder="例：12" data-unit="man">
@@ -262,7 +263,8 @@
     <div class="page" data-page="4">
       <div class="inner">
         <div class="page-progress">4 / 6</div>
-        <h2 class="page-title">資産・負債</h2>
+        <h2 class="page-title">資産・負債（任意）</h2>
+        <p class="form-hint">未入力のままでも次へ進められます。</p>
         <div class="form-group">
           <label>預貯金（万円）</label>
           <input type="text" name="asset_savings" inputmode="numeric" placeholder="例：500" data-unit="man">
@@ -286,8 +288,8 @@
     <div class="page" data-page="5">
       <div class="inner">
         <div class="page-progress">5 / 6</div>
-        <h2 class="page-title">目標・悩み</h2>
-        <p class="form-hint">思いつくまま自由にお書きください。</p>
+        <h2 class="page-title">目標・悩み（任意）</h2>
+        <p class="form-hint">未入力のままでも次へ進められます。思いつくまま自由にお書きください。</p>
         <div class="form-group">
           <label>相談に至ったきっかけは何ですか？</label>
           <textarea name="reason" placeholder="例：貯金が増えない、将来が不安 など"></textarea>
@@ -315,7 +317,8 @@
     <div class="page" data-page="6">
       <div class="inner">
         <div class="page-progress">6 / 6</div>
-        <h2 class="page-title">将来の計画・その他</h2>
+        <h2 class="page-title">将来の計画・その他（任意）</h2>
+        <p class="form-hint">未入力のままでも完了へ進められます。</p>
         <div class="form-group">
           <label>今後5〜10年で予定している大きな支出・イベント</label>
           <textarea name="future_event" placeholder="例：住宅購入、子どもの進学、親の介護 など"></textarea>
@@ -404,24 +407,13 @@
       };
 
       function getRequiredEmpty(pageNum) {
-        const page = pages[pageNum];
-        if (!page) return [];
-        const inputs = page.querySelectorAll('input[name], textarea[name], select[name]');
-        let hasValue = false;
+        if (pageNum !== 1) return [];
         const empty = [];
-        inputs.forEach(function(el) {
-          const v = el.value ? el.value.trim() : '';
-          if (v) hasValue = true;
-        });
-        if (pageNum === 1) {
-          const name = document.querySelector('input[name="name"]');
-          const email = document.querySelector('input[name="email"]');
-          if (!name || !name.value.trim()) empty.push(name);
-          if (!email || !email.value.trim()) empty.push(email);
-          else if (!isStrictEmail(email.value)) empty.push(email);
-        } else if (pageNum >= 2 && pageNum <= 6 && !hasValue && inputs.length > 0) {
-          empty.push(inputs[0]);
-        }
+        const name = document.querySelector('input[name="name"]');
+        const email = document.querySelector('input[name="email"]');
+        if (!name || !name.value.trim()) empty.push(name);
+        if (!email || !email.value.trim()) empty.push(email);
+        else if (!isStrictEmail(email.value)) empty.push(email);
         return empty;
       }
 
