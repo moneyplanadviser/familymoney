@@ -82,4 +82,5 @@ npx prisma db seed
 | `CONTACT_TO_EMAIL` | お問い合わせ転送先 |
 | `NEXT_PUBLIC_APP_URL` | 通知メール内リンク用（任意） |
 | `NEXT_PUBLIC_PUBLIC_SITE_URL` | `/links` から飛ばす公開ツールサイトのオリジン（任意。未設定時は `https://www.familymoney.jp`） |
+| `NEXT_PUBLIC_LINK_LINE_URL` など | `/links` の外部リンク（任意）。`LINE` / `INSTAGRAM` / `X` / `NEWSLETTER` — 未設定は非表示。note は固定で表示 |
 | `RESEND_API_KEY` / `RESEND_FROM` | メール送信（任意） |
