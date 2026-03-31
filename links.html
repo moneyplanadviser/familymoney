@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FamilyMoney | 公式リンク一覧</title>
+  <meta name="description" content="FamilyMoney のシミュレーションツール・資料・関連リンクをまとめました。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary-dark: #b8956a;
+      --bg: #f8f6f2;
+      --text: #2c2c2c;
+      --muted: #5c5c5c;
+      --card: #fff;
+      --border: #e5e0d8;
+      --font: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
+    }
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    .page {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 40px 20px 64px;
+      text-align: center;
+    }
+    .avatar {
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-dark) 0%, #8b7355 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    .brand { font-size: 1.35rem; font-weight: 700; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .tagline { font-size: 0.9rem; color: var(--muted); margin-bottom: 32px; }
+    .links { display: flex; flex-direction: column; gap: 14px; }
+    .link-btn {
+      display: block;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 16px 24px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .link-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    .link-btn small {
+      display: block;
+      margin-top: 4px;
+      font-weight: 400;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .back {
+      margin-top: 40px;
+      font-size: 0.85rem;
+    }
+    .back a { color: var(--primary-dark); font-weight: 600; }
+    .footer { margin-top: 32px; font-size: 0.75rem; color: #888; }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="avatar" aria-hidden="true">FM</div>
+    <h1 class="brand">FamilyMoney</h1>
+    <p class="tagline">家計・相続・年金をわかりやすくシミュレーション</p>
+    <nav class="links" aria-label="公式リンク">
+      <a href="index.html" class="link-btn">ツール一覧トップ<small>シミュレーターへの入口</small></a>
+      <a href="kakei.html" class="link-btn">家計シミュレーター</a>
+      <a href="souzokuzei.html" class="link-btn">相続税シミュレーター</a>
+      <a href="kyouikushikin.html" class="link-btn">教育費シミュレーター</a>
+      <a href="nenkin.html" class="link-btn">年金シミュレーター</a>
+      <a href="初回ヒアリングシート_家計相談.html" class="link-btn">家計個別相談 初回ヒアリングシート</a>
+      <a href="wagaie-torisetsu.html" class="link-btn">わが家のお金の価値観ミニ取説</a>
+      <a href="salon-campaign.html" class="link-btn">オンラインサロン<small>キャンペーン・ご案内</small></a>
+      <a href="https://github.com/moneyplanadviser/familymoney/tree/main/member-site" class="link-btn" target="_blank" rel="noopener noreferrer">会員サイト（開発）ドキュメント<small>GitHub</small></a>
+      <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmoneyplanadviser%2Ffamilymoney&root-directory=member-site" class="link-btn" target="_blank" rel="noopener noreferrer">会員サイトを Vercel で試す</a>
+    </nav>
+    <p class="back"><a href="index.html">← ツール一覧に戻る</a></p>
+    <footer class="footer">FamilyMoney</footer>
+  </main>
+</body>
+</html>
