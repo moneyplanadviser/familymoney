@@ -230,30 +230,30 @@
       <div class="inner">
         <div class="page-progress">3 / 6</div>
         <h2 class="page-title">毎月の支出</h2>
-        <p class="form-hint">月額の概算で構いません。</p>
+        <p class="form-hint">月額の概算で構いません。万円単位で入力してください。</p>
         <div class="form-group">
-          <label>住居費（家賃・住宅ローン・管理費等）</label>
-          <input type="text" name="exp_rent" inputmode="numeric" placeholder="円">
+          <label>住居費（家賃・住宅ローン・管理費等）（月額・万円）</label>
+          <input type="text" name="exp_rent" inputmode="numeric" placeholder="例：12" data-unit="man">
         </div>
         <div class="form-group">
-          <label>光熱費・通信費</label>
-          <input type="text" name="exp_utility" inputmode="numeric" placeholder="円">
+          <label>光熱費・通信費（月額・万円）</label>
+          <input type="text" name="exp_utility" inputmode="numeric" placeholder="例：3" data-unit="man">
         </div>
         <div class="form-group">
-          <label>食費</label>
-          <input type="text" name="exp_food" inputmode="numeric" placeholder="円">
+          <label>食費（月額・万円）</label>
+          <input type="text" name="exp_food" inputmode="numeric" placeholder="例：8" data-unit="man">
         </div>
         <div class="form-group">
-          <label>日用品・雑費</label>
-          <input type="text" name="exp_daily" inputmode="numeric" placeholder="円">
+          <label>日用品・雑費（月額・万円）</label>
+          <input type="text" name="exp_daily" inputmode="numeric" placeholder="例：2" data-unit="man">
         </div>
         <div class="form-group">
-          <label>教育費（塾・習い事等）</label>
-          <input type="text" name="exp_edu" inputmode="numeric" placeholder="円">
+          <label>教育費（塾・習い事等）（月額・万円）</label>
+          <input type="text" name="exp_edu" inputmode="numeric" placeholder="例：5" data-unit="man">
         </div>
         <div class="form-group">
-          <label>保険料・車関連費・その他</label>
-          <input type="text" name="exp_other" inputmode="numeric" placeholder="円">
+          <label>保険料・車関連費・その他（月額・万円）</label>
+          <input type="text" name="exp_other" inputmode="numeric" placeholder="例：3" data-unit="man">
         </div>
       </div>
     </div>
@@ -272,12 +272,13 @@
           <input type="text" name="asset_invest" inputmode="numeric" placeholder="例：100" data-unit="man">
         </div>
         <div class="form-group">
-          <label>住宅ローン 残高・月々返済（円）</label>
-          <p class="form-hint" style="margin-top:0;margin-bottom:6px;">数字でご記入ください（残高・月返済など、分かる範囲で）</p>
+          <label>住宅ローン 残高・月々返済（万円）</label>
+          <p class="form-hint" style="margin-top:0;margin-bottom:6px;">いずれも万円単位です。残高と月返済の両方分かる場合はスペース区切りで（例：500 8）。</p>
           <input type="text" name="debt_housing" inputmode="decimal" enterkeyhint="done" placeholder="例：500 8">
         </div>
         <div class="form-group">
-          <label>その他のローン・借入</label>
+          <label>その他のローン・借入（万円）</label>
+          <p class="form-hint" style="margin-top:0;margin-bottom:6px;">万円単位でご記入ください（複数ある場合はスペース区切り可）。</p>
           <input type="text" name="debt_other" inputmode="decimal" enterkeyhint="done" placeholder="例：100 3">
         </div>
       </div>
@@ -396,7 +397,8 @@
         income_self: 'ご自身の収入', income_spouse: '配偶者の収入', income_other: 'その他の収入',
         exp_rent: '住居費', exp_utility: '光熱・通信費', exp_food: '食費', exp_daily: '日用品・雑費',
         exp_edu: '教育費', exp_other: '保険・車・その他',
-        asset_savings: '預貯金', asset_invest: '投資', debt_housing: '住宅ローン', debt_other: 'その他借入',
+        asset_savings: '預貯金', asset_invest: '投資',
+        debt_housing: '住宅ローン（万円・残高と月返済など）', debt_other: 'その他借入（万円）',
         reason: '相談のきっかけ', concern: '一番気になっていること', past_trouble: '困ったこと・失敗',
         ideal: '理想の家計', difficulty: '難しいと感じること',
         future_event: '今後5〜10年の予定', retirement: '老後のイメージ・不安',
