@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://familymoney.jp
+Sitemap: https://familymoney.jp/sitemap.xml
