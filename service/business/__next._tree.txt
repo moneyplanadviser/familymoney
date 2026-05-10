@@ -1,3 +1,3 @@
-:HL["/_next/static/chunks/0pshru8y2veyq.css","style"]
+:HL["/_next/static/chunks/03pzthb3l8~da.css","style"]
 :HL["/images/seminar-scene-real.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"service","param":null,"prefetchHints":0,"slots":{"children":{"name":"business","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"G9lwZg83vg7pV441EhIqJ"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"service","param":null,"prefetchHints":0,"slots":{"children":{"name":"business","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"x6AQe_gW-l08OFuCNHAG8"}
