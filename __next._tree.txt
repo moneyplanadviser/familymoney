@@ -1,5 +1,5 @@
-:HL["/_next/static/chunks/0bqpluz.hicr2.css","style"]
+:HL["/_next/static/chunks/0-6p6miwej8nv.css","style"]
 :HL["/images/hero-family-v2.png","image"]
 :HL["/images/about-room.png","image"]
 :HL["/images/aoki-portrait-real.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"p3nMst_0YwsSYg-4Bm6YA"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"XnT447gQyr1Lh0RuyFXSb"}
