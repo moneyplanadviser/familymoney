@@ -1,3 +1,3 @@
-:HL["/_next/static/chunks/0-t7f~yt3ikdh.css","style"]
+:HL["/_next/static/chunks/14gvz44pqp3yh.css","style"]
 :HL["/images/online-lecture-real.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"service","param":null,"prefetchHints":0,"slots":{"children":{"name":"personal-support","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"OWShsyraMglesaVmCgoH7"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"service","param":null,"prefetchHints":0,"slots":{"children":{"name":"personal-support","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"tL-3x2AYIpsMqQ9-MHGIu"}
