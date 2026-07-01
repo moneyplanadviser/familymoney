@@ -1,4 +1,4 @@
-:HL["/_next/static/chunks/0~699_-bexv13.css","style"]
+:HL["/_next/static/chunks/0pej1jenlu~z~.css","style"]
 :HL["/images/mailmag/hero-couple-table.png","image"]
 :HL["/images/mailmag/line-qr.png","image"]
 :HL["/images/mailmag/cta-couple-note.png","image"]
@@ -7,4 +7,4 @@
 :HL["/images/mailmag/article-checklist.png","image"]
 :HL["/images/mailmag/profile-aoki-desk.png","image"]
 :HL["/images/mailmag/final-still-life.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"mail-magazine","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"NhJQ1vegDYki4U5iNsFeq"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"mail-magazine","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"OLj50x9kFL__F6Wopxh7M"}
