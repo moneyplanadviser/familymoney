@@ -7,4 +7,4 @@
 :HL["/images/mailmag/article-checklist.png","image"]
 :HL["/images/mailmag/profile-aoki-desk.png","image"]
 :HL["/images/mailmag/final-still-life.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"mail-magazine","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"OLj50x9kFL__F6Wopxh7M"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"mail-magazine","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"oo5OEA1jQ0NwUlC7jZ-R8"}
