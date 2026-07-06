@@ -1,5 +1,8 @@
 {
   "buildCommand": "",
   "outputDirectory": ".",
-  "framework": null
+  "framework": null,
+  "github": {
+    "enabled": false
+  }
 }
